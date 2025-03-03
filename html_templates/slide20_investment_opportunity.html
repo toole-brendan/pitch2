@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Investment Opportunity</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Common components */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Investment opportunity specific styles */
+    .investment-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .investment-header {
+      background-color: #16a34a;
+      color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .investment-amount {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .investment-detail {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+    
+    .investment-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 1.5rem;
+    }
+    
+    .allocation-chart {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .chart-placeholder {
+      flex-grow: 1;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      border: 2px dashed #9ca3af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      color: #6b7280;
+      font-style: italic;
+      text-align: center;
+    }
+    
+    .milestones-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .milestones-header {
+      padding: 1rem;
+      background-color: #1f2937;
+      color: white;
+      font-weight: 600;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+    
+    .milestones-content {
+      padding: 1.25rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .milestone {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .milestone-bullet {
+      width: 1.5rem;
+      height: 1.5rem;
+      background-color: #16a34a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    
+    .milestone-text {
+      flex-grow: 1;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+    
+    .investment-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .highlight-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .highlight-icon {
+      width: 3rem;
+      height: 3rem;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .highlight-title {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 1rem;
+    }
+    
+    .highlight-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    /* Placeholder styles */
+    .placeholder {
+      background-color: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      color: #6b7280;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-style: italic;
+      min-height: 100px;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .investment-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .investment-highlights {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Investment Opportunity</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="investment-container">
+        <!-- Investment Header -->
+        <div class="investment-header">
+          <div class="investment-amount">$10M Series A</div>
+          <div class="investment-detail">18-month runway to Series B readiness</div>
+        </div>
+        
+        <!-- Investment Grid -->
+        <div class="investment-grid">
+          <!-- Use of Funds Chart -->
+          <div class="allocation-chart">
+            <h2 class="section-title">Use of Funds</h2>
+            <div class="chart-placeholder">
+              [Allocation Chart Placeholder]<br>
+              <small>40% Development | 35% Sales | 25% Operations</small>
+            </div>
+          </div>
+          
+          <!-- Key Milestones -->
+          <div class="milestones-card">
+            <div class="milestones-header">Key Milestones to Achieve</div>
+            <div class="milestones-content">
+              <div class="milestone">
+                <div class="milestone-bullet">1</div>
+                <div class="milestone-text">Scale military implementation to 10+ battalions</div>
+              </div>
+              <div class="milestone">
+                <div class="milestone-bullet">2</div>
+                <div class="milestone-text">Launch commercial platform in target verticals</div>
+              </div>
+              <div class="milestone">
+                <div class="milestone-bullet">3</div>
+                <div class="milestone-text">Develop shell token payment infrastructure</div>
+              </div>
+              <div class="milestone">
+                <div class="milestone-bullet">4</div>
+                <div class="milestone-text">Achieve 100+ commercial customers</div>
+              </div>
+              <div class="milestone">
+                <div class="milestone-bullet">5</div>
+                <div class="milestone-text">Reach $8M ARR by end of runway</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Investment Highlights -->
+        <div class="investment-highlights">
+          <div class="highlight-card">
+            <div class="highlight-icon">[Icon]</div>
+            <div class="highlight-title">Value Creation</div>
+            <div class="highlight-text">Clear path to $500M+ valuation</div>
+          </div>
+          
+          <div class="highlight-card">
+            <div class="highlight-icon">[Icon]</div>
+            <div class="highlight-title">Dual Revenue Streams</div>
+            <div class="highlight-text">Military stability + Commercial upside</div>
+          </div>
+          
+          <div class="highlight-card">
+            <div class="highlight-icon">[Icon]</div>
+            <div class="highlight-title">Exit Strategy</div>
+            <div class="highlight-text">Multiple acquisition paths in both markets</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 20</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

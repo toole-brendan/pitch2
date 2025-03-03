@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Team</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Common components */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Team specific styles */
+    .team-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .team-member {
+      background-color: white;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .member-photo {
+      height: 150px;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-style: italic;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .member-info {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .member-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1f2937;
+    }
+    
+    .member-title {
+      font-size: 0.9rem;
+      color: #16a34a;
+      font-weight: 600;
+    }
+    
+    .member-credentials {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    
+    .member-bio {
+      font-size: 0.875rem;
+      color: #4b5563;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+    
+    .advisors-section {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .advisors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    
+    .advisor {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .advisor-avatar {
+      width: 3rem;
+      height: 3rem;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    .advisor-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .advisor-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1f2937;
+    }
+    
+    .advisor-affiliation {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Placeholder styles */
+    .placeholder {
+      background-color: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      color: #6b7280;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-style: italic;
+      min-height: 100px;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .advisors-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Leadership Team</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="team-container">
+        <!-- Executive Team Section -->
+        <div class="team-grid">
+          <!-- Team Member 1 - CEO -->
+          <div class="team-member">
+            <div class="member-photo">[CEO Photo Placeholder]</div>
+            <div class="member-info">
+              <div class="member-name">[CEO Name]</div>
+              <div class="member-title">Chief Executive Officer</div>
+              <div class="member-credentials">Former Military Logistics Officer</div>
+              <div class="member-bio">[Placeholder for brief bio highlighting military logistics experience and leadership]</div>
+            </div>
+          </div>
+          
+          <!-- Team Member 2 - CTO -->
+          <div class="team-member">
+            <div class="member-photo">[CTO Photo Placeholder]</div>
+            <div class="member-info">
+              <div class="member-name">[CTO Name]</div>
+              <div class="member-title">Chief Technology Officer</div>
+              <div class="member-credentials">Blockchain Developer, 10+ Years</div>
+              <div class="member-bio">[Placeholder for brief bio highlighting blockchain expertise and technical leadership]</div>
+            </div>
+          </div>
+          
+          <!-- Team Member 3 - COO -->
+          <div class="team-member">
+            <div class="member-photo">[COO Photo Placeholder]</div>
+            <div class="member-info">
+              <div class="member-name">[COO Name]</div>
+              <div class="member-title">Chief Operating Officer</div>
+              <div class="member-credentials">Supply Chain Executive, 15+ Years</div>
+              <div class="member-bio">[Placeholder for brief bio highlighting supply chain expertise and operational experience]</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Advisors Section -->
+        <div class="advisors-section">
+          <h2 class="section-title">Key Advisors</h2>
+          <div class="advisors-grid">
+            <div class="advisor">
+              <div class="advisor-avatar">[Photo]</div>
+              <div class="advisor-info">
+                <div class="advisor-name">[Advisor Name]</div>
+                <div class="advisor-affiliation">Former Military Command</div>
+              </div>
+            </div>
+            
+            <div class="advisor">
+              <div class="advisor-avatar">[Photo]</div>
+              <div class="advisor-info">
+                <div class="advisor-name">[Advisor Name]</div>
+                <div class="advisor-affiliation">Blockchain Security Expert</div>
+              </div>
+            </div>
+            
+            <div class="advisor">
+              <div class="advisor-avatar">[Photo]</div>
+              <div class="advisor-info">
+                <div class="advisor-name">[Advisor Name]</div>
+                <div class="advisor-affiliation">Supply Chain Industry Leader</div>
+              </div>
+            </div>
+            
+            <div class="advisor">
+              <div class="advisor-avatar">[Photo]</div>
+              <div class="advisor-info">
+                <div class="advisor-name">[Advisor Name]</div>
+                <div class="advisor-affiliation">Venture Capital Partner</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Expertise Highlights -->
+        <div class="card">
+          <div class="grid-2 grid">
+            <div>
+              <strong>Military Expertise:</strong> 30+ years combined military logistics and property management experience
+            </div>
+            <div>
+              <strong>Technology Expertise:</strong> 25+ years combined blockchain and enterprise software development
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 18</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

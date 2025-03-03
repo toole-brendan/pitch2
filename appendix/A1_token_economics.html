@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Token Economics</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .appendix-tag {
+      display: inline-block;
+      background-color: #16a34a;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Common components */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Token economics specific styles */
+    .token-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .token-grid {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .token-distribution {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .chart-placeholder {
+      flex-grow: 1;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      border: 2px dashed #9ca3af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      color: #6b7280;
+      font-style: italic;
+      text-align: center;
+    }
+    
+    .token-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .token-utility {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .utility-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .utility-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 600;
+      color: #16a34a;
+    }
+    
+    .utility-text {
+      flex-grow: 1;
+    }
+    
+    .utility-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .utility-description {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    .token-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .metric-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #16a34a;
+    }
+    
+    .metric-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    /* Placeholder styles */
+    .placeholder {
+      background-color: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      color: #6b7280;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-style: italic;
+      min-height: 100px;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .token-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .token-metrics {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title"><span class="appendix-tag">A1</span> Token Economics Details</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="token-container">
+        <div class="token-grid">
+          <!-- Token Distribution Section -->
+          <div class="token-distribution">
+            <h2 class="section-title">Token Distribution Model</h2>
+            <div class="chart-placeholder">
+              [Token Distribution Chart Placeholder]<br>
+              <small>Initial distribution across stakeholders</small>
+            </div>
+            <div class="token-details">
+              <div class="card flex-row">
+                <div>
+                  <strong>Total Supply:</strong> 1,000,000,000 Shell Tokens
+                </div>
+                <div>
+                  <strong>Initial Price:</strong> $0.05 per token
+                </div>
+              </div>
+              <div class="card">
+                <div class="section-title">Token Release Schedule</div>
+                <div class="placeholder">
+                  [Placeholder for token vesting and release schedule]
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Token Utility Section -->
+          <div class="token-utility">
+            <h2 class="section-title">Utility Mechanisms</h2>
+            <div class="utility-item">
+              <div class="utility-icon">1</div>
+              <div class="utility-text">
+                <div class="utility-title">Payment Settlement</div>
+                <div class="utility-description">Facilitates faster payment settlement between supply chain participants</div>
+              </div>
+            </div>
+            
+            <div class="utility-item">
+              <div class="utility-icon">2</div>
+              <div class="utility-text">
+                <div class="utility-title">Transaction Validation</div>
+                <div class="utility-description">Used to validate transactions and maintain network integrity</div>
+              </div>
+            </div>
+            
+            <div class="utility-item">
+              <div class="utility-icon">3</div>
+              <div class="utility-text">
+                <div class="utility-title">Governance</div>
+                <div class="utility-description">Token holders can vote on protocol improvements and network parameters</div>
+              </div>
+            </div>
+            
+            <div class="utility-item">
+              <div class="utility-icon">4</div>
+              <div class="utility-text">
+                <div class="utility-title">Staking Rewards</div>
+                <div class="utility-description">Earn rewards for providing liquidity and securing the network</div>
+              </div>
+            </div>
+            
+            <h2 class="section-title" style="margin-top: 1rem;">Token Burn Mechanism</h2>
+            <div class="placeholder">
+              [Placeholder for token burn mechanism description and diagram]
+            </div>
+          </div>
+        </div>
+        
+        <!-- Token Growth Metrics -->
+        <div class="token-metrics">
+          <div class="metric-card">
+            <div class="metric-value">15%</div>
+            <div class="metric-label">Transaction Fee Reduction</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">Annual Token Value Growth (Projected)</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-value">5M+</div>
+            <div class="metric-label">Monthly Transaction Volume</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Appendix A1</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Call to Action</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Common components */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Call to action specific styles */
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .cta-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .cta-subtitle {
+      font-size: 1.25rem;
+      color: #4b5563;
+      margin-top: 1rem;
+    }
+    
+    .process-timeline {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 2rem 0;
+      padding: 0 1rem;
+    }
+    
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 2.5rem;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #e5e7eb;
+      z-index: 0;
+    }
+    
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      width: 20%;
+    }
+    
+    .step-circle {
+      width: 5rem;
+      height: 5rem;
+      background-color: #16a34a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .step-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .step-description {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .contact-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .contact-avatar {
+      width: 5rem;
+      height: 5rem;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .contact-name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 1.1rem;
+    }
+    
+    .contact-title {
+      font-size: 0.875rem;
+      color: #16a34a;
+      font-style: italic;
+    }
+    
+    .contact-method {
+      font-size: 0.875rem;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .vision-statement {
+      background-color: #f0fdf4;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      text-align: center;
+      font-style: italic;
+      color: #166534;
+      font-size: 1.1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* Placeholder styles */
+    .placeholder {
+      background-color: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      color: #6b7280;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-style: italic;
+      min-height: 100px;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .process-timeline {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+      
+      .process-timeline::before {
+        display: none;
+      }
+      
+      .timeline-step {
+        width: 100%;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Next Steps</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="cta-container">
+        <!-- CTA Header -->
+        <div class="cta-header">
+          <div class="cta-subtitle">Looking to close $10M Series A by [Q3 2025]</div>
+        </div>
+        
+        <!-- Process Timeline -->
+        <div class="process-timeline">
+          <div class="timeline-step">
+            <div class="step-circle">1</div>
+            <div class="step-title">Initial Meeting</div>
+            <div class="step-description">Today's presentation</div>
+          </div>
+          
+          <div class="timeline-step">
+            <div class="step-circle">2</div>
+            <div class="step-title">Due Diligence</div>
+            <div class="step-description">Materials available immediately</div>
+          </div>
+          
+          <div class="timeline-step">
+            <div class="step-circle">3</div>
+            <div class="step-title">Term Sheet</div>
+            <div class="step-description">2-3 weeks</div>
+          </div>
+          
+          <div class="timeline-step">
+            <div class="step-circle">4</div>
+            <div class="step-title">Close Round</div>
+            <div class="step-description">30-45 days</div>
+          </div>
+          
+          <div class="timeline-step">
+            <div class="step-circle">5</div>
+            <div class="step-title">First 100 Days</div>
+            <div class="step-description">Implementation plan ready</div>
+          </div>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="card">
+          <h2 class="section-title">Contact Information</h2>
+          <div class="contact-grid">
+            <div class="contact-card">
+              <div class="contact-avatar">[Photo]</div>
+              <div class="contact-info">
+                <div class="contact-name">[CEO Name]</div>
+                <div class="contact-title">Chief Executive Officer</div>
+                <div class="contact-method">📧 [email@handreceipt.com]</div>
+                <div class="contact-method">📱 [555-123-4567]</div>
+              </div>
+            </div>
+            
+            <div class="contact-card">
+              <div class="contact-avatar">[Photo]</div>
+              <div class="contact-info">
+                <div class="contact-name">[CFO Name]</div>
+                <div class="contact-title">Chief Financial Officer</div>
+                <div class="contact-method">📧 [email@handreceipt.com]</div>
+                <div class="contact-method">📱 [555-765-4321]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Vision Statement -->
+        <div class="vision-statement">
+          "Building the new standard for supply chain verification and payment"
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 21</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

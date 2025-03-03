@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Problem Statement</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Split screen layout for military and commercial */
+    .split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      height: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .split-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+    
+    /* Military side */
+    .military-side {
+      background-color: #fee2e2;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .military-side .section-title {
+      color: #991b1b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      margin-bottom: 1rem;
+    }
+    
+    .military-side .section-title-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      background-color: #991b1b;
+      border-radius: 50%;
+    }
+    
+    /* Commercial side */
+    .commercial-side {
+      background-color: #dbeafe;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .commercial-side .section-title {
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      margin-bottom: 1rem;
+    }
+    
+    .commercial-side .section-title-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      background-color: #1e40af;
+      border-radius: 50%;
+    }
+    
+    /* Visual placeholder */
+    .visual-placeholder {
+      height: 140px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border: 2px dashed rgba(0, 0, 0, 0.1);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      color: rgba(0, 0, 0, 0.4);
+      margin-bottom: 1rem;
+    }
+    
+    /* Challenges list */
+    .challenges-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .challenge-item {
+      background-color: white;
+      border-radius: 0.375rem;
+      padding: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .challenge-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #4b5563;
+    }
+    
+    .challenge-text strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+    }
+    
+    .challenge-text span {
+      font-size: 0.8125rem;
+      color: #4b5563;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">The Broken Link in Supply Chains</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="split-container">
+        <!-- Military Side -->
+        <div class="military-side">
+          <h2 class="section-title">
+            <div class="section-title-icon"></div>
+            Military Challenges
+          </h2>
+          
+          <div class="visual-placeholder">
+            [Military Officer with Paper Forms]
+          </div>
+          
+          <div class="challenges-list">
+            <div class="challenge-item">
+              <div class="challenge-icon">1</div>
+              <div class="challenge-text">
+                <strong>Paper-based Accountability</strong>
+                <span>Manual signatures and physical forms requiring in-person processing</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">2</div>
+              <div class="challenge-text">
+                <strong>Time-consuming Inventories</strong>
+                <span>8+ hours per week per unit spent on manual inventory counts</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">3</div>
+              <div class="challenge-text">
+                <strong>High Liability Risk</strong>
+                <span>$100K+ personal liability per lost/misplaced equipment incident</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">4</div>
+              <div class="challenge-text">
+                <strong>Limited Visibility</strong>
+                <span>72+ hour delays in status updates across the supply chain</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Commercial Side -->
+        <div class="commercial-side">
+          <h2 class="section-title">
+            <div class="section-title-icon"></div>
+            Commercial Challenges
+          </h2>
+          
+          <div class="visual-placeholder">
+            [Warehouse Manager with Payment/Supplier Issues]
+          </div>
+          
+          <div class="challenges-list">
+            <div class="challenge-item">
+              <div class="challenge-icon">1</div>
+              <div class="challenge-text">
+                <strong>Extended Payment Cycles</strong>
+                <span>60-90 day payment cycles creating significant cash flow problems</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">2</div>
+              <div class="challenge-text">
+                <strong>Limited Supplier Visibility</strong>
+                <span>Minimal transparency into multi-tier supplier networks</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">3</div>
+              <div class="challenge-text">
+                <strong>Expensive ERP Systems</strong>
+                <span>$250K+ implementation costs for enterprise systems</span>
+              </div>
+            </div>
+            
+            <div class="challenge-item">
+              <div class="challenge-icon">4</div>
+              <div class="challenge-text">
+                <strong>Data Silos</strong>
+                <span>Disconnected information between departments and locations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 2</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Technical Architecture Details</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .appendix-tag {
+      display: inline-block;
+      background-color: #16a34a;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Common components */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Technical architecture specific styles */
+    .architecture-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .detailed-diagram {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .diagram-placeholder {
+      flex-grow: 1;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      border: 2px dashed #9ca3af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      color: #6b7280;
+      font-style: italic;
+      text-align: center;
+    }
+    
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    
+    .component-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .component-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .component-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #16a34a;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .component-name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.95rem;
+    }
+    
+    .component-description {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    .tech-card {
+      padding: 1rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    
+    .tech-name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.9rem;
+    }
+    
+    .tech-category {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    .api-section {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .api-endpoints {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .endpoint {
+      display: flex;
+      padding: 0.5rem;
+      background-color: #f3f4f6;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875rem;
+    }
+    
+    .endpoint-method {
+      font-weight: 600;
+      color: #2563eb;
+      width: 4rem;
+    }
+    
+    .endpoint-path {
+      flex-grow: 1;
+      color: #1f2937;
+    }
+    
+    .endpoint-description {
+      color: #6b7280;
+      font-style: italic;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      margin-left: 1rem;
+    }
+    
+    /* Placeholder styles */
+    .placeholder {
+      background-color: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      color: #6b7280;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-style: italic;
+      min-height: 100px;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title"><span class="appendix-tag">A3</span> Technical Architecture Details</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="architecture-container">
+        <!-- Detailed Technical Architecture Diagram -->
+        <div class="detailed-diagram">
+          <h2 class="section-title">Detailed Technical Architecture</h2>
+          <div class="diagram-placeholder">
+            [Comprehensive Technical Architecture Diagram Placeholder]<br>
+            <small>End-to-end system architecture showing all components and data flows</small>
+          </div>
+        </div>
+        
+        <!-- Key Components Section -->
+        <div class="components-grid">
+          <div class="component-card">
+            <div class="component-header">
+              <div class="component-icon">UI</div>
+              <div class="component-name">Frontend Applications</div>
+            </div>
+            <div class="component-description">React Native mobile application with offline capabilities and React-based web dashboard for administrative functions. Utilizes progressive web app architecture for cross-platform compatibility.</div>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-header">
+              <div class="component-icon">API</div>
+              <div class="component-name">API Gateway Layer</div>
+            </div>
+            <div class="component-description">GraphQL-based API gateway with RESTful endpoints for legacy systems integration. Handles authentication, rate limiting, and request validation with JWT token security.</div>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-header">
+              <div class="component-icon">BC</div>
+              <div class="component-name">Blockchain Core</div>
+            </div>
+            <div class="component-description">Hybrid blockchain architecture with private permission-based ledger for defense applications and public blockchain integration for commercial transparency. Custom consensus algorithm optimized for supply chain verification.</div>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-header">
+              <div class="component-icon">DB</div>
+              <div class="component-name">Data Storage</div>
+            </div>
+            <div class="component-description">Multi-tier storage solution with NoSQL document store for flexible schema evolution, distributed cache for performance, and encrypted blob storage for attachments and media.</div>
+          </div>
+        </div>
+        
+        <!-- API Endpoints Section -->
+        <div class="api-section">
+          <h2 class="section-title">Core API Endpoints</h2>
+          <div class="api-endpoints">
+            <div class="endpoint">
+              <div class="endpoint-method">POST</div>
+              <div class="endpoint-path">/api/v1/assets/verify</div>
+              <div class="endpoint-description">Verify asset authenticity using blockchain</div>
+            </div>
+            
+            <div class="endpoint">
+              <div class="endpoint-method">GET</div>
+              <div class="endpoint-path">/api/v1/assets/{id}/history</div>
+              <div class="endpoint-description">Retrieve full transaction history for asset</div>
+            </div>
+            
+            <div class="endpoint">
+              <div class="endpoint-method">POST</div>
+              <div class="endpoint-path">/api/v1/transactions/process</div>
+              <div class="endpoint-description">Process payment or transfer transaction</div>
+            </div>
+            
+            <div class="endpoint">
+              <div class="endpoint-method">GET</div>
+              <div class="endpoint-path">/api/v1/inventory/status</div>
+              <div class="endpoint-description">Get real-time inventory status with verification</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Technology Stack -->
+        <div class="card">
+          <h2 class="section-title">Technology Stack</h2>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <div class="tech-name">React Native</div>
+              <div class="tech-category">Mobile & Web UI</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">Node.js</div>
+              <div class="tech-category">Backend Services</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">GraphQL</div>
+              <div class="tech-category">API Layer</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">AWS GovCloud</div>
+              <div class="tech-category">Infrastructure (Military)</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">Kubernetes</div>
+              <div class="tech-category">Orchestration</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">MongoDB</div>
+              <div class="tech-category">Document Storage</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">Hyperledger Fabric</div>
+              <div class="tech-category">Private Blockchain</div>
+            </div>
+            
+            <div class="tech-card">
+              <div class="tech-name">Ethereum</div>
+              <div class="tech-category">Public Blockchain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Appendix A3</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>
