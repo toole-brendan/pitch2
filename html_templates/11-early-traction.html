@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Early Traction</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Metrics Row */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .metric-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .metric-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    
+    .defense-icon {
+      background-color: #2563eb;
+    }
+    
+    .commercial-icon {
+      background-color: #10b981;
+    }
+    
+    .mixed-icon {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+    }
+    
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .defense-value {
+      color: #2563eb;
+    }
+    
+    .commercial-value {
+      color: #10b981;
+    }
+    
+    .mixed-value {
+      background: linear-gradient(90deg, #2563eb, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .metric-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.3;
+    }
+    
+    /* Traction Showcase */
+    .traction-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .traction-showcase {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Military Traction */
+    .traction-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .traction-header {
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .defense-header {
+      background-color: #dbeafe;
+    }
+    
+    .commercial-header {
+      background-color: #d1fae5;
+    }
+    
+    .traction-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: white;
+      flex-shrink: 0;
+    }
+    
+    .traction-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .defense-title {
+      color: #1e40af;
+    }
+    
+    .commercial-title {
+      color: #047857;
+    }
+    
+    .traction-content {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    
+    /* Progress items */
+    .progress-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .progress-item {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    
+    .progress-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .defense-progress-icon {
+      background-color: #eff6ff;
+      color: #2563eb;
+    }
+    
+    .commercial-progress-icon {
+      background-color: #ecfdf5;
+      color: #10b981;
+    }
+    
+    .progress-content {
+      flex: 1;
+    }
+    
+    .progress-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .progress-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    /* Testimonial section */
+    .testimonial-section {
+      margin-top: auto;
+    }
+    
+    .testimonial-card {
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      position: relative;
+    }
+    
+    .defense-testimonial {
+      background-color: #eff6ff;
+      border-left: 4px solid #2563eb;
+    }
+    
+    .commercial-testimonial {
+      background-color: #ecfdf5;
+      border-left: 4px solid #10b981;
+    }
+    
+    .testimonial-quote {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .defense-quote {
+      color: #334155;
+    }
+    
+    .commercial-quote {
+      color: #334155;
+    }
+    
+    .testimonial-author {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    
+    .defense-author {
+      color: #1e40af;
+    }
+    
+    .commercial-author {
+      color: #047857;
+    }
+    
+    .testimonial-role {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Partners section */
+    .partners-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-top: 1rem;
+    }
+    
+    .partners-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+    
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .partner-card {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .partner-logo {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      background-color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #475569;
+      margin-bottom: 0.75rem;
+    }
+    
+    .partner-name {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .partner-type {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Timeline section */
+    .timeline-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .timeline-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+    }
+    
+    .timeline-container {
+      position: relative;
+      padding-left: 2rem;
+    }
+    
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0.75rem;
+      width: 2px;
+      background-color: #e5e7eb;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+    
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 0.25rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .completed-dot {
+      background-color: #10b981;
+    }
+    
+    .current-dot {
+      background-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+    
+    .future-dot {
+      background-color: #e5e7eb;
+      border: 2px solid #d1d5db;
+    }
+    
+    .timeline-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }
+    
+    .timeline-content {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .timeline-milestone {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+    }
+    
+    .timeline-desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Early Traction</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <!-- Metrics Row -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-icon defense-icon">A</div>
+          <span class="metric-value defense-value">2</span>
+          <span class="metric-label">Army battalions in<br>alpha deployment</span>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon commercial-icon">B</div>
+          <span class="metric-value commercial-value">5</span>
+          <span class="metric-label">Commercial customers<br>in beta testing</span>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon defense-icon">R</div>
+          <span class="metric-value defense-value">42%</span>
+          <span class="metric-label">Reduction in inventory<br>verification time</span>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon commercial-icon">P</div>
+          <span class="metric-value commercial-value">68%</span>
+          <span class="metric-label">Reduction in payment<br>processing time</span>
+        </div>
+      </div>
+      
+      <!-- Traction Showcase -->
+      <div class="traction-showcase">
+        <!-- Military Traction -->
+        <div class="traction-card">
+          <div class="traction-header defense-header">
+            <div class="traction-icon defense-icon">D</div>
+            <h2 class="traction-title defense-title">Military Traction</h2>
+          </div>
+          
+          <div class="traction-content">
+            <div class="progress-items">
+              <div class="progress-item">
+                <div class="progress-icon defense-progress-icon">1</div>
+                <div class="progress-content">
+                  <div class="progress-title">Alpha Deployment Success</div>
+                  <div class="progress-desc">Deployed with 2 Army battalions, processing over 5,000 equipment items with 99.5% accuracy</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon defense-progress-icon">2</div>
+                <div class="progress-content">
+                  <div class="progress-title">Brigade Commander Support</div>
+                  <div class="progress-desc">Letter of support from Brigade Commander highlighting administrative time savings</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon defense-progress-icon">3</div>
+                <div class="progress-content">
+                  <div class="progress-title">Technical Validation</div>
+                  <div class="progress-desc">Verified by Army Software Factory with recommendation for wider deployment</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon defense-progress-icon">4</div>
+                <div class="progress-content">
+                  <div class="progress-title">Pipeline Growth</div>
+                  <div class="progress-desc">3 additional battalions in contractual phase for Q3 2025 implementation</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="testimonial-section">
+              <div class="testimonial-card defense-testimonial">
+                <div class="testimonial-quote defense-quote">
+                  "HandReceipt has transformed our property accountability process. What used to take days now takes hours, with significantly improved accuracy and visibility for command leadership."
+                </div>
+                <div class="testimonial-author defense-author">LTC James Wilson</div>
+                <div class="testimonial-role">Battalion Commander, US Army</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Commercial Traction -->
+        <div class="traction-card">
+          <div class="traction-header commercial-header">
+            <div class="traction-icon commercial-icon">C</div>
+            <h2 class="traction-title commercial-title">Commercial Traction</h2>
+          </div>
+          
+          <div class="traction-content">
+            <div class="progress-items">
+              <div class="progress-item">
+                <div class="progress-icon commercial-progress-icon">1</div>
+                <div class="progress-content">
+                  <div class="progress-title">Multi-Vertical Beta</div>
+                  <div class="progress-desc">5 commercial customers across electronics, manufacturing, and equipment rental verticals</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon commercial-progress-icon">2</div>
+                <div class="progress-content">
+                  <div class="progress-title">High Beta Conversion</div>
+                  <div class="progress-desc">92% of beta users plan to convert to paid customers in Q2 2025</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon commercial-progress-icon">3</div>
+                <div class="progress-content">
+                  <div class="progress-title">Strategic Partnership</div>
+                  <div class="progress-desc">Agreement with TechSupply Association (15,000 members) for preferred vendor status</div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-icon commercial-progress-icon">4</div>
+                <div class="progress-content">
+                  <div class="progress-title">Shell Token Adoption</div>
+                  <div class="progress-desc">$850K in transaction volume through Shell token payments in first 60 days</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="testimonial-section">
+              <div class="testimonial-card commercial-testimonial">
+                <div class="testimonial-quote commercial-quote">
+                  "HandReceipt paid for itself in the first month through working capital optimization alone. The Shell token payments have dramatically improved our supplier relationships."
+                </div>
+                <div class="testimonial-author commercial-author">Sarah Chen</div>
+                <div class="testimonial-role">CTO, ElectroTech Distribution</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Strategic Partners -->
+      <div class="partners-section">
+        <h3 class="partners-title">Strategic Partners & Validation</h3>
+        
+        <div class="partners-grid">
+          <div class="partner-card">
+            <div class="partner-logo">ASF</div>
+            <div class="partner-name">Army Software Factory</div>
+            <div class="partner-type">Technical Validation</div>
+          </div>
+          
+          <div class="partner-card">
+            <div class="partner-logo">TSA</div>
+            <div class="partner-name">TechSupply Association</div>
+            <div class="partner-type">Industry Partnership</div>
+          </div>
+          
+          <div class="partner-card">
+            <div class="partner-logo">BCV</div>
+            <div class="partner-name">BlockChain Ventures</div>
+            <div class="partner-type">Technology Partner</div>
+          </div>
+          
+          <div class="partner-card">
+            <div class="partner-logo">DCX</div>
+            <div class="partner-name">Defense Contractors Exchange</div>
+            <div class="partner-type">Channel Partner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 11</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

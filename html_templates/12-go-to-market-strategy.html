@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Go-to-Market Strategy</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Strategy section */
+    .strategy-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .strategy-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .strategy-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+      max-width: 80%;
+    }
+    
+    /* Dual track timeline */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    /* Track labels */
+    .track-labels {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    
+    .timeline-label {
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+    
+    .defense-label {
+      background-color: #dbeafe;
+      color: #1e40af;
+      border-bottom: 1px solid #bfdbfe;
+    }
+    
+    .commercial-label {
+      background-color: #d1fae5;
+      color: #047857;
+    }
+    
+    .timeline-track {
+      display: flex;
+      position: relative;
+      height: 15rem;
+      margin-left: 120px; /* Make room for the track labels */
+    }
+    
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e5e7eb;
+      z-index: 0;
+    }
+    
+    .timeline-quarters {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 0;
+    }
+    
+    .quarter-marker {
+      width: 2px;
+      height: 100%;
+      background-color: #e5e7eb;
+      position: relative;
+    }
+    
+    .quarter-label {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6b7280;
+      white-space: nowrap;
+    }
+    
+    .upper-track, .lower-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 45%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+    
+    .upper-track {
+      top: 0;
+    }
+    
+    .lower-track {
+      bottom: 0;
+    }
+    
+    /* Timeline milestones */
+    .timeline-milestone {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    
+    .milestone-content {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 12rem;
+      position: relative;
+    }
+    
+    .milestone-connector {
+      position: absolute;
+      width: 2px;
+      background-color: #d1d5db;
+      z-index: 0;
+    }
+    
+    .upper-milestone .milestone-connector {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 1.5rem;
+    }
+    
+    .lower-milestone .milestone-connector {
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 1.5rem;
+    }
+    
+    .milestone-dot {
+      position: absolute;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    
+    .upper-milestone .milestone-dot {
+      bottom: -0.5rem;
+    }
+    
+    .lower-milestone .milestone-dot {
+      top: -0.5rem;
+    }
+    
+    .defense-milestone .milestone-content {
+      border-top: 4px solid #2563eb;
+    }
+    
+    .defense-milestone .milestone-dot {
+      background-color: #2563eb;
+    }
+    
+    .commercial-milestone .milestone-content {
+      border-top: 4px solid #10b981;
+    }
+    
+    .commercial-milestone .milestone-dot {
+      background-color: #10b981;
+    }
+    
+    .now-indicator {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #ef4444;
+      z-index: 2;
+    }
+    
+    .now-label {
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      white-space: nowrap;
+    }
+    
+    .milestone-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .milestone-desc {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Channel strategy */
+    .channel-strategy {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .channel-strategy {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .channel-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .channel-header {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .defense-channel-header {
+      background-color: #dbeafe;
+    }
+    
+    .commercial-channel-header {
+      background-color: #d1fae5;
+    }
+    
+    .channel-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .defense-channel-icon {
+      background-color: #2563eb;
+      color: white;
+    }
+    
+    .commercial-channel-icon {
+      background-color: #10b981;
+      color: white;
+    }
+    
+    .channel-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+    
+    .defense-channel-title {
+      color: #1e40af;
+    }
+    
+    .commercial-channel-title {
+      color: #047857;
+    }
+    
+    .channel-content {
+      padding: 1.25rem;
+    }
+    
+    .channel-item {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+    
+    .channel-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .channel-bullet {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+    }
+    
+    .defense-channel-bullet {
+      background-color: #eff6ff;
+      color: #2563eb;
+    }
+    
+    .commercial-channel-bullet {
+      background-color: #ecfdf5;
+      color: #10b981;
+    }
+    
+    .channel-item-content {
+      flex: 1;
+    }
+    
+    .channel-item-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .channel-item-desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+    
+    /* Customer acquisition */
+    .acquisition-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .acquisition-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .acquisition-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .acquisition-metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .acquisition-metric {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .metric-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .metric-icon-small {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .joint-metric-icon {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+    }
+    
+    .metric-name {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+    }
+    
+    .acquisition-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .acquisition-desc {
+      font-size: 0.75rem;
+      color: #6b7280;
+      line-height: 1.3;
+    }
+    
+    .acquisition-tactics {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .tactic-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .list-header {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .header-dot {
+      width: 0.625rem;
+      height: 0.625rem;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .defense-dot {
+      background-color: #2563eb;
+    }
+    
+    .commercial-dot {
+      background-color: #10b981;
+    }
+    
+    .tactic-item {
+      background-color: #f8fafc;
+      border-radius: 0.375rem;
+      padding: 0.625rem 0.75rem;
+      font-size: 0.8125rem;
+      color: #4b5563;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .tactic-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .defense-tactic-icon {
+      background-color: #eff6ff;
+      color: #2563eb;
+    }
+    
+    .commercial-tactic-icon {
+      background-color: #ecfdf5;
+      color: #10b981;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Go-to-Market Strategy</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <!-- Dual-Track Timeline -->
+      <div class="strategy-section">
+        <h2 class="strategy-title">Dual-Track Growth Strategy</h2>
+        <p class="strategy-desc">Parallel paths for defense and commercial adoption, leveraging complementary strengths for accelerated market penetration.</p>
+        
+        <div class="timeline-container">
+          <div class="timeline-track">
+            <!-- Track labels (vertical) -->
+            <div class="track-labels">
+              <div class="timeline-label defense-label">Defense Track</div>
+              <div class="timeline-label commercial-label">Commercial Track</div>
+            </div>
+            <!-- Vertical quarter markers -->
+            <div class="timeline-quarters">
+              <div class="quarter-marker">
+                <div class="quarter-label">Q2 2025</div>
+              </div>
+              <div class="quarter-marker">
+                <div class="quarter-label">Q3 2025</div>
+              </div>
+              <div class="quarter-marker">
+                <div class="quarter-label">Q4 2025</div>
+              </div>
+              <div class="quarter-marker">
+                <div class="quarter-label">Q1 2026</div>
+              </div>
+              <div class="quarter-marker">
+                <div class="quarter-label">Q2 2026</div>
+              </div>
+            </div>
+            
+            <!-- Now indicator -->
+            <div class="now-indicator" style="left: 5%;">
+              <div class="now-label">Now</div>
+            </div>
+            
+            <!-- Defense track (upper) -->
+            <div class="upper-track">
+              <div class="timeline-milestone upper-milestone defense-milestone" style="left: 12%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">3 Battalion Pilots</div>
+                  <div class="milestone-desc">Initial deployments across combat units</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone upper-milestone defense-milestone" style="left: 38%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Brigade Validation</div>
+                  <div class="milestone-desc">Full brigade implementation with 5+ battalions</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone upper-milestone defense-milestone" style="left: 62%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Division Expansion</div>
+                  <div class="milestone-desc">Multiple brigades with shared infrastructure</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone upper-milestone defense-milestone" style="left: 88%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Allied Forces Pilots</div>
+                  <div class="milestone-desc">Initial deployments with NATO partners</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+            </div>
+            
+            <!-- Commercial track (lower) -->
+            <div class="lower-track">
+              <div class="timeline-milestone lower-milestone commercial-milestone" style="left: 12%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Electronics Vertical</div>
+                  <div class="milestone-desc">Focus on component manufacturers and distributors</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone lower-milestone commercial-milestone" style="left: 31%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Equipment Rental</div>
+                  <div class="milestone-desc">High-value asset tracking and leasing solutions</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone lower-milestone commercial-milestone" style="left: 50%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Geographic Expansion</div>
+                  <div class="milestone-desc">Canada and UK market entry</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone lower-milestone commercial-milestone" style="left: 69%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">Cross-Border Trade</div>
+                  <div class="milestone-desc">Focus on international supply chains</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+              
+              <div class="timeline-milestone lower-milestone commercial-milestone" style="left: 88%;">
+                <div class="milestone-content">
+                  <div class="milestone-title">APAC Expansion</div>
+                  <div class="milestone-desc">Singapore hub for Asia-Pacific region</div>
+                </div>
+                <div class="milestone-connector"></div>
+                <div class="milestone-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Channel Strategy -->
+      <div class="channel-strategy">
+        <!-- Defense Channels -->
+        <div class="channel-card">
+          <div class="channel-header defense-channel-header">
+            <div class="channel-icon defense-channel-icon">D</div>
+            <h2 class="channel-title defense-channel-title">Defense Channels</h2>
+          </div>
+          
+          <div class="channel-content">
+            <div class="channel-item">
+              <div class="channel-bullet defense-channel-bullet">1</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Direct Military Demonstrations</div>
+                <div class="channel-item-desc">Targeted unit demonstrations at battalion and brigade level focused on hands-on property accountability workflows</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet defense-channel-bullet">2</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Defense Contractor Partnerships</div>
+                <div class="channel-item-desc">Integration with established defense IT providers for expanded distribution and implementation support</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet defense-channel-bullet">3</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Military Technology Programs</div>
+                <div class="channel-item-desc">Participation in Army Software Factory and Defense Innovation Unit sponsorship programs</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet defense-channel-bullet">4</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Defense Trade Shows</div>
+                <div class="channel-item-desc">Presence at AUSA, SOFIC, and other military logistics-focused events with working demonstrations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Commercial Channels -->
+        <div class="channel-card">
+          <div class="channel-header commercial-channel-header">
+            <div class="channel-icon commercial-channel-icon">C</div>
+            <h2 class="channel-title commercial-channel-title">Commercial Channels</h2>
+          </div>
+          
+          <div class="channel-content">
+            <div class="channel-item">
+              <div class="channel-bullet commercial-channel-bullet">1</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Industry Association Partnerships</div>
+                <div class="channel-item-desc">Preferred vendor status with vertical-specific associations, beginning with TechSupply Association</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet commercial-channel-bullet">2</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">ERP Implementation Partners</div>
+                <div class="channel-item-desc">Channel relationships with mid-market ERP consultants and system integrators</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet commercial-channel-bullet">3</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Direct Enterprise Sales</div>
+                <div class="channel-item-desc">Vertical-specialized sales teams focused on mid-market manufacturers and distributors</div>
+              </div>
+            </div>
+            
+            <div class="channel-item">
+              <div class="channel-bullet commercial-channel-bullet">4</div>
+              <div class="channel-item-content">
+                <div class="channel-item-title">Digital Demand Generation</div>
+                <div class="channel-item-desc">Industry-specific content marketing, webinars, and case studies targeting supply chain decision-makers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Customer Acquisition Strategy -->
+      <div class="acquisition-section">
+        <h2 class="acquisition-title">Customer Acquisition Strategy</h2>
+        
+        <div class="acquisition-metrics">
+          <div class="acquisition-metric">
+            <div class="metric-header">
+              <div class="metric-icon-small joint-metric-icon">1</div>
+              <div class="metric-name">Year 1 Targets</div>
+            </div>
+            <div class="acquisition-value">25 Customers</div>
+            <div class="acquisition-desc">10 defense units and 15 commercial organizations across electronics and equipment rental</div>
+          </div>
+          
+          <div class="acquisition-metric">
+            <div class="metric-header">
+              <div class="metric-icon-small joint-metric-icon">2</div>
+              <div class="metric-name">Customer Acquisition Cost</div>
+            </div>
+            <div class="acquisition-value">$15-25K</div>
+            <div class="acquisition-desc">Defense: $25K with longer sales cycle<br>Commercial: $15K with higher volume</div>
+          </div>
+          
+          <div class="acquisition-metric">
+            <div class="metric-header">
+              <div class="metric-icon-small joint-metric-icon">3</div>
+              <div class="metric-name">Sales Cycle</div>
+            </div>
+            <div class="acquisition-value">3-9 Months</div>
+            <div class="acquisition-desc">Defense: 6-9 months<br>Commercial: 3-4 months average</div>
+          </div>
+        </div>
+        
+        <div class="acquisition-tactics">
+          <div class="tactic-list">
+            <div class="list-header">
+              <div class="header-dot defense-dot"></div>
+              Defense Acquisition Tactics
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon defense-tactic-icon">1</div>
+              Targeted unit demonstrations for Battalion S4 logistics officers
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon defense-tactic-icon">2</div>
+              Command briefs focusing on readiness improvements
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon defense-tactic-icon">3</div>
+              "Land and expand" from company to battalion to brigade
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon defense-tactic-icon">4</div>
+              White papers on administrative burden reduction
+            </div>
+          </div>
+          
+          <div class="tactic-list">
+            <div class="list-header">
+              <div class="header-dot commercial-dot"></div>
+              Commercial Acquisition Tactics
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon commercial-tactic-icon">1</div>
+              Free Shell token pilot programs with ROI guarantee
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon commercial-tactic-icon">2</div>
+              Vertical-specific case studies and customer testimonials
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon commercial-tactic-icon">3</div>
+              Working capital optimization workshops for CFOs
+            </div>
+            
+            <div class="tactic-item">
+              <div class="tactic-icon commercial-tactic-icon">4</div>
+              Industry association events and sponsorships
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 12</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

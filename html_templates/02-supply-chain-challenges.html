@@ -127,16 +127,42 @@
     
     /* Visual placeholder */
     .visual-placeholder {
-      height: 140px;
+      height: 120px;
       background-color: rgba(255, 255, 255, 0.6);
-      border: 2px dashed rgba(0, 0, 0, 0.1);
       border-radius: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-style: italic;
-      color: rgba(0, 0, 0, 0.4);
       margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    
+    .visual-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .cost-metric {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #991b1b;
+      margin-right: 1rem;
+    }
+
+    .commercial-cost-metric {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1e40af;
+      margin-right: 1rem;
+    }
+    
+    .metric-description {
+      font-size: 0.9rem;
+      max-width: 60%;
+      font-weight: 500;
     }
     
     /* Challenges list */
@@ -181,6 +207,26 @@
       color: #4b5563;
     }
     
+    /* Customer quote */
+    .customer-quote {
+      margin-top: 1rem;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #4b5563;
+      border-left: 3px solid;
+    }
+    
+    .military-side .customer-quote {
+      border-left-color: #991b1b;
+    }
+    
+    .commercial-side .customer-quote {
+      border-left-color: #1e40af;
+    }
+    
     /* Footer area */
     .slide-footer {
       margin-top: 1.5rem;
@@ -188,35 +234,6 @@
       justify-content: space-between;
       font-size: 0.75rem;
       color: #9ca3af;
-    }
-    
-    /* Navigation controls */
-    .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      display: flex;
-      gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
-    }
-    
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
     }
   </style>
 </head>
@@ -239,7 +256,10 @@
           </h2>
           
           <div class="visual-placeholder">
-            [Military Officer with Paper Forms]
+            <div class="visual-content">
+              <div class="cost-metric">$38M</div>
+              <div class="metric-description">Lost annually through inefficient inventory processes across one division</div>
+            </div>
           </div>
           
           <div class="challenges-list">
@@ -275,6 +295,11 @@
               </div>
             </div>
           </div>
+          
+          <div class="customer-quote">
+            "I spend more time on paperwork than leading my soldiers. The financial liability hanging over me is a constant source of stress."
+            <br>— Company Commander, US Army
+          </div>
         </div>
         
         <!-- Commercial Side -->
@@ -285,7 +310,10 @@
           </h2>
           
           <div class="visual-placeholder">
-            [Warehouse Manager with Payment/Supplier Issues]
+            <div class="visual-content">
+              <div class="commercial-cost-metric">$52K</div>
+              <div class="metric-description">Average financing costs due to payment delays for mid-sized distributors</div>
+            </div>
           </div>
           
           <div class="challenges-list">
@@ -321,6 +349,11 @@
               </div>
             </div>
           </div>
+          
+          <div class="customer-quote">
+            "Managing cash flow is impossible with 90-day payment terms. We're constantly choosing between paying our suppliers and making payroll."
+            <br>— Operations Director, TechComponents
+          </div>
         </div>
       </div>
     </div>
@@ -329,12 +362,6 @@
     <div class="slide-footer">
       <div>HandReceipt | Confidential</div>
       <div>Slide 2</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
     </div>
   </div>
 </body>

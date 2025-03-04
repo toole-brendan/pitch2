@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Call to Action</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Two-column layout */
+    .cta-container {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 2rem;
+      flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .cta-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    
+    /* Investment Opportunity Section */
+    .opportunity-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Main CTA section */
+    .cta-main {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0.5rem;
+      background: linear-gradient(to right, #2563eb, #10b981);
+    }
+    
+    .cta-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1f2937;
+      text-align: center;
+    }
+    
+    .offering-details {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+    
+    .detail-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .detail-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .detail-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .detail-subdesc {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    .highlighted-value {
+      background: linear-gradient(to right, #2563eb, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Timeline section */
+    .timeline-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .timeline-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-container {
+      position: relative;
+      padding-left: 2rem;
+    }
+    
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0.75rem;
+      width: 2px;
+      background-color: #e5e7eb;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      background-color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.625rem;
+    }
+    
+    .timeline-date {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .timeline-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    /* Vision section */
+    .vision-section {
+      background-color: #ecfdf5;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .vision-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #047857;
+      margin-bottom: 1rem;
+    }
+    
+    .vision-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .vision-statement {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #065f46;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      position: relative;
+      padding: 0 1rem;
+    }
+    
+    .vision-statement::before {
+      content: '"';
+      position: absolute;
+      top: -1rem;
+      left: -0.5rem;
+      font-size: 3rem;
+      color: rgba(16, 185, 129, 0.2);
+      font-family: Georgia, serif;
+    }
+    
+    .vision-statement::after {
+      content: '"';
+      position: absolute;
+      bottom: -2rem;
+      right: -0.5rem;
+      font-size: 3rem;
+      color: rgba(16, 185, 129, 0.2);
+      font-family: Georgia, serif;
+    }
+    
+    /* Company details */
+    .company-details {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .company-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .detail-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .detail-info {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    
+    /* Next steps section */
+    .next-steps {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .steps-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+    }
+    
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    
+    .step-number {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.5rem;
+      background-color: #dbeafe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #1e40af;
+      flex-shrink: 0;
+    }
+    
+    .step-content {
+      flex: 1;
+    }
+    
+    .step-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .step-desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+    
+    /* Contact information */
+    .contact-info {
+      background-color: #f8fafc;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px dashed #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .contact-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+    
+    .contact-item {
+      font-size: 0.8125rem;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .contact-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4b5563;
+    }
+    
+    .qr-placeholder {
+      width: 5rem;
+      height: 5rem;
+      background-color: #e5e7eb;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Join Our Journey</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="cta-container">
+        <!-- CTA Section -->
+        <div class="opportunity-section">
+          <!-- Main CTA -->
+          <div class="cta-main">
+            <h2 class="cta-title">Investment Opportunity</h2>
+            
+            <div class="offering-details">
+              <div class="detail-column">
+                <div class="detail-label">Raising</div>
+                <div class="detail-value highlighted-value">$10M</div>
+                <div class="detail-subdesc">Series A</div>
+              </div>
+              
+              <div class="detail-column">
+                <div class="detail-label">Pre-money Valuation</div>
+                <div class="detail-value">$40M</div>
+                <div class="detail-subdesc">4x revenue multiple</div>
+              </div>
+              
+              <div class="detail-column">
+                <div class="detail-label">Minimum Investment</div>
+                <div class="detail-value">$500K</div>
+                <div class="detail-subdesc">16.7% reserved for strategic partners</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Timeline for Closing -->
+          <div class="timeline-section">
+            <h2 class="timeline-title">Timeline for Closing</h2>
+            
+            <div class="timeline-container">
+              <div class="timeline-item">
+                <div class="timeline-dot">1</div>
+                <div class="timeline-date">March 15, 2025</div>
+                <div class="timeline-desc">Initial commitments and term sheet distribution</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot">2</div>
+                <div class="timeline-date">March 30, 2025</div>
+                <div class="timeline-desc">Due diligence materials available in data room</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot">3</div>
+                <div class="timeline-date">April 15, 2025</div>
+                <div class="timeline-desc">Closing target with first tranche funding</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot">4</div>
+                <div class="timeline-date">May 1, 2025</div>
+                <div class="timeline-desc">First 100 days plan implementation begins</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Company Details -->
+          <div class="company-details">
+            <div class="company-grid">
+              <div class="detail-group">
+                <div class="detail-name">Company</div>
+                <div class="detail-info">HandReceipt, Inc.</div>
+              </div>
+              
+              <div class="detail-group">
+                <div class="detail-name">Founded</div>
+                <div class="detail-info">2023</div>
+              </div>
+              
+              <div class="detail-group">
+                <div class="detail-name">Headquarters</div>
+                <div class="detail-info">Austin, TX</div>
+              </div>
+              
+              <div class="detail-group">
+                <div class="detail-name">Team Size</div>
+                <div class="detail-info">32 employees</div>
+              </div>
+              
+              <div class="detail-group">
+                <div class="detail-name">Current Funding</div>
+                <div class="detail-info">$2.5M Seed</div>
+              </div>
+              
+              <div class="detail-group">
+                <div class="detail-name">Current Revenue</div>
+                <div class="detail-info">$10M ARR</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Vision and Contact Section -->
+        <div class="vision-section">
+          <h2 class="vision-title">Our Vision</h2>
+          
+          <div class="vision-content">
+            <div class="vision-statement">
+              Building the new standard for supply chain verification and payment, creating unprecedented transparency and efficiency across military and commercial markets.
+            </div>
+          </div>
+          
+          <!-- Next Steps -->
+          <div class="next-steps">
+            <h2 class="steps-title">Next Steps</h2>
+            
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <div class="step-title">Initial Meeting</div>
+                  <div class="step-desc">Schedule a follow-up call to discuss investment details</div>
+                </div>
+              </div>
+              
+              <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <div class="step-title">Due Diligence</div>
+                  <div class="step-desc">Access our secure data room for comprehensive materials</div>
+                </div>
+              </div>
+              
+              <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <div class="step-title">Terms & Commitment</div>
+                  <div class="step-desc">Finalize investment terms and secure your allocation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="contact-info">
+            <div class="contact-details">
+              <div class="contact-title">Contact Information</div>
+              
+              <div class="contact-item">
+                <div class="contact-icon">👤</div>
+                <div>John Anderson, CEO</div>
+              </div>
+              
+              <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>john@handreceipt.com</div>
+              </div>
+              
+              <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div>(512) 555-1234</div>
+              </div>
+            </div>
+            
+            <div class="qr-placeholder">
+              Contact<br>QR Code
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 16</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

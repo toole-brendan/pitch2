@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Market Opportunity</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Split screen layout for Defense and Commercial */
+    .split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      height: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .split-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+    
+    /* Defense side */
+    .defense-side {
+      background-color: #e9f0fd;
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .defense-side .section-title {
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.3rem, 2vw, 1.5rem);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .defense-side .section-icon {
+      width: 2rem;
+      height: 2rem;
+      background-color: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    /* Commercial side */
+    .commercial-side {
+      background-color: #e7f7ee;
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .commercial-side .section-title {
+      color: #047857;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.3rem, 2vw, 1.5rem);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .commercial-side .section-icon {
+      width: 2rem;
+      height: 2rem;
+      background-color: #047857;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    /* Market size visualization */
+    .market-viz {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .big-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.25rem;
+      line-height: 1;
+    }
+    
+    .big-label {
+      font-size: 0.85rem;
+      color: #4b5563;
+      display: block;
+      font-weight: 500;
+    }
+    
+    .defense-number {
+      color: #2563eb;
+    }
+    
+    .commercial-number {
+      color: #047857;
+    }
+    
+    /* Metrics grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .metric-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .metric-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    
+    .defense-value {
+      color: #2563eb;
+    }
+    
+    .commercial-value {
+      color: #047857;
+    }
+    
+    .metric-desc {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    
+    /* Target markets section */
+    .target-markets {
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+    
+    .target-title {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+    
+    .market-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .market-tag {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .defense-tag {
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+    
+    .commercial-tag {
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    
+    /* Growth driver section */
+    .growth-drivers {
+      margin-top: auto;
+    }
+    
+    .driver-title {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+    
+    .driver-item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    
+    .driver-bullet {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+    
+    .defense-bullet {
+      background-color: #2563eb;
+    }
+    
+    .commercial-bullet {
+      background-color: #047857;
+    }
+    
+    .driver-text {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+    
+    /* Combined market section */
+    .combined-market {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .combined-text {
+      flex: 1;
+    }
+    
+    .combined-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+    
+    .combined-desc {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 0.5rem;
+    }
+    
+    .combined-bullet {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    
+    .combined-icon {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #047857);
+      flex-shrink: 0;
+    }
+    
+    .combined-value {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2rem;
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      margin-left: 2rem;
+    }
+    
+    .combined-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(90deg, #2563eb, #047857);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .combined-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-align: center;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Market Opportunity</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="split-container">
+        <!-- Defense Side -->
+        <div class="defense-side">
+          <h2 class="section-title">
+            <div class="section-icon">D</div>
+            Defense Market
+          </h2>
+          
+          <div class="market-viz">
+            <span class="big-number defense-number">$25-35B</span>
+            <span class="big-label">Global Defense Property Management Market</span>
+          </div>
+          
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-title">Serviceable Units</div>
+              <div class="metric-value defense-value">1,800+</div>
+              <div class="metric-desc">Company-level units in US military alone</div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-title">Revenue Potential</div>
+              <div class="metric-value defense-value">$300-500M</div>
+              <div class="metric-desc">Annual revenue within 5 years</div>
+            </div>
+          </div>
+          
+          <div class="target-markets">
+            <div class="target-title">Target Organizations</div>
+            <div class="market-tags">
+              <span class="market-tag defense-tag">Army Units</span>
+              <span class="market-tag defense-tag">Marine Corps</span>
+              <span class="market-tag defense-tag">Navy Storage</span>
+              <span class="market-tag defense-tag">Air Force Logistics</span>
+              <span class="market-tag defense-tag">National Guard</span>
+              <span class="market-tag defense-tag">Allied Forces</span>
+            </div>
+          </div>
+          
+          <div class="growth-drivers">
+            <div class="driver-title">Growth Drivers</div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet defense-bullet"></div>
+              <div class="driver-text">DoD modernization initiatives and funding</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet defense-bullet"></div>
+              <div class="driver-text">Increased focus on accountability and readiness</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet defense-bullet"></div>
+              <div class="driver-text">Post-deployment equipment reset requirements</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet defense-bullet"></div>
+              <div class="driver-text">Mandate to reduce administrative burden</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Commercial Side -->
+        <div class="commercial-side">
+          <h2 class="section-title">
+            <div class="section-icon">C</div>
+            Commercial Market
+          </h2>
+          
+          <div class="market-viz">
+            <span class="big-number commercial-number">$20B</span>
+            <span class="big-label">Global Supply Chain Software Market (11% CAGR)</span>
+          </div>
+          
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-title">Target Companies</div>
+              <div class="metric-value commercial-value">185,000</div>
+              <div class="metric-desc">Mid-market companies ($10M-$250M revenue)</div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-title">Revenue Potential</div>
+              <div class="metric-value commercial-value">$700-800M</div>
+              <div class="metric-desc">Annual revenue within 5 years</div>
+            </div>
+          </div>
+          
+          <div class="target-markets">
+            <div class="target-title">Target Verticals</div>
+            <div class="market-tags">
+              <span class="market-tag commercial-tag">Mid-Market Manufacturers</span>
+              <span class="market-tag commercial-tag">Contract Manufacturers</span>
+              <span class="market-tag commercial-tag">Equipment Rental</span>
+              <span class="market-tag commercial-tag">Regulated Industries</span>
+              <span class="market-tag commercial-tag">Cross-Border Trade</span>
+              <span class="market-tag commercial-tag">Multi-Location Retail</span>
+              <span class="market-tag commercial-tag">Field Service Orgs</span>
+            </div>
+          </div>
+          
+          <div class="growth-drivers">
+            <div class="driver-title">Growth Drivers</div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet commercial-bullet"></div>
+              <div class="driver-text">Increasing focus on supply chain resilience post-COVID</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet commercial-bullet"></div>
+              <div class="driver-text">Working capital optimization pressures</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet commercial-bullet"></div>
+              <div class="driver-text">Growing blockchain adoption in enterprise applications</div>
+            </div>
+            
+            <div class="driver-item">
+              <div class="driver-bullet commercial-bullet"></div>
+              <div class="driver-text">Increasing regulatory requirements for verification</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Combined Market Opportunity -->
+      <div class="combined-market">
+        <div class="combined-text">
+          <div class="combined-title">Combined Market Potential</div>
+          <div class="combined-desc">Our dual-market approach targets complementary sectors with shared technology:</div>
+          
+          <div class="combined-bullet">
+            <div class="combined-icon"></div>
+            <div class="driver-text">Defense contracts provide stable revenue while commercial scales rapidly</div>
+          </div>
+          
+          <div class="combined-bullet">
+            <div class="combined-icon"></div>
+            <div class="driver-text">Transaction fee potential creates exponential growth in years 3-5</div>
+          </div>
+        </div>
+        
+        <div class="combined-value">
+          <div class="combined-number">$1.3-1.8B</div>
+          <div class="combined-label">Annual Revenue Potential<br>within 5 Years</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 5</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

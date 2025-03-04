@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Technology Differentiators</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Architecture Diagram */
+    .architecture-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .architecture-diagram {
+      flex: 1;
+      position: relative;
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .diagram-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .diagram-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    /* Layers */
+    .architecture-layers {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    .arch-layer {
+      border-radius: 0.5rem;
+      padding: 1rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 1;
+    }
+    
+    .layer-title {
+      position: absolute;
+      top: -0.625rem;
+      left: 1rem;
+      background-color: white;
+      padding: 0 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+    
+    .client-layer {
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    
+    .api-layer {
+      background-color: #ecfdf5;
+      border: 1px solid #a7f3d0;
+    }
+    
+    .blockchain-layer {
+      background-color: #f0fdfa;
+      border: 1px solid #99f6e4;
+    }
+    
+    .integration-layer {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    
+    /* Platform Modules */
+    .platform-module {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      flex: 1;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .module-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: white;
+    }
+    
+    .military-icon {
+      background-color: #2563eb;
+    }
+    
+    .commercial-icon {
+      background-color: #10b981;
+    }
+    
+    .shared-icon {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+    }
+    
+    .module-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    
+    /* Connectors */
+    .connector-line {
+      position: absolute;
+      width: 2px;
+      background-color: #cbd5e1;
+      z-index: 0;
+    }
+    
+    .vertical-connector {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    /* Key Differentiators Section */
+    .differentiators-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .differentiators-section {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .differentiator-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .differentiator-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.75rem;
+      background-color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1f2937;
+      flex-shrink: 0;
+    }
+    
+    .differentiator-content {
+      flex: 1;
+    }
+    
+    .differentiator-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.75rem;
+    }
+    
+    .differentiator-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+    
+    .differentiator-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .bullet-item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    
+    .bullet-marker {
+      width: 0.625rem;
+      height: 0.625rem;
+      border-radius: 50%;
+      background-color: #16a34a;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+    
+    .bullet-text {
+      font-size: 0.8125rem;
+      color: #4b5563;
+    }
+    
+    /* Security & Compliance Section */
+    .security-section {
+      display: flex;
+      background-color: white;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .security-header {
+      background-color: #eff6ff;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 10rem;
+      flex-shrink: 0;
+      border-right: 1px solid #dbeafe;
+    }
+    
+    .security-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+    
+    .security-desc {
+      font-size: 0.875rem;
+      color: #334155;
+    }
+    
+    .compliance-list {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.5rem;
+      align-content: flex-start;
+    }
+    
+    .compliance-badge {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .badge-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: #dbeafe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #1e40af;
+    }
+    
+    .badge-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #334155;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Technology Differentiators</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="architecture-container">
+        <!-- Architecture Diagram -->
+        <div class="architecture-diagram">
+          <h2 class="diagram-title">HandReceipt Technical Architecture</h2>
+          
+          <div class="diagram-content">
+            <div class="architecture-layers">
+              <!-- Client Layer -->
+              <div class="arch-layer client-layer">
+                <div class="layer-title">Client Layer</div>
+                
+                <div class="platform-module">
+                  <div class="module-icon military-icon">M</div>
+                  <div class="module-title">Military Mobile App</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon commercial-icon">C</div>
+                  <div class="module-title">Commercial Web App</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon shared-icon">QR</div>
+                  <div class="module-title">QR Scanner Interface</div>
+                </div>
+              </div>
+              
+              <!-- API Layer -->
+              <div class="arch-layer api-layer">
+                <div class="layer-title">API Layer</div>
+                
+                <div class="platform-module">
+                  <div class="module-icon shared-icon">API</div>
+                  <div class="module-title">REST API Gateway</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon shared-icon">V</div>
+                  <div class="module-title">Verification Algorithm</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon shared-icon">A</div>
+                  <div class="module-title">Authentication & Security</div>
+                </div>
+              </div>
+              
+              <!-- Blockchain Layer -->
+              <div class="arch-layer blockchain-layer">
+                <div class="layer-title">Blockchain Layer</div>
+                
+                <div class="platform-module">
+                  <div class="module-icon military-icon">PB</div>
+                  <div class="module-title">Private Blockchain</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon commercial-icon">SHL</div>
+                  <div class="module-title">Shell Token Smart Contracts</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon shared-icon">SC</div>
+                  <div class="module-title">Supply Chain Verification</div>
+                </div>
+              </div>
+              
+              <!-- Integration Layer -->
+              <div class="arch-layer integration-layer">
+                <div class="layer-title">Integration Layer</div>
+                
+                <div class="platform-module">
+                  <div class="module-icon military-icon">M</div>
+                  <div class="module-title">Military Systems</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon commercial-icon">ERP</div>
+                  <div class="module-title">ERP/WMS Connectors</div>
+                </div>
+                
+                <div class="platform-module">
+                  <div class="module-icon commercial-icon">$</div>
+                  <div class="module-title">Payment Systems</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Key Differentiators -->
+        <div class="differentiators-section">
+          <div class="differentiator-card">
+            <div class="differentiator-icon">1</div>
+            <div class="differentiator-content">
+              <h3 class="differentiator-title">Dual Blockchain Implementation</h3>
+              <p class="differentiator-desc">Tailored blockchain infrastructure for different security needs:</p>
+              <div class="differentiator-bullets">
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Private blockchain for military security & compliance</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Public blockchain for commercial transparency</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Cross-chain verification capabilities</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="differentiator-card">
+            <div class="differentiator-icon">2</div>
+            <div class="differentiator-content">
+              <h3 class="differentiator-title">Patented Verification Algorithm</h3>
+              <p class="differentiator-desc">Proprietary technology ensuring authentic records:</p>
+              <div class="differentiator-bullets">
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">99.7% accuracy rate in field testing</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Works with damaged/partial QR codes</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Tamper-proof verification process</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="differentiator-card">
+            <div class="differentiator-icon">3</div>
+            <div class="differentiator-content">
+              <h3 class="differentiator-title">Mobile-First Architecture</h3>
+              <p class="differentiator-desc">Designed for field operations and warehouse efficiency:</p>
+              <div class="differentiator-bullets">
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Works on standard smartphones and tablets</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Offline capability with sync when connectivity returns</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Optimized for low-bandwidth environments</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="differentiator-card">
+            <div class="differentiator-icon">4</div>
+            <div class="differentiator-content">
+              <h3 class="differentiator-title">API-Driven Integration</h3>
+              <p class="differentiator-desc">Seamless connection to existing systems:</p>
+              <div class="differentiator-bullets">
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">REST API for ERP/WMS integration</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">Support for existing scanning infrastructure</div>
+                </div>
+                <div class="bullet-item">
+                  <div class="bullet-marker"></div>
+                  <div class="bullet-text">No rip-and-replace required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Security & Compliance -->
+        <div class="security-section">
+          <div class="security-header">
+            <h3 class="security-title">Security & Compliance</h3>
+            <p class="security-desc">Enterprise-grade protection with regulatory alignment</p>
+          </div>
+          
+          <div class="compliance-list">
+            <div class="compliance-badge">
+              <div class="badge-icon">M</div>
+              <div class="badge-text">Military-Grade Encryption</div>
+            </div>
+            
+            <div class="compliance-badge">
+              <div class="badge-icon">C</div>
+              <div class="badge-text">CMMC Level 3 Compliance</div>
+            </div>
+            
+            <div class="compliance-badge">
+              <div class="badge-icon">A</div>
+              <div class="badge-text">ATO-Ready for Government</div>
+            </div>
+            
+            <div class="compliance-badge">
+              <div class="badge-icon">S</div>
+              <div class="badge-text">SOC 2 Type II Certified</div>
+            </div>
+            
+            <div class="compliance-badge">
+              <div class="badge-icon">G</div>
+              <div class="badge-text">GDPR Compliant</div>
+            </div>
+            
+            <div class="compliance-badge">
+              <div class="badge-icon">H</div>
+              <div class="badge-text">HIPAA Eligible</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 9</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

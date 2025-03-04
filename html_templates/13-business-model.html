@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Team</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Leadership team section */
+    .leadership-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-left: 0.5rem;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Team member card */
+    .team-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-photo {
+      height: 10rem;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .photo-placeholder {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    
+    .expertise-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .military-badge {
+      background-color: #2563eb;
+    }
+    
+    .commercial-badge {
+      background-color: #10b981;
+    }
+    
+    .blockchain-badge {
+      background-color: #8b5cf6;
+    }
+    
+    .card-content {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .member-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .member-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #16a34a;
+      margin-bottom: 0.75rem;
+    }
+    
+    .member-bio {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    
+    /* Previous experience */
+    .previous-experience {
+      margin-top: auto;
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .experience-logo {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.25rem;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #4b5563;
+    }
+    
+    /* Advisors section */
+    .advisors-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .advisors-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+    }
+    
+    .advisors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .advisors-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .advisor-card {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .advisor-photo {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 1.25rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .advisor-details {
+      flex: 1;
+    }
+    
+    .advisor-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .advisor-role {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+    
+    /* Team stats section */
+    .team-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .team-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .stat-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #16a34a;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.3;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Leadership Team</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <!-- Leadership Section -->
+      <div class="leadership-section">
+        <div class="team-grid">
+          <!-- CEO -->
+          <div class="team-card">
+            <div class="card-photo">
+              <div class="photo-placeholder">CEO</div>
+              <div class="expertise-badge military-badge">Military</div>
+            </div>
+            <div class="card-content">
+              <h3 class="member-name">John Anderson</h3>
+              <div class="member-title">Chief Executive Officer</div>
+              <div class="member-bio">Former logistics officer with 12 years military experience. Tech entrepreneur with previous startup exit to Oracle. Combines operational expertise with proven business leadership.</div>
+              <div class="previous-experience">
+                <div class="experience-logo">ORC</div>
+                <div class="experience-logo">DOD</div>
+                <div class="experience-logo">US</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CTO -->
+          <div class="team-card">
+            <div class="card-photo">
+              <div class="photo-placeholder">CTO</div>
+              <div class="expertise-badge blockchain-badge">Blockchain</div>
+            </div>
+            <div class="card-content">
+              <h3 class="member-name">Dr. Maya Patel</h3>
+              <div class="member-title">Chief Technology Officer</div>
+              <div class="member-bio">Blockchain architect previously at ConsenSys. Holds 3 blockchain patents focused on supply chain verification. PhD in Distributed Systems with expertise in blockchain security protocols.</div>
+              <div class="previous-experience">
+                <div class="experience-logo">CON</div>
+                <div class="experience-logo">ETH</div>
+                <div class="experience-logo">MIT</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- COO -->
+          <div class="team-card">
+            <div class="card-photo">
+              <div class="photo-placeholder">COO</div>
+              <div class="expertise-badge military-badge">Military</div>
+            </div>
+            <div class="card-content">
+              <h3 class="member-name">Robert Martinez</h3>
+              <div class="member-title">Chief Operations Officer</div>
+              <div class="member-bio">Former Defense Logistics Agency director with 20+ years of supply chain experience. Led major logistics modernization initiatives with $200M+ budgets. Expert in defense procurement processes.</div>
+              <div class="previous-experience">
+                <div class="experience-logo">DLA</div>
+                <div class="experience-logo">DOD</div>
+                <div class="experience-logo">GE</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Military Division Head -->
+          <div class="team-card">
+            <div class="card-photo">
+              <div class="photo-placeholder">COL</div>
+              <div class="expertise-badge military-badge">Military</div>
+            </div>
+            <div class="card-content">
+              <h3 class="member-name">Col. James Wilson (Ret.)</h3>
+              <div class="member-title">Head of Military Division</div>
+              <div class="member-bio">Retired Colonel who previously led Army logistics modernization initiative. 26 years of military service with extensive property accountability and supply chain expertise. Maintains strong DOD relationships.</div>
+              <div class="previous-experience">
+                <div class="experience-logo">USA</div>
+                <div class="experience-logo">LOG</div>
+                <div class="experience-logo">CECOM</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Commercial Division Head -->
+          <div class="team-card">
+            <div class="card-photo">
+              <div class="photo-placeholder">VP</div>
+              <div class="expertise-badge commercial-badge">Commercial</div>
+            </div>
+            <div class="card-content">
+              <h3 class="member-name">Jennifer Lee</h3>
+              <div class="member-title">Head of Commercial Division</div>
+              <div class="member-bio">Previously VP at SAP Supply Chain. Has scaled 3 enterprise SaaS companies with successful exits. Expert in ERP integration and supply chain optimization for mid-market enterprises.</div>
+              <div class="previous-experience">
+                <div class="experience-logo">SAP</div>
+                <div class="experience-logo">ORCL</div>
+                <div class="experience-logo">AMZN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Team Stats -->
+      <div class="team-stats">
+        <div class="stat-card">
+          <div class="stat-value">75+</div>
+          <div class="stat-label">Years Combined Military Experience</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Successful Tech Startup Exits</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Patents in Blockchain & Supply Chain</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">$3B+</div>
+          <div class="stat-label">Managed in Supply Chain Budgets</div>
+        </div>
+      </div>
+      
+      <!-- Advisors Section -->
+      <div class="advisors-section">
+        <h2 class="advisors-title">Key Advisors</h2>
+        
+        <div class="advisors-grid">
+          <div class="advisor-card">
+            <div class="advisor-photo">AS</div>
+            <div class="advisor-details">
+              <div class="advisor-name">Hon. Richard Thompson</div>
+              <div class="advisor-role">Former Assistant Secretary of Defense for Logistics</div>
+            </div>
+          </div>
+          
+          <div class="advisor-card">
+            <div class="advisor-photo">DR</div>
+            <div class="advisor-details">
+              <div class="advisor-name">Dr. Sarah Johnson</div>
+              <div class="advisor-role">Supply Chain Professor, MIT Sloan</div>
+            </div>
+          </div>
+          
+          <div class="advisor-card">
+            <div class="advisor-photo">CIO</div>
+            <div class="advisor-details">
+              <div class="advisor-name">Michael Chen</div>
+              <div class="advisor-role">CIO, Major Defense Contractor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 13</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>

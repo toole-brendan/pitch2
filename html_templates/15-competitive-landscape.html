@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HandReceipt Pitch Deck - Investment Opportunity</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* Slide container - takes up full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+    }
+    
+    /* Header area */
+    .slide-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .green-underline {
+      width: 80px;
+      height: 4px;
+      background-color: #16a34a;
+      margin-top: 0.5rem;
+    }
+    
+    /* Main content area */
+    .slide-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Two-column layout */
+    .investment-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .investment-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    
+    /* Funding section */
+    .funding-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Funding ask card */
+    .funding-ask {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .funding-ask::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0.3rem;
+      background: linear-gradient(to right, #2563eb, #10b981);
+    }
+    
+    .series-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .ask-amount {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #2563eb, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    
+    .ask-description {
+      font-size: 1rem;
+      color: #6b7280;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    
+    /* Use of funds card */
+    .use-of-funds {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+    }
+    
+    .funds-chart {
+      position: relative;
+      height: 12rem;
+      display: flex;
+      margin-bottom: 1.5rem;
+    }
+    
+    .funds-segment {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .development-segment {
+      flex: 40;
+      background-color: #dbeafe;
+      border-radius: 0.5rem 0 0 0.5rem;
+    }
+    
+    .sales-segment {
+      flex: 35;
+      background-color: #bfdbfe;
+    }
+    
+    .operations-segment {
+      flex: 25;
+      background-color: #93c5fd;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    
+    .segment-label {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1e40af;
+    }
+    
+    .segment-percentage {
+      font-size: 0.875rem;
+      color: #1e40af;
+      margin-top: 0.25rem;
+    }
+    
+    .funds-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .legend-color {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+    }
+    
+    .development-color {
+      background-color: #dbeafe;
+    }
+    
+    .sales-color {
+      background-color: #bfdbfe;
+    }
+    
+    .operations-color {
+      background-color: #93c5fd;
+    }
+    
+    .legend-text {
+      font-size: 0.875rem;
+      color: #4b5563;
+    }
+    
+    /* Key milestones section */
+    .milestones {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    .milestones-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .milestone-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    
+    .milestone-quarter {
+      width: 3rem;
+      height: 3rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #1f2937;
+      flex-shrink: 0;
+    }
+    
+    .milestone-content {
+      flex: 1;
+    }
+    
+    .milestone-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .milestone-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    /* Return potential section */
+    .return-potential {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    /* Valuation card */
+    .valuation-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+    
+    .valuation-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+    }
+    
+    .valuation-progress {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+    
+    .progress-track {
+      width: 100%;
+      height: 0.5rem;
+      background-color: #e5e7eb;
+      border-radius: 0.25rem;
+      position: relative;
+    }
+    
+    .progress-marker {
+      position: absolute;
+      top: 0;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      transform: translate(-50%, -25%);
+    }
+    
+    .progress-label {
+      position: absolute;
+      top: 1.25rem;
+      transform: translateX(-50%);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      text-align: center;
+    }
+    
+    .progress-sublabel {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: normal;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+    
+    .current-marker {
+      left: 10%;
+      background-color: #10b981;
+    }
+    
+    .series-b-marker {
+      left: 40%;
+      background-color: #2563eb;
+    }
+    
+    .exit-marker {
+      left: 85%;
+      background-color: #8b5cf6;
+    }
+    
+    .progress-highlight {
+      position: absolute;
+      height: 100%;
+      left: 0;
+      border-radius: 0.25rem;
+      width: 10%;
+      background-color: #10b981;
+    }
+    
+    .valuation-metrics {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10%;
+    }
+    
+    .metric-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .metric-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Exit opportunities */
+    .exit-opportunities {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      flex: 1;
+    }
+    
+    .opportunities-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.25rem;
+    }
+    
+    .opportunities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .opportunity-card {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .opportunity-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .opportunity-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    
+    .defense-icon {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .commercial-icon {
+      background-color: #d1fae5;
+      color: #047857;
+    }
+    
+    .enterprise-icon {
+      background-color: #e0e7ff;
+      color: #4f46e5;
+    }
+    
+    .payment-icon {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+    
+    .opportunity-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: #1f2937;
+    }
+    
+    .opportunity-desc {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+    
+    /* IP section */
+    .ip-section {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .ip-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    
+    .ip-subtitle {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-bottom: 1.25rem;
+    }
+    
+    .patents-list {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+    
+    .patent-item {
+      background-color: #f8fafc;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      flex: 1;
+    }
+    
+    .patent-status {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: white;
+      background-color: #10b981;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 0.25rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .pending-status {
+      background-color: #f59e0b;
+    }
+    
+    .patent-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .patent-desc {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    
+    /* Navigation controls */
+    .slide-nav {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    
+    .slide-nav:hover {
+      opacity: 1;
+    }
+    
+    .nav-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Slide Header -->
+    <div class="slide-header">
+      <h1 class="slide-title">Investment Opportunity</h1>
+      <div class="green-underline"></div>
+    </div>
+    
+    <!-- Slide Content -->
+    <div class="slide-content">
+      <div class="investment-container">
+        <!-- Funding Section -->
+        <div class="funding-section">
+          <!-- Funding Ask -->
+          <div class="funding-ask">
+            <div class="series-label">Series A</div>
+            <div class="ask-amount">$10M</div>
+            <div class="ask-description">Seeking $10M to accelerate growth across both markets and reach Series B readiness in 18 months</div>
+          </div>
+          
+          <!-- Use of Funds -->
+          <div class="use-of-funds">
+            <h2 class="section-title">Use of Funds</h2>
+            
+            <div class="funds-chart">
+              <div class="funds-segment development-segment">
+                <div class="segment-info">
+                  <div class="segment-label">Product</div>
+                  <div class="segment-percentage">40%</div>
+                </div>
+              </div>
+              
+              <div class="funds-segment sales-segment">
+                <div class="segment-info">
+                  <div class="segment-label">Sales</div>
+                  <div class="segment-percentage">35%</div>
+                </div>
+              </div>
+              
+              <div class="funds-segment operations-segment">
+                <div class="segment-info">
+                  <div class="segment-label">Ops</div>
+                  <div class="segment-percentage">25%</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="funds-legend">
+              <div class="legend-item">
+                <div class="legend-color development-color"></div>
+                <div class="legend-text">Product Development</div>
+              </div>
+              
+              <div class="legend-item">
+                <div class="legend-color sales-color"></div>
+                <div class="legend-text">Sales & Marketing</div>
+              </div>
+              
+              <div class="legend-item">
+                <div class="legend-color operations-color"></div>
+                <div class="legend-text">Operations & Compliance</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Key Milestones -->
+          <div class="milestones">
+            <h2 class="section-title">Key Milestones to Achieve</h2>
+            
+            <div class="milestones-list">
+              <div class="milestone-item">
+                <div class="milestone-quarter">Q3 '25</div>
+                <div class="milestone-content">
+                  <div class="milestone-title">Full Production Military Release</div>
+                  <div class="milestone-desc">Complete brigade-level deployment capability with security certifications</div>
+                </div>
+              </div>
+              
+              <div class="milestone-item">
+                <div class="milestone-quarter">Q4 '25</div>
+                <div class="milestone-content">
+                  <div class="milestone-title">Commercial Platform 2.0</div>
+                  <div class="milestone-desc">Enhanced payment features and expanded ERP integrations</div>
+                </div>
+              </div>
+              
+              <div class="milestone-item">
+                <div class="milestone-quarter">Q1 '26</div>
+                <div class="milestone-content">
+                  <div class="milestone-title">International Expansion</div>
+                  <div class="milestone-desc">Launch in Canada, UK, and initial NATO partners</div>
+                </div>
+              </div>
+              
+              <div class="milestone-item">
+                <div class="milestone-quarter">Q3 '26</div>
+                <div class="milestone-content">
+                  <div class="milestone-title">Series B Readiness</div>
+                  <div class="milestone-desc">$2M MRR with clear path to profitability in Year 4</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Return Potential Section -->
+        <div class="return-potential">
+          <!-- Valuation Path -->
+          <div class="valuation-card">
+            <h2 class="valuation-title">Path to $500M+ Valuation</h2>
+            
+            <div class="valuation-progress">
+              <div class="progress-track">
+                <div class="progress-highlight"></div>
+                
+                <div class="progress-marker current-marker">
+                  <div class="progress-label">
+                    Series A
+                    <span class="progress-sublabel">$50M Valuation</span>
+                  </div>
+                </div>
+                
+                <div class="progress-marker series-b-marker">
+                  <div class="progress-label">
+                    Series B
+                    <span class="progress-sublabel">$200M Valuation</span>
+                  </div>
+                </div>
+                
+                <div class="progress-marker exit-marker">
+                  <div class="progress-label">
+                    Exit Opportunity
+                    <span class="progress-sublabel">$500M+ Valuation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="valuation-metrics">
+              <div class="metric-column">
+                <div class="metric-value">18 mo</div>
+                <div class="metric-label">To Series B</div>
+              </div>
+              
+              <div class="metric-column">
+                <div class="metric-value">4x</div>
+                <div class="metric-label">Multiple to Series B</div>
+              </div>
+              
+              <div class="metric-column">
+                <div class="metric-value">10x+</div>
+                <div class="metric-label">Potential Return</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Exit Opportunities -->
+          <div class="exit-opportunities">
+            <h2 class="opportunities-title">Multiple Exit Opportunities</h2>
+            
+            <div class="opportunities-grid">
+              <div class="opportunity-card">
+                <div class="opportunity-header">
+                  <div class="opportunity-icon defense-icon">DC</div>
+                  <div class="opportunity-title">Defense Contractors</div>
+                </div>
+                <div class="opportunity-desc">Strategic acquisition to enhance military logistics capabilities</div>
+              </div>
+              
+              <div class="opportunity-card">
+                <div class="opportunity-header">
+                  <div class="opportunity-icon commercial-icon">SC</div>
+                  <div class="opportunity-title">Supply Chain Software</div>
+                </div>
+                <div class="opportunity-desc">Complementary technology for enterprise SCM platforms</div>
+              </div>
+              
+              <div class="opportunity-card">
+                <div class="opportunity-header">
+                  <div class="opportunity-icon enterprise-icon">ES</div>
+                  <div class="opportunity-title">Enterprise Software</div>
+                </div>
+                <div class="opportunity-desc">Blockchain integration for ERP providers</div>
+              </div>
+              
+              <div class="opportunity-card">
+                <div class="opportunity-header">
+                  <div class="opportunity-icon payment-icon">PP</div>
+                  <div class="opportunity-title">Payment Processors</div>
+                </div>
+                <div class="opportunity-desc">Supply chain transaction network acquisition</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- IP Position -->
+          <div class="ip-section">
+            <h2 class="ip-title">Strong IP Position</h2>
+            <p class="ip-subtitle">Multiple patents creating defensible market advantages</p>
+            
+            <div class="patents-list">
+              <div class="patent-item">
+                <div class="patent-status">Granted</div>
+                <div class="patent-name">Verification Algorithm</div>
+                <div class="patent-desc">QR-based blockchain verification with 99.7% accuracy</div>
+              </div>
+              
+              <div class="patent-item">
+                <div class="patent-status">Granted</div>
+                <div class="patent-name">Dual Blockchain Security</div>
+                <div class="patent-desc">Private/public chain integration for secure verification</div>
+              </div>
+              
+              <div class="patent-item">
+                <div class="patent-status pending-status">Pending</div>
+                <div class="patent-name">Smart Contract Payment</div>
+                <div class="patent-desc">Supply chain-triggered conditional payment execution</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide Footer -->
+    <div class="slide-footer">
+      <div>HandReceipt | Confidential</div>
+      <div>Slide 15</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="slide-nav">
+      <div class="nav-button">←</div>
+      <div class="nav-button">→</div>
+    </div>
+  </div>
+</body>
+</html>
