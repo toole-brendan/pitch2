@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Financial Projections</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --dark-grid-line: rgba(255, 255, 255, 0.05);
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +40,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +54,68 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,484 +124,384 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
-    /* Revenue forecast section */
-    .revenue-forecast {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Common components */
+    .card {
+      background-color: var(--card-bg);
+      padding: 1.25rem;
+      border-radius: 4px;
+      box-shadow: 0 0 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.25rem;
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 20px var(--shadow-color);
     }
     
     .section-title {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
-    .legend {
-      display: flex;
-      gap: 1rem;
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-    
-    .legend-color {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 0.25rem;
-    }
-    
-    .defense-color {
-      background-color: #2563eb;
-    }
-    
-    .commercial-color {
-      background-color: #10b981;
-    }
-    
-    .transaction-color {
-      background-color: #8b5cf6;
-    }
-    
-    /* Chart container */
-    .chart-container {
-      height: 16rem;
-      position: relative;
-    }
-    
-    /* Revenue chart */
-    .revenue-chart {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      height: 14rem;
-      margin-top: 1rem;
-      padding-bottom: 2rem;
-      position: relative;
-    }
-    
-    /* Y-axis */
-    .y-axis {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 2rem;
-      width: 3rem;
-    }
-    
-    .y-marker {
-      position: absolute;
-      left: 0;
-      right: 0;
-      border-top: 1px dashed #e5e7eb;
-    }
-    
-    .y-label {
-      position: absolute;
-      left: 0;
-      transform: translateY(-50%);
-      font-size: 0.7rem;
-      color: #6b7280;
-    }
-    
-    /* X-axis */
-    .x-axis {
-      position: absolute;
-      left: 3rem;
-      right: 0;
-      bottom: 0;
-      height: 2rem;
-      display: flex;
-      justify-content: space-between;
-    }
-    
-    .x-label {
-      flex: 1;
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #6b7280;
-    }
-    
-    /* Revenue bars */
-    .revenue-bars {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      height: 100%;
-      width: 100%;
-      padding-left: 3rem;
-    }
-    
-    .year-column {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: flex-end;
-      align-items: center;
-    }
-    
-    .revenue-bar {
-      width: 60%;
-      border-radius: 0.25rem 0.25rem 0 0;
-      display: flex;
-      flex-direction: column-reverse;
-    }
-    
-    .bar-segment {
-      width: 100%;
-    }
-    
-    .defense-segment {
-      background-color: #2563eb;
-    }
-    
-    .commercial-segment {
-      background-color: #10b981;
-    }
-    
-    .transaction-segment {
-      background-color: #8b5cf6;
-    }
-    
-    /* Grid lines */
-    .chart-grid {
-      position: absolute;
-      top: 0;
-      left: 3rem;
-      right: 0;
-      bottom: 2rem;
-      z-index: 0;
-      pointer-events: none;
-    }
-    
-    .grid-line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      border-top: 1px dashed #e5e7eb;
-    }
-    
-    /* Financial metrics section */
-    .financial-grid {
+    .grid {
       display: grid;
-      grid-template-columns: 2fr 1fr;
       gap: 1.5rem;
     }
     
-    @media (max-width: 768px) {
-      .financial-grid {
-        grid-template-columns: 1fr;
-      }
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
     }
     
-    /* Key metrics section */
-    .key-metrics {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    .grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
     }
     
-    .metrics-title {
-      font-size: 1.25rem;
+    /* Financial tables */
+    .financial-container {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .financial-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .financial-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+    }
+    
+    .financial-title {
+      font-size: 1.1rem;
       font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.25rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
-    .metrics-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-    }
-    
-    @media (max-width: 768px) {
-      .metrics-container {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    .metric-card {
-      background-color: #f8fafc;
-      border-radius: 0.5rem;
+    .financial-content {
       padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
     }
     
-    .metric-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
+    .financial-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
     }
     
-    .metric-name {
+    .financial-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border-color);
       font-weight: 600;
-      font-size: 0.875rem;
-      color: #1f2937;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
     }
     
-    .metric-trend {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #16a34a;
-      background-color: #dcfce7;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
+    .financial-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px dashed var(--border-color);
     }
     
-    .metric-values {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.875rem;
-      color: #6b7280;
+    .financial-table tr:last-child td {
+      border-bottom: none;
     }
     
-    .start-value, .end-value {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .financial-table tr:hover {
+      background-color: var(--feature-bg);
     }
     
-    .value-label {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      margin-bottom: 0.25rem;
+    .row-label {
+      font-weight: 600;
+      color: var(--text-primary);
     }
     
-    .value-number {
-      font-size: 1.25rem;
+    .text-right {
+      text-align: right;
+    }
+    
+    .total-row td {
       font-weight: 700;
-      color: #1f2937;
+      border-top: 2px solid var(--border-color);
+      background-color: var(--bg-secondary);
     }
     
-    .value-year {
-      font-size: 0.6875rem;
-      color: #9ca3af;
-      margin-top: 0.25rem;
+    .positive-value {
+      color: #10803f;
     }
     
-    .progress-arrow {
-      flex: 1;
-      position: relative;
-      align-self: center;
-      height: 2px;
-      background: linear-gradient(to right, #d1d5db, #16a34a);
-      margin: 0 0.75rem;
+    .negative-value {
+      color: #b91c1c;
     }
     
-    .progress-arrow::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-top: 4px solid transparent;
-      border-bottom: 4px solid transparent;
-      border-left: 6px solid #16a34a;
-    }
-    
-    /* Profitability section */
-    .profitability {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .profitability-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    
-    .profitability-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-    }
-    
-    .profit-badge {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: white;
-      background-color: #16a34a;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.375rem;
-    }
-    
-    .timeline-container {
-      flex-grow: 1;
-      position: relative;
-      padding: 1.5rem 0;
-    }
-    
-    .timeline-track {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background-color: #e5e7eb;
-      transform: translateY(-50%);
-    }
-    
-    .timeline-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 42%;
-      background-color: #16a34a;
-      border-radius: 0 2px 2px 0;
-    }
-    
-    .timeline-markers {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    
-    .timeline-marker {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    
-    .marker-dot {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background-color: #e5e7eb;
-      border: 2px solid white;
-      margin-bottom: 0.5rem;
-    }
-    
-    .active-dot {
-      background-color: #16a34a;
-    }
-    
-    .current-dot {
-      background-color: #3b82f6;
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-    }
-    
-    .marker-label {
-      position: absolute;
-      top: 1.25rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #6b7280;
-      white-space: nowrap;
-    }
-    
-    .top-label {
-      top: -2.5rem;
-    }
-    
-    /* Assumptions section */
-    .assumptions {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .assumptions-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1rem;
-    }
-    
-    .assumptions-grid {
+    /* Dual track section */
+    .dual-track-container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
     
-    @media (max-width: 768px) {
-      .assumptions-grid {
-        grid-template-columns: 1fr;
-      }
+    .market-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .assumption-group {
+    .market-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .market-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .military-header {
+      background-color: var(--military-bg);
+      border-bottom: 2px solid var(--military-accent);
+    }
+    
+    .commercial-header {
+      background-color: var(--commercial-bg);
+      border-bottom: 2px solid var(--commercial-accent);
+    }
+    
+    .market-title {
+      font-size: 1.1rem;
+    }
+    
+    .military-title {
+      color: var(--military-accent);
+    }
+    
+    .commercial-title {
+      color: var(--commercial-accent);
+    }
+    
+    .market-content {
+      padding: 1.25rem;
+    }
+    
+    .metrics-list {
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
     
-    .group-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #1f2937;
+    .metric-row {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border-color);
     }
     
-    .title-bullet {
-      width: 0.625rem;
-      height: 0.625rem;
-      border-radius: 50%;
+    .metric-row:last-child {
+      border-bottom: none;
     }
     
-    .defense-bullet {
-      background-color: #2563eb;
+    .metric-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
     }
     
-    .commercial-bullet {
-      background-color: #10b981;
+    .metric-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .military-value {
+      color: var(--military-accent);
+    }
+    
+    .commercial-value {
+      color: var(--commercial-accent);
+    }
+    
+    /* Key Assumptions */
+    .assumptions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    .assumption-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .assumption-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .assumption-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .assumption-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
     
     .assumption-item {
       display: flex;
       gap: 0.75rem;
-      align-items: center;
-      font-size: 0.8125rem;
-      color: #6b7280;
+      align-items: flex-start;
     }
     
-    .check-icon {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background-color: #dcfce7;
-      color: #16a34a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.625rem;
-      font-weight: bold;
+    .assumption-marker {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--accent-primary);
+      margin-top: 0.5rem;
       flex-shrink: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+    
+    .assumption-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    
+    /* Funding Section */
+    .funding-container {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .funding-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .funding-content {
+      padding: 1.25rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .funding-details {
+      flex: 1;
+    }
+    
+    .funding-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .funding-amount {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .funding-desc {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .allocation-title {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+    
+    .allocation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .allocation-item {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    
+    .allocation-item:last-child {
+      border-bottom: none;
+    }
+    
+    .allocation-category {
+      color: var(--text-secondary);
+    }
+    
+    .allocation-percentage {
+      font-weight: 600;
     }
     
     /* Footer area */
@@ -540,349 +510,331 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    /* Navigation controls */
+
+    /* Navigation */
     .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
       display: flex;
-      gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .dual-track-container, .assumptions-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .funding-content {
+        flex-direction: column;
+      }
+      
+      .financial-table {
+        font-size: 0.8rem;
+      }
+      
+      .financial-table th, .financial-table td {
+        padding: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
       <h1 class="slide-title">Financial Projections</h1>
-      <div class="green-underline"></div>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
     <div class="slide-content">
-      <!-- Revenue Forecast -->
-      <div class="revenue-forecast">
-        <div class="section-header">
-          <h2 class="section-title">5-Year Revenue Forecast</h2>
-          
-          <div class="legend">
-            <div class="legend-item">
-              <div class="legend-color defense-color"></div>
-              <div>Defense</div>
-            </div>
-            
-            <div class="legend-item">
-              <div class="legend-color commercial-color"></div>
-              <div>Commercial</div>
-            </div>
-            
-            <div class="legend-item">
-              <div class="legend-color transaction-color"></div>
-              <div>Transaction Fees</div>
-            </div>
-          </div>
+      <!-- Financial Projections Table -->
+      <div class="financial-container">
+        <div class="financial-header">
+          <h2 class="financial-title">THREE-YEAR FINANCIAL PROJECTION_</h2>
         </div>
         
-        <div class="chart-container">
-          <!-- Y-axis markers -->
-          <div class="y-axis">
-            <div class="y-marker" style="top: 0%;">
-              <div class="y-label">$100M</div>
-            </div>
-            <div class="y-marker" style="top: 25%;">
-              <div class="y-label">$75M</div>
-            </div>
-            <div class="y-marker" style="top: 50%;">
-              <div class="y-label">$50M</div>
-            </div>
-            <div class="y-marker" style="top: 75%;">
-              <div class="y-label">$25M</div>
-            </div>
-            <div class="y-marker" style="top: 100%;">
-              <div class="y-label">$0</div>
-            </div>
-          </div>
-          
-          <!-- Chart grid -->
-          <div class="chart-grid">
-            <div class="grid-line" style="top: 0%;"></div>
-            <div class="grid-line" style="top: 25%;"></div>
-            <div class="grid-line" style="top: 50%;"></div>
-            <div class="grid-line" style="top: 75%;"></div>
-            <div class="grid-line" style="top: 100%;"></div>
-          </div>
-          
-          <!-- Revenue bars -->
-          <div class="revenue-bars">
-            <!-- Year 1 -->
-            <div class="year-column">
-              <div class="revenue-bar" style="height: 2.5%;">
-                <div class="bar-segment defense-segment" style="height: 70%;"></div>
-                <div class="bar-segment commercial-segment" style="height: 30%;"></div>
-                <div class="bar-segment transaction-segment" style="height: 0%;"></div>
-              </div>
-            </div>
-            
-            <!-- Year 2 -->
-            <div class="year-column">
-              <div class="revenue-bar" style="height: 7.5%;">
-                <div class="bar-segment defense-segment" style="height: 55%;"></div>
-                <div class="bar-segment commercial-segment" style="height: 40%;"></div>
-                <div class="bar-segment transaction-segment" style="height: 5%;"></div>
-              </div>
-            </div>
-            
-            <!-- Year 3 -->
-            <div class="year-column">
-              <div class="revenue-bar" style="height: 25%;">
-                <div class="bar-segment defense-segment" style="height: 40%;"></div>
-                <div class="bar-segment commercial-segment" style="height: 45%;"></div>
-                <div class="bar-segment transaction-segment" style="height: 15%;"></div>
-              </div>
-            </div>
-            
-            <!-- Year 4 -->
-            <div class="year-column">
-              <div class="revenue-bar" style="height: 60%;">
-                <div class="bar-segment defense-segment" style="height: 30%;"></div>
-                <div class="bar-segment commercial-segment" style="height: 45%;"></div>
-                <div class="bar-segment transaction-segment" style="height: 25%;"></div>
-              </div>
-            </div>
-            
-            <!-- Year 5 -->
-            <div class="year-column">
-              <div class="revenue-bar" style="height: 100%;">
-                <div class="bar-segment defense-segment" style="height: 25%;"></div>
-                <div class="bar-segment commercial-segment" style="height: 40%;"></div>
-                <div class="bar-segment transaction-segment" style="height: 35%;"></div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- X-axis labels -->
-          <div class="x-axis">
-            <div class="x-label">Year 1</div>
-            <div class="x-label">Year 2</div>
-            <div class="x-label">Year 3</div>
-            <div class="x-label">Year 4</div>
-            <div class="x-label">Year 5</div>
-          </div>
+        <div class="financial-content">
+          <table class="financial-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th class="text-right">Year 1 (2024)</th>
+                <th class="text-right">Year 2 (2025)</th>
+                <th class="text-right">Year 3 (2026)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-label">Total Revenue</td>
+                <td class="text-right">$2,750,000</td>
+                <td class="text-right">$5,800,000</td>
+                <td class="text-right">$12,400,000</td>
+              </tr>
+              <tr>
+                <td class="row-label">Cost of Revenue</td>
+                <td class="text-right">$880,000</td>
+                <td class="text-right">$1,740,000</td>
+                <td class="text-right">$3,472,000</td>
+              </tr>
+              <tr>
+                <td class="row-label">Gross Profit</td>
+                <td class="text-right">$1,870,000</td>
+                <td class="text-right">$4,060,000</td>
+                <td class="text-right">$8,928,000</td>
+              </tr>
+              <tr>
+                <td class="row-label">Gross Margin</td>
+                <td class="text-right">68%</td>
+                <td class="text-right">70%</td>
+                <td class="text-right">72%</td>
+              </tr>
+              <tr>
+                <td class="row-label">Operating Expenses</td>
+                <td class="text-right">$2,970,000</td>
+                <td class="text-right">$3,760,000</td>
+                <td class="text-right">$5,828,000</td>
+              </tr>
+              <tr>
+                <td class="row-label">EBITDA</td>
+                <td class="text-right negative-value">($1,100,000)</td>
+                <td class="text-right positive-value">$300,000</td>
+                <td class="text-right positive-value">$3,100,000</td>
+              </tr>
+              <tr>
+                <td class="row-label">EBITDA Margin</td>
+                <td class="text-right negative-value">-40%</td>
+                <td class="text-right positive-value">5%</td>
+                <td class="text-right positive-value">25%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       
-      <!-- Financial Metrics Grid -->
-      <div class="financial-grid">
-        <!-- Key Metrics -->
-        <div class="key-metrics">
-          <h2 class="metrics-title">Key Financial Metrics</h2>
-          
-          <div class="metrics-container">
-            <div class="metric-card">
-              <div class="metric-header">
-                <div class="metric-name">Gross Margin</div>
-                <div class="metric-trend">+15%</div>
-              </div>
-              
-              <div class="metric-values">
-                <div class="start-value">
-                  <div class="value-label">START</div>
-                  <div class="value-number">65%</div>
-                  <div class="value-year">Year 1</div>
-                </div>
-                
-                <div class="progress-arrow"></div>
-                
-                <div class="end-value">
-                  <div class="value-label">TARGET</div>
-                  <div class="value-number">80%</div>
-                  <div class="value-year">Year 5</div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="metric-card">
-              <div class="metric-header">
-                <div class="metric-name">Operating Margin</div>
-                <div class="metric-trend">+55%</div>
-              </div>
-              
-              <div class="metric-values">
-                <div class="start-value">
-                  <div class="value-label">START</div>
-                  <div class="value-number">-40%</div>
-                  <div class="value-year">Year 1</div>
-                </div>
-                
-                <div class="progress-arrow"></div>
-                
-                <div class="end-value">
-                  <div class="value-label">TARGET</div>
-                  <div class="value-number">15%</div>
-                  <div class="value-year">Year 4</div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="metric-card">
-              <div class="metric-header">
-                <div class="metric-name">Customer Count</div>
-                <div class="metric-trend">+2000%</div>
-              </div>
-              
-              <div class="metric-values">
-                <div class="start-value">
-                  <div class="value-label">START</div>
-                  <div class="value-number">25</div>
-                  <div class="value-year">Year 1</div>
-                </div>
-                
-                <div class="progress-arrow"></div>
-                
-                <div class="end-value">
-                  <div class="value-label">TARGET</div>
-                  <div class="value-number">500+</div>
-                  <div class="value-year">Year 5</div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="metric-card">
-              <div class="metric-header">
-                <div class="metric-name">CAC Payback</div>
-                <div class="metric-trend">+44%</div>
-              </div>
-              
-              <div class="metric-values">
-                <div class="start-value">
-                  <div class="value-label">START</div>
-                  <div class="value-number">18 mo</div>
-                  <div class="value-year">Year 1</div>
-                </div>
-                
-                <div class="progress-arrow"></div>
-                
-                <div class="end-value">
-                  <div class="value-label">TARGET</div>
-                  <div class="value-number">10 mo</div>
-                  <div class="value-year">Year 3+</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Dual Track Revenue -->
+      <div>
+        <div class="section-title">DUAL MARKET REVENUE DISTRIBUTION_</div>
+        <div class="section-subtitle">Growth projections across defense and commercial segments</div>
         
-        <!-- Path to Profitability -->
-        <div class="profitability">
-          <div class="profitability-header">
-            <h2 class="profitability-title">Path to Profitability</h2>
-            <div class="profit-badge">Month 30</div>
-          </div>
-          
-          <div class="timeline-container">
-            <div class="timeline-track">
-              <div class="timeline-progress"></div>
+        <div class="dual-track-container">
+          <!-- Military Market -->
+          <div class="market-card">
+            <div class="market-header military-header">
+              <h3 class="market-title military-title">DEFENSE MARKET_</h3>
             </div>
             
-            <div class="timeline-markers">
-              <div class="timeline-marker" style="left: 0%;">
-                <div class="marker-dot"></div>
-                <div class="marker-label">Launch</div>
+            <div class="market-content">
+              <div class="metrics-list">
+                <div class="metric-row">
+                  <div class="metric-label">2024 REVENUE</div>
+                  <div class="metric-value military-value">$1,650,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">2025 REVENUE</div>
+                  <div class="metric-value military-value">$3,190,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">2026 REVENUE</div>
+                  <div class="metric-value military-value">$5,580,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">3-YEAR CAGR</div>
+                  <div class="metric-value military-value">83.9%</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">PROJECTED CUSTOMERS Y3</div>
+                  <div class="metric-value military-value">27</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">Y3 REVENUE CONTRIBUTION</div>
+                  <div class="metric-value military-value">45%</div>
+                </div>
               </div>
-              
-              <div class="timeline-marker" style="left: 30%;">
-                <div class="marker-dot active-dot"></div>
-                <div class="marker-label">Cash Flow<br>Positive</div>
-              </div>
-              
-              <div class="timeline-marker" style="left: 42%;">
-                <div class="marker-dot current-dot"></div>
-                <div class="marker-label top-label">Now</div>
-              </div>
-              
-              <div class="timeline-marker" style="left: 60%;">
-                <div class="marker-dot"></div>
-                <div class="marker-label">Profitable<br>Year 4</div>
-              </div>
-              
-              <div class="timeline-marker" style="left: 85%;">
-                <div class="marker-dot"></div>
-                <div class="marker-label">$100M<br>Revenue</div>
+            </div>
+          </div>
+          
+          <!-- Commercial Market -->
+          <div class="market-card">
+            <div class="market-header commercial-header">
+              <h3 class="market-title commercial-title">COMMERCIAL MARKET_</h3>
+            </div>
+            
+            <div class="market-content">
+              <div class="metrics-list">
+                <div class="metric-row">
+                  <div class="metric-label">2024 REVENUE</div>
+                  <div class="metric-value commercial-value">$1,100,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">2025 REVENUE</div>
+                  <div class="metric-value commercial-value">$2,610,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">2026 REVENUE</div>
+                  <div class="metric-value commercial-value">$6,820,000</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">3-YEAR CAGR</div>
+                  <div class="metric-value commercial-value">149.5%</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">PROJECTED CUSTOMERS Y3</div>
+                  <div class="metric-value commercial-value">38</div>
+                </div>
+                
+                <div class="metric-row">
+                  <div class="metric-label">Y3 REVENUE CONTRIBUTION</div>
+                  <div class="metric-value commercial-value">55%</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Key Assumptions -->
-      <div class="assumptions">
-        <h2 class="assumptions-title">Key Growth Drivers & Assumptions</h2>
+      <!-- Financial Assumptions -->
+      <div>
+        <div class="section-title">KEY FINANCIAL ASSUMPTIONS_</div>
+        <div class="section-subtitle">Basis for financial projections and modeling</div>
         
         <div class="assumptions-grid">
-          <div class="assumption-group">
-            <div class="group-title">
-              <div class="title-bullet defense-bullet"></div>
-              Defense Revenue Drivers
-            </div>
+          <!-- Revenue Assumptions -->
+          <div class="assumption-card">
+            <h3 class="assumption-title">REVENUE ASSUMPTIONS_</h3>
             
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>Stable, long-term contracts with 7-year average retention</div>
-            </div>
-            
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>Land and expand from company to battalion to brigade level</div>
-            </div>
-            
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>DoD modernization initiatives creating funding opportunities</div>
+            <div class="assumption-list">
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Military customer acquisition rate accelerates from 5 in Year 1 to 12 in Year 3 based on initial traction and contracting momentum.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Commercial customer base grows from 9 in Year 1 to 38 by Year 3, with average contract value increasing 15% annually.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Customer retention rate of 92% for military contracts and 85% for commercial customers based on early traction data.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Shell Token transaction fee revenue begins in Year 2, growing to 15% of commercial revenue by Year 3.
+                </div>
+              </div>
             </div>
           </div>
           
-          <div class="assumption-group">
-            <div class="group-title">
-              <div class="title-bullet commercial-bullet"></div>
-              Commercial Revenue Drivers
+          <!-- Expense Assumptions -->
+          <div class="assumption-card">
+            <h3 class="assumption-title">EXPENSE ASSUMPTIONS_</h3>
+            
+            <div class="assumption-list">
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Engineering team expands from 12 to 28 over three years, with average fully-loaded cost of $145K per engineer.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Sales expenses maintain 20-22% of revenue with increasing efficiency as we scale and enter Year 3.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Infrastructure and hosting costs benefit from economies of scale, decreasing from 8% to 5% of revenue by Year 3.
+                </div>
+              </div>
+              
+              <div class="assumption-item">
+                <span class="assumption-marker"></span>
+                <div class="assumption-text">
+                  Implementation costs average 38% of first-year revenue, with higher costs for military (42%) vs. commercial (32%) deployments.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Funding Requirements -->
+      <div class="funding-container">
+        <div class="financial-header">
+          <h2 class="financial-title">FUNDING REQUIREMENTS_</h2>
+        </div>
+        
+        <div class="funding-content">
+          <div class="funding-details">
+            <div class="funding-amount">$5 Million</div>
+            <div class="funding-desc">
+              HandReceipt is seeking $5 million in Series A funding to accelerate growth, reach profitability in Year 2, and position the company for significant market expansion in the dual-track military and commercial markets.
             </div>
             
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>Mid-market focus with vertical-specific expansion strategy</div>
-            </div>
-            
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>Increasing adoption of Shell token payments in years 3-5</div>
-            </div>
-            
-            <div class="assumption-item">
-              <div class="check-icon">✓</div>
-              <div>Network effects accelerating growth as platform scales</div>
+            <div class="allocation-title">CAPITAL ALLOCATION_</div>
+            <div class="allocation-list">
+              <div class="allocation-item">
+                <div class="allocation-category">Engineering & Product Development</div>
+                <div class="allocation-percentage">45%</div>
+              </div>
+              
+              <div class="allocation-item">
+                <div class="allocation-category">Sales & Marketing</div>
+                <div class="allocation-percentage">30%</div>
+              </div>
+              
+              <div class="allocation-item">
+                <div class="allocation-category">Operations & Customer Success</div>
+                <div class="allocation-percentage">15%</div>
+              </div>
+              
+              <div class="allocation-item">
+                <div class="allocation-category">Working Capital</div>
+                <div class="allocation-percentage">10%</div>
+              </div>
             </div>
           </div>
         </div>
@@ -891,14 +843,12 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 14</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>14</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
 </body>

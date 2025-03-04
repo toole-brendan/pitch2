@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Dual Market Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --shared-bg: #ededf5;
+      --shared-accent: #6a5acd;
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +41,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +55,93 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
+    }
+    
+    /* Theme toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .theme-toggle button {
+      background-color: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .theme-toggle button:hover {
+      background-color: var(--border-color);
+      color: var(--text-primary);
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,30 +150,27 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-    }
-    
-    /* Footer area */
-    .slide-footer {
-      margin-top: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: #9ca3af;
+      z-index: 1;
+      position: relative;
     }
     
     /* Common components */
     .card {
-      background-color: white;
-      border-radius: 0.5rem;
+      background-color: var(--card-bg);
       padding: 1.25rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
+      position: relative;
     }
     
     .section-title {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary);
       margin-bottom: 1rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .flex-row {
@@ -129,20 +222,20 @@
       flex-direction: column;
       justify-content: center;
       padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 20px var(--shadow-color);
       transition: all 0.3s ease;
     }
     
     .hexagon-section:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 25px var(--shadow-color);
     }
     
     .defense-section {
       left: 0;
       clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
-      background-color: rgba(37, 99, 235, 0.15);
-      border: 2px solid rgba(37, 99, 235, 0.6);
+      background-color: var(--military-bg);
+      border: 1px solid var(--military-accent);
       padding-right: 50px;
       z-index: 1;
     }
@@ -150,8 +243,8 @@
     .commercial-section {
       right: 0;
       clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 15% 100%, 0% 50%);
-      background-color: rgba(22, 163, 74, 0.15);
-      border: 2px solid rgba(22, 163, 74, 0.6);
+      background-color: var(--commercial-bg);
+      border: 1px solid var(--commercial-accent);
       padding-left: 50px;
       z-index: 1;
     }
@@ -159,9 +252,8 @@
     .shared-section {
       width: 180px;
       height: 180px;
-      background-color: rgba(139, 92, 246, 0.2);
-      border: 2px solid rgba(139, 92, 246, 0.6);
-      border-radius: 50%;
+      background-color: var(--shared-bg);
+      border: 1px solid var(--shared-accent);
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -169,27 +261,32 @@
       justify-content: center;
       text-align: center;
       padding: 20px;
+      box-shadow: 0 0 20px var(--shadow-color);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     }
     
     .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 600;
       margin-bottom: 1.5rem;
       text-align: center;
     }
     
     .defense-title {
-      color: rgba(37, 99, 235, 0.9);
+      color: var(--military-accent);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .commercial-title {
-      color: rgba(22, 163, 74, 0.9);
+      color: var(--commercial-accent);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .shared-title {
-      font-size: 1.2rem;
-      color: rgba(139, 92, 246, 0.9);
+      font-size: 1rem;
+      color: var(--shared-accent);
       margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .feature-item {
@@ -197,41 +294,48 @@
       align-items: center;
       margin-bottom: 1rem;
       padding: 0.5rem;
-      border-radius: 0.5rem;
       transition: all 0.2s ease;
-      background-color: rgba(255, 255, 255, 0.6);
+      background-color: var(--feature-bg);
+      border: 1px solid var(--border-color);
     }
     
     .feature-item:hover {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: var(--feature-hover);
+      border-color: var(--accent-primary);
     }
     
     .feature-icon {
       width: 2rem;
       height: 2rem;
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 0.75rem;
       flex-shrink: 0;
-      color: white;
+      color: var(--text-primary);
       font-size: 0.9rem;
       font-weight: bold;
+      font-family: 'IBM Plex Mono', monospace;
+      border: 1px solid;
     }
     
     .defense-icon {
-      background-color: rgba(37, 99, 235, 0.9);
+      background-color: transparent;
+      border-color: var(--military-accent);
+      color: var(--military-accent);
     }
     
     .commercial-icon {
-      background-color: rgba(22, 163, 74, 0.9);
+      background-color: transparent;
+      border-color: var(--commercial-accent);
+      color: var(--commercial-accent);
     }
     
     .feature-text {
       font-size: 0.9rem;
-      color: #1f2937;
+      color: var(--text-primary);
       font-weight: 500;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .market-cards {
@@ -242,25 +346,30 @@
     }
     
     .market-card {
-      background-color: white;
-      border-radius: 0.5rem;
+      background-color: var(--card-bg);
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
     }
     
     .market-header {
       padding: 1rem;
-      color: white;
+      color: var(--text-primary);
       font-weight: 600;
       text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .defense-header {
-      background-color: rgba(37, 99, 235, 0.9);
+      background-color: var(--military-bg);
+      border-bottom: 1px solid var(--military-accent);
     }
     
     .commercial-header {
-      background-color: rgba(22, 163, 74, 0.9);
+      background-color: var(--commercial-bg);
+      border-bottom: 1px solid var(--commercial-accent);
     }
     
     .market-content {
@@ -276,23 +385,27 @@
     .metric-icon {
       width: 2.5rem;
       height: 2.5rem;
-      border-radius: 50%;
-      background-color: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: bold;
+      border: 1px solid;
     }
     
     .metric-text h4 {
       font-weight: 600;
       font-size: 0.9rem;
       margin-bottom: 0.25rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
     }
     
     .metric-text p {
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .key-points {
@@ -309,16 +422,55 @@
     .key-point-bullet {
       width: 1rem;
       height: 1rem;
-      background-color: #16a34a;
-      border-radius: 50%;
       flex-shrink: 0;
       margin-top: 0.25rem;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: bold;
+      font-size: 0.8rem;
     }
     
     .key-point-text {
       flex-grow: 1;
-      color: #4b5563;
-      font-style: italic;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    /* Footer area */
+    .slide-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Navigation */
+    .slide-nav {
+      display: flex;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
     }
     
     /* Responsive adjustments */
@@ -356,10 +508,18 @@
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+      <button id="theme-toggle-btn">TOGGLE THEME_</button>
+    </div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
       <h1 class="slide-title">Dual Market Strategy</h1>
-      <div class="green-underline"></div>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
@@ -369,7 +529,7 @@
         <div class="hexagon-diagram">
           <!-- Defense Section (Left) -->
           <div class="hexagon-section defense-section">
-            <h3 class="section-title defense-title">DEFENSE</h3>
+            <h3 class="section-title defense-title">DEFENSE_</h3>
             
             <div class="feature-item">
               <div class="feature-icon defense-icon">1</div>
@@ -389,7 +549,7 @@
           
           <!-- Commercial Section (Right) -->
           <div class="hexagon-section commercial-section">
-            <h3 class="section-title commercial-title">COMMERCIAL</h3>
+            <h3 class="section-title commercial-title">COMMERCIAL_</h3>
             
             <div class="feature-item">
               <div class="feature-icon commercial-icon">1</div>
@@ -409,8 +569,8 @@
           
           <!-- Shared Core (Middle) -->
           <div class="shared-section">
-            <h4 class="shared-title">Core Blockchain Technology</h4>
-            <div style="font-size: 0.8rem; color: #6b7280;">Shared platform powering both markets</div>
+            <h4 class="shared-title">CORE_TECH</h4>
+            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: 'IBM Plex Mono', monospace;">Shared platform</div>
           </div>
         </div>
       </div>
@@ -418,7 +578,7 @@
       <!-- Market Cards -->
       <div class="market-cards">
         <div class="market-card">
-          <div class="market-header defense-header">Defense Market</div>
+          <div class="market-header defense-header">DEFENSE MARKET</div>
           <div class="market-content">
             <div class="market-metric">
               <div class="metric-icon defense-icon">$</div>
@@ -438,7 +598,7 @@
         </div>
         
         <div class="market-card">
-          <div class="market-header commercial-header">Commercial Market</div>
+          <div class="market-header commercial-header">COMMERCIAL MARKET</div>
           <div class="market-content">
             <div class="market-metric">
               <div class="metric-icon commercial-icon">$</div>
@@ -460,22 +620,22 @@
       
       <!-- Key Points -->
       <div class="card">
-        <h2 class="section-title">Strategic Advantages of Dual Markets</h2>
+        <h2 class="section-title">STRATEGIC ADVANTAGES_</h2>
         <div class="key-points">
           <div class="key-point">
-            <div class="key-point-bullet"></div>
+            <div class="key-point-bullet">></div>
             <div class="key-point-text">Shared R&D costs across both markets create development efficiency</div>
           </div>
           <div class="key-point">
-            <div class="key-point-bullet"></div>
+            <div class="key-point-bullet">></div>
             <div class="key-point-text">Military credibility accelerates commercial trust and adoption</div>
           </div>
           <div class="key-point">
-            <div class="key-point-bullet"></div>
+            <div class="key-point-bullet">></div>
             <div class="key-point-text">Diverse revenue streams provide stability through market cycles</div>
           </div>
           <div class="key-point">
-            <div class="key-point-bullet"></div>
+            <div class="key-point-bullet">></div>
             <div class="key-point-text">Network effects between markets increase overall platform value</div>
           </div>
         </div>
@@ -484,9 +644,38 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 4</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>04</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const htmlTag = document.documentElement;
+      
+      toggleBtn.addEventListener('click', function() {
+        if (htmlTag.getAttribute('data-theme') === 'dark') {
+          htmlTag.setAttribute('data-theme', 'light');
+          toggleBtn.textContent = 'DARK MODE_';
+        } else {
+          htmlTag.setAttribute('data-theme', 'dark');
+          toggleBtn.textContent = 'LIGHT MODE_';
+        }
+      });
+      
+      // Set initial button text based on the current theme
+      if (htmlTag.getAttribute('data-theme') === 'dark') {
+        toggleBtn.textContent = 'LIGHT MODE_';
+      } else {
+        toggleBtn.textContent = 'DARK MODE_';
+      }
+    });
+  </script>
 </body>
 </html>

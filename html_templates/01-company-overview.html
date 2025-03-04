@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Cover</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +37,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', monospace;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +51,28 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease;
     }
     
-    /* Cover slide specific background with subtle blockchain visualization */
+    /* Cover slide specific background with subtle grid visualization */
     .slide-cover {
       position: relative;
     }
     
-    .blockchain-bg {
+    .grid-bg {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: 0;
-      opacity: 0.06;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="20" y="20" width="20" height="20" fill="%2316a34a" rx="2" /><rect x="60" y="20" width="20" height="20" fill="%2316a34a" rx="2" /><rect x="20" y="60" width="20" height="20" fill="%2316a34a" rx="2" /><rect x="60" y="60" width="20" height="20" fill="%2316a34a" rx="2" /><line x1="40" y1="30" x2="60" y2="30" stroke="%2316a34a" stroke-width="2" /><line x1="30" y1="40" x2="30" y2="60" stroke="%2316a34a" stroke-width="2" /><line x1="70" y1="40" x2="70" y2="60" stroke="%2316a34a" stroke-width="2" /><line x1="40" y1="70" x2="60" y2="70" stroke="%2316a34a" stroke-width="2" /></svg>');
-      background-size: 150px 150px;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Cover slide header */
@@ -55,45 +82,71 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 4rem;
       margin-bottom: 2rem;
     }
     
     .logo-container {
-      width: 180px;
-      height: 60px;
-      background-color: #16a34a;
-      border-radius: 8px;
+      width: 220px;
+      height: 70px;
+      background-color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
       margin-bottom: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Mono', monospace;
       font-weight: bold;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+    }
+    
+    .logo-container::before {
+      content: ">";
+      position: absolute;
+      left: 15px;
+      color: rgba(255, 255, 255, 0.7);
     }
     
     .cover-title {
       font-size: clamp(2.5rem, 6vw, 3.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
       margin-bottom: 1rem;
       line-height: 1.2;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
     
     .cover-subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 500;
-      color: #4b5563;
+      color: var(--text-secondary);
       max-width: 70%;
       margin: 0 auto;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .green-underline {
+    .accent-underline {
       width: 120px;
-      height: 6px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin: 1.5rem auto;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -20px;
+      top: 0;
     }
     
     /* Main content - empty for cover slide */
@@ -108,31 +161,48 @@
     
     /* Value proposition */
     .value-proposition {
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.85);
-      border-radius: 8px;
-      border-left: 4px solid #16a34a;
+      padding: 1.5rem 2rem;
+      background-color: var(--card-bg);
+      border-left: 3px solid var(--accent-primary);
       max-width: 80%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      margin-top: 1rem;
+      box-shadow: 0 4px 20px var(--shadow-color);
+      margin-top: 2rem;
+      position: relative;
+    }
+    
+    .value-proposition::before {
+      content: "//";
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
     }
     
     .value-proposition p {
       font-size: 1.1rem;
-      color: #4b5563;
-      line-height: 1.5;
-      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .value-highlight {
+      color: var(--accent-primary);
+      font-weight: 500;
     }
     
     /* Footer area */
     .slide-footer {
       z-index: 1;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
       padding: 0 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .presenter-info {
@@ -140,44 +210,43 @@
       bottom: 5rem;
       text-align: center;
       font-size: 1rem;
-      color: #6b7280;
+      color: var(--text-secondary);
       width: 100%;
       left: 0;
+      font-family: 'IBM Plex Mono', monospace;
     }
   </style>
 </head>
 <body>
   <div class="slide slide-cover">
-    <!-- Blockchain Background Pattern -->
-    <div class="blockchain-bg"></div>
+    <!-- Background grid pattern -->
+    <div class="grid-bg"></div>
     
-    <!-- Cover Header -->
+    <!-- Cover Header with Logo -->
     <div class="cover-header">
       <div class="logo-container">HANDRECEIPT</div>
-      <h1 class="cover-title">HandReceipt</h1>
-      <div class="green-underline"></div>
-      <h2 class="cover-subtitle">Blockchain Supply Chain Management</h2>
+      <h1 class="cover-title">SECURE SUPPLY VERIFICATION</h1>
+      <div class="accent-underline"></div>
+      <p class="cover-subtitle">Military-grade validation adapted for commercial markets</p>
     </div>
     
-    <!-- Cover Content -->
+    <!-- Main content area -->
     <div class="slide-content">
-      <h3 class="cover-subtitle">Transforming Military and Commercial Inventory Management</h3>
-      
       <div class="value-proposition">
-        <p>Reducing payment cycles by 75% and inventory errors by 90% through blockchain-verified supply chain management</p>
+        <p>HandReceipt delivers dual-market supply chain verification for <span class="value-highlight">MILITARY</span> and <span class="value-highlight">COMMERCIAL</span> applications, providing tamper-proof inventory management with cryptographic authentication.</p>
       </div>
     </div>
     
-    <!-- Presenter Info -->
-    <div class="presenter-info">
-      [Presenter Name], [Founder & CEO]
-    </div>
-    
-    <!-- Slide Footer -->
+    <!-- Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>March 2025</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div>01</div>
     </div>
   </div>
+
+  <script>
+    // No theme toggle script needed
+  </script>
 </body>
 </html>
+

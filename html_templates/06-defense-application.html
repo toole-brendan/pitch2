@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Defense Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --phone-bg: #f0f2f5;
+      --phone-border: #c4c9d4;
+      --app-header-bg: #0066b3;
+      --app-content-bg: #ffffff;
+      --app-section-bg: #e6f0fa;
+      --app-button-bg: #0066b3;
+      --progress-bg: #d4d4d4;
+      --progress-fill: #0066b3;
+      --process-line: #d4d4d4;
+      --feature-border: #eaeaea;
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +49,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,37 +63,78 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
     
-    .title-badge {
-      background-color: #1e40af;
-      color: white;
-      font-size: 1rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .green-underline {
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
+    }
+    
+    .title-badge {
+      background-color: var(--military-accent);
+      color: white;
+      font-size: 1rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
     }
     
     /* Main content area */
@@ -66,532 +143,51 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-    }
-    
-    /* Main container */
-    .defense-container {
-      display: grid;
-      grid-template-columns: 5fr 4fr;
-      gap: 2rem;
-      height: 100%;
-    }
-    
-    @media (max-width: 768px) {
-      .defense-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-    
-    /* Dashboard mockup */
-    .dashboard-mockup {
-      background-color: white;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #e5e7eb;
-    }
-    
-    .dashboard-header {
-      background-color: #1e3a8a;
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1e3a8a;
-    }
-    
-    .dashboard-title {
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    
-    .dashboard-controls {
-      display: flex;
-      gap: 0.75rem;
-    }
-    
-    .dashboard-control {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-    
-    .dashboard-body {
-      flex: 1;
-      padding: 1rem;
-      overflow: hidden;
+      z-index: 1;
       position: relative;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto 1fr 1fr;
-      gap: 1rem;
     }
     
-    /* Dashboard components */
-    .dash-component {
-      background-color: #f8fafc;
-      border-radius: 0.5rem;
-      border: 1px solid #e2e8f0;
-      padding: 0.75rem;
+    /* Common components */
+    .card {
+      background-color: var(--card-bg);
+      padding: 1.25rem;
+      box-shadow: 0 0 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
       position: relative;
-      overflow: hidden;
     }
     
-    .dash-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    
-    .dash-title {
+    .section-title {
+      font-size: 1.25rem;
       font-weight: 600;
-      font-size: 0.85rem;
-      color: #334155;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
-    .dash-menu {
-      color: #94a3b8;
-      font-size: 1rem;
-    }
-    
-    /* Status card row */
-    .status-row {
-      grid-column: span 12;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-    
-    .status-card {
-      background-color: white;
-      border-radius: 0.5rem;
-      border: 1px solid #e2e8f0;
-      padding: 0.75rem;
+    .flex-row {
       display: flex;
-      flex-direction: column;
-    }
-    
-    .status-label {
-      font-size: 0.75rem;
-      color: #64748b;
-      margin-bottom: 0.25rem;
-    }
-    
-    .status-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-    
-    .status-desc {
-      font-size: 0.7rem;
-      color: #94a3b8;
-    }
-    
-    .success-value {
-      color: #16a34a;
-    }
-    
-    .warning-value {
-      color: #f59e0b;
-    }
-    
-    .danger-value {
-      color: #dc2626;
-    }
-    
-    .info-value {
-      color: #3b82f6;
-    }
-    
-    /* Equipment list */
-    .equipment-list {
-      grid-column: span 6;
-      grid-row: span 2;
-    }
-    
-    .list-container {
-      font-size: 0.75rem;
-      border-radius: 0.25rem;
-      border: 1px solid #e2e8f0;
-      margin-top: 0.5rem;
-      overflow: hidden;
-    }
-    
-    .list-header {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-      gap: 0.5rem;
-      background-color: #f1f5f9;
-      padding: 0.5rem;
-      font-weight: 600;
-      color: #475569;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    
-    .list-row {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-      gap: 0.5rem;
-      padding: 0.5rem;
-      border-bottom: 1px solid #e2e8f0;
-      align-items: center;
-      background-color: white;
-    }
-    
-    .list-row:last-child {
-      border-bottom: none;
-    }
-    
-    .list-row:nth-child(even) {
-      background-color: #f8fafc;
-    }
-    
-    .list-col {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
-    .status-pill {
-      display: inline-block;
-      padding: 0.15rem 0.5rem;
-      border-radius: 1rem;
-      font-size: 0.65rem;
-      font-weight: 500;
-    }
-    
-    .verified-pill {
-      background-color: #dcfce7;
-      color: #16a34a;
-    }
-    
-    .pending-pill {
-      background-color: #fef3c7;
-      color: #d97706;
-    }
-    
-    /* Sensitive items */
-    .sensitive-items {
-      grid-column: span 6;
-      grid-row: span 1;
-    }
-    
-    .sensitive-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    
-    .sensitive-card {
-      background-color: white;
-      border-radius: 0.25rem;
-      border: 1px solid #e2e8f0;
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .sensitive-icon {
-      width: 1.75rem;
-      height: 1.75rem;
-      background-color: #dbeafe;
-      border-radius: 0.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #2563eb;
-      font-weight: bold;
-      font-size: 0.65rem;
-    }
-    
-    .sensitive-details {
-      flex: 1;
-    }
-    
-    .sensitive-name {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #334155;
-      margin-bottom: 0.15rem;
-    }
-    
-    .sensitive-serial {
-      font-size: 0.65rem;
-      color: #64748b;
-    }
-    
-    .sensitive-status {
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: #16a34a;
-    }
-    
-    /* NTC prep */
-    .ntc-prep {
-      grid-column: span 6;
-      grid-row: span 1;
-    }
-    
-    .progress-container {
-      margin-top: 0.75rem;
-    }
-    
-    .progress-row {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 0.5rem;
-    }
-    
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.7rem;
-      margin-bottom: 0.25rem;
-    }
-    
-    .progress-name {
-      color: #334155;
-      font-weight: 500;
-    }
-    
-    .progress-value {
-      color: #64748b;
-    }
-    
-    .progress-bar {
-      height: 0.5rem;
-      background-color: #e2e8f0;
-      border-radius: 0.25rem;
-      overflow: hidden;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      border-radius: 0.25rem;
-    }
-    
-    .progress-fill-80 {
-      width: 80%;
-      background-color: #3b82f6;
-    }
-    
-    .progress-fill-65 {
-      width: 65%;
-      background-color: #f59e0b;
-    }
-    
-    .progress-fill-90 {
-      width: 90%;
-      background-color: #16a34a;
-    }
-    
-    /* Features & Benefits */
-    .features-benefits {
-      display: flex;
-      flex-direction: column;
       gap: 1.5rem;
     }
     
-    .features-section, .benefits-section {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .section-header {
-      color: #1e40af;
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+    .flex-column {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 1rem;
     }
     
-    .header-icon {
-      width: 1.75rem;
-      height: 1.75rem;
-      background-color: #1e40af;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 0.75rem;
-    }
-    
-    /* Features grid */
-    .features-grid {
+    .grid {
       display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
     }
     
-    .feature-item {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-    }
-    
-    .feature-icon {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 0.5rem;
-      background-color: #dbeafe;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #1e40af;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-    
-    .feature-content {
-      flex: 1;
-    }
-    
-    .feature-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .feature-desc {
-      font-size: 0.8rem;
-      color: #6b7280;
-    }
-    
-    /* Benefits */
-    .benefits-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    
-    .benefit-item {
-      background-color: #f8fafc;
-      border-radius: 0.5rem;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    
-    .benefit-metric {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1e40af;
-      flex-shrink: 0;
-      width: 4rem;
-      text-align: center;
-    }
-    
-    .benefit-text {
-      font-size: 0.9rem;
-      color: #334155;
-    }
-    
-    /* User journey */
-    .user-journey {
-      background-color: #f0f9ff;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin-top: 1.5rem;
-      border: 1px solid #bfdbfe;
-    }
-    
-    .journey-title {
-      color: #1e40af;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    
-    .journey-steps {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      padding: 0 1rem;
-    }
-    
-    .journey-steps::after {
-      content: '';
-      position: absolute;
-      top: 2rem;
-      left: 3rem;
-      right: 3rem;
-      height: 2px;
-      background-color: #bfdbfe;
-      z-index: 0;
-    }
-    
-    .journey-step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      width: 5.5rem;
-    }
-    
-    .step-number {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: #1e40af;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      margin-bottom: 0.75rem;
-    }
-    
-    .step-label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #334155;
-      line-height: 1.2;
-    }
-    
-    /* Case study */
-    .case-study {
-      background-color: white;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 4px solid #1e40af;
-    }
-    
-    .case-quote {
-      font-style: italic;
-      font-size: 0.85rem;
-      color: #4b5563;
-      margin-bottom: 0.5rem;
-    }
-    
-    .case-author {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #1e40af;
-    }
-    
-    .case-role {
-      font-size: 0.75rem;
-      color: #6b7280;
+    .grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
     }
     
     /* Footer area */
@@ -600,357 +196,304 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    /* Navigation controls */
+
+    /* Navigation */
     .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
       display: flex;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
       gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
     }
     
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
+    /* Defense specific styles */
+    .defense-icon {
+      background-color: var(--military-bg);
+      color: var(--military-accent);
+      border: 1px solid var(--military-accent);
       width: 2.5rem;
       height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: bold;
+    }
+    
+    .key-feature {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      box-shadow: 0 0 15px var(--shadow-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .key-feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px var(--shadow-color);
+    }
+    
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .feature-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    .feature-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .feature-benefits {
+      margin-top: 0.5rem;
+    }
+    
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .benefit-marker {
+      color: var(--military-accent);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .benefit-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .use-cases {
+      margin-top: 1.5rem;
+    }
+    
+    .use-case {
+      background-color: var(--military-bg);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .use-case-title {
+      font-weight: 600;
+      color: var(--military-accent);
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .use-case-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .testimonial {
+      background-color: var(--military-bg);
+      border: 1px solid var(--border-color);
+      padding: 1.5rem;
+      position: relative;
+      border-left: 3px solid var(--military-accent);
+    }
+    
+    .quote {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-style: normal;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .attribution {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .avatar {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background-color: var(--military-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .person-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .person-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    .person-title {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      
+      .flex-row {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">
-        Defense Application
-        <span class="title-badge">MILITARY</span>
-      </h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Defense Application <span class="title-badge">MILITARY</span></h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
     <div class="slide-content">
-      <div class="defense-container">
-        <!-- Dashboard Mockup -->
-        <div class="dashboard-mockup">
-          <div class="dashboard-header">
-            <div class="dashboard-title">HandReceipt - B Company, 2-87 Infantry</div>
-            <div class="dashboard-controls">
-              <div class="dashboard-control"></div>
-              <div class="dashboard-control"></div>
-              <div class="dashboard-control"></div>
+      <!-- Main column layout -->
+      <div class="flex-row">
+        <!-- Left Column: Key Features -->
+        <div class="flex-column" style="flex: 1;">
+          <div class="section-title">KEY CAPABILITIES_</div>
+          
+          <div class="key-feature">
+            <div class="feature-header">
+              <div class="defense-icon">1</div>
+              <div class="feature-title">Digital Hand Receipts</div>
+            </div>
+            <div class="feature-desc">Replace paper forms with blockchain-backed digital records</div>
+            <div class="feature-benefits">
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">Eliminate lost paperwork, reducing property loss by 80%</div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">Tamper-proof signatures authenticated through DoD credentials</div>
+              </div>
             </div>
           </div>
           
-          <div class="dashboard-body">
-            <!-- Status Cards Row -->
-            <div class="status-row">
-              <div class="status-card">
-                <div class="status-label">Property Accountability</div>
-                <div class="status-value success-value">98.7%</div>
-                <div class="status-desc">3 items pending verification</div>
+          <div class="key-feature">
+            <div class="feature-header">
+              <div class="defense-icon">2</div>
+              <div class="feature-title">Inventory Accountability</div>
+            </div>
+            <div class="feature-desc">Complete audit trail with immutable record-keeping</div>
+            <div class="feature-benefits">
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">Real-time property status visibility across command levels</div>
               </div>
-              
-              <div class="status-card">
-                <div class="status-label">Sensitive Items</div>
-                <div class="status-value success-value">100%</div>
-                <div class="status-desc">All verified within 24hrs</div>
-              </div>
-              
-              <div class="status-card">
-                <div class="status-label">NTC Readiness</div>
-                <div class="status-value warning-value">84%</div>
-                <div class="status-desc">121 days remaining</div>
-              </div>
-              
-              <div class="status-card">
-                <div class="status-label">Pending Actions</div>
-                <div class="status-value info-value">8</div>
-                <div class="status-desc">3 require immediate attention</div>
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">Reduce inventory time by 75% with QR code scanning</div>
               </div>
             </div>
-            
-            <!-- Equipment List -->
-            <div class="dash-component equipment-list">
-              <div class="dash-header">
-                <div class="dash-title">Equipment Inventory</div>
-                <div class="dash-menu">⋯</div>
-              </div>
-              
-              <div class="list-container">
-                <div class="list-header">
-                  <div class="list-col">Type</div>
-                  <div class="list-col">Nomenclature</div>
-                  <div class="list-col">Serial</div>
-                  <div class="list-col">Location</div>
-                  <div class="list-col">Status</div>
-                </div>
-                
-                <div class="list-row">
-                  <div class="list-col">Weapon</div>
-                  <div class="list-col">M4 Rifle, 5.56mm</div>
-                  <div class="list-col">12496352</div>
-                  <div class="list-col">Arms Room</div>
-                  <div class="list-col"><span class="status-pill verified-pill">Verified</span></div>
-                </div>
-                
-                <div class="list-row">
-                  <div class="list-col">Weapon</div>
-                  <div class="list-col">M249 SAW</div>
-                  <div class="list-col">LW12937</div>
-                  <div class="list-col">Arms Room</div>
-                  <div class="list-col"><span class="status-pill verified-pill">Verified</span></div>
-                </div>
-                
-                <div class="list-row">
-                  <div class="list-col">Vehicle</div>
-                  <div class="list-col">HMMWV</div>
-                  <div class="list-col">987654</div>
-                  <div class="list-col">Motor Pool</div>
-                  <div class="list-col"><span class="status-pill pending-pill">Maintenance</span></div>
-                </div>
-                
-                <div class="list-row">
-                  <div class="list-col">Comms</div>
-                  <div class="list-col">SINCGARS Radio</div>
-                  <div class="list-col">RC-9956</div>
-                  <div class="list-col">Comms Cage</div>
-                  <div class="list-col"><span class="status-pill verified-pill">Verified</span></div>
-                </div>
-                
-                <div class="list-row">
-                  <div class="list-col">Vehicle</div>
-                  <div class="list-col">JLTV</div>
-                  <div class="list-col">204987JT</div>
-                  <div class="list-col">Motor Pool</div>
-                  <div class="list-col"><span class="status-pill pending-pill">Transfer</span></div>
-                </div>
-              </div>
+          </div>
+          
+          <div class="key-feature">
+            <div class="feature-header">
+              <div class="defense-icon">3</div>
+              <div class="feature-title">Security & Compliance</div>
             </div>
-            
-            <!-- Sensitive Items -->
-            <div class="dash-component sensitive-items">
-              <div class="dash-header">
-                <div class="dash-title">Sensitive Items Verification</div>
-                <div class="dash-menu">⋯</div>
+            <div class="feature-desc">Military-grade security standards with full compliance</div>
+            <div class="feature-benefits">
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">IL5/IL6 compliant with secure credential management</div>
               </div>
-              
-              <div class="sensitive-grid">
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">M4</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">M4 Rifle</div>
-                    <div class="sensitive-serial">12496352</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-                
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">M240</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">M240B MG</div>
-                    <div class="sensitive-serial">M2405689</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-                
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">NVG</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">NVG</div>
-                    <div class="sensitive-serial">12R45678</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-                
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">SAW</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">M249 SAW</div>
-                    <div class="sensitive-serial">LW12937</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-                
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">DAGR</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">DAGR</div>
-                    <div class="sensitive-serial">45R-6789</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-                
-                <div class="sensitive-card">
-                  <div class="sensitive-icon">PRC</div>
-                  <div class="sensitive-details">
-                    <div class="sensitive-name">PRC-117G</div>
-                    <div class="sensitive-serial">PRC8725</div>
-                  </div>
-                  <div class="sensitive-status">✓</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- NTC Prep -->
-            <div class="dash-component ntc-prep">
-              <div class="dash-header">
-                <div class="dash-title">NTC Rotation Preparation</div>
-                <div class="dash-menu">⋯</div>
-              </div>
-              
-              <div class="progress-container">
-                <div class="progress-row">
-                  <div class="progress-label">
-                    <div class="progress-name">Equipment Readiness</div>
-                    <div class="progress-value">84%</div>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill progress-fill-80"></div>
-                  </div>
-                </div>
-                
-                <div class="progress-row">
-                  <div class="progress-label">
-                    <div class="progress-name">Vehicle Maintenance</div>
-                    <div class="progress-value">65%</div>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill progress-fill-65"></div>
-                  </div>
-                </div>
-                
-                <div class="progress-row">
-                  <div class="progress-label">
-                    <div class="progress-name">Communications Check</div>
-                    <div class="progress-value">90%</div>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill progress-fill-90"></div>
-                  </div>
-                </div>
+              <div class="benefit-item">
+                <div class="benefit-marker">></div>
+                <div class="benefit-text">CMMC 2.0 and NIST 800-171 adherence for full DoD requirements</div>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Features and Benefits -->
-        <div class="features-benefits">
-          <!-- Key Features -->
-          <div class="features-section">
-            <h2 class="section-header">
-              <div class="header-icon">F</div>
-              Key Features
-            </h2>
+        <!-- Right Column: Use Cases & Testimonial -->
+        <div class="flex-column" style="flex: 1;">
+          <div class="section-title">MILITARY APPLICATIONS_</div>
+          
+          <div class="use-cases">
+            <div class="use-case">
+              <div class="use-case-title">TACTICAL UNIT EQUIPMENT TRACKING</div>
+              <div class="use-case-desc">
+                Tactical units can verify equipment status and readiness instantly with mobile QR scanning, even in disconnected environments. Changes sync when connectivity is restored.
+              </div>
+            </div>
             
-            <div class="features-grid">
-              <div class="feature-item">
-                <div class="feature-icon">1</div>
-                <div class="feature-content">
-                  <div class="feature-title">Property Accountability</div>
-                  <div class="feature-desc">Secure digital record of all accountable items with blockchain verification</div>
-                </div>
+            <div class="use-case">
+              <div class="use-case-title">SUPPLY CHAIN VERIFICATION</div>
+              <div class="use-case-desc">
+                Logistics officers can trace equipment history from procurement to deployment, ensuring authentic parts and regulatory compliance throughout the supply chain.
               </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon">2</div>
-                <div class="feature-content">
-                  <div class="feature-title">Sensitive Item Tracking</div>
-                  <div class="feature-desc">Real-time verification status with timestamp and location data</div>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon">3</div>
-                <div class="feature-content">
-                  <div class="feature-title">Field-Ready Operation</div>
-                  <div class="feature-desc">Offline capabilities with synchronization when connectivity restored</div>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon">4</div>
-                <div class="feature-content">
-                  <div class="feature-title">Digital Hand Receipts</div>
-                  <div class="feature-desc">Automated DA Form 2062/3161 generation with secure signatures</div>
-                </div>
+            </div>
+            
+            <div class="use-case">
+              <div class="use-case-title">COMMAND-LEVEL OVERSIGHT</div>
+              <div class="use-case-desc">
+                Command staff receive real-time data on equipment status across all subordinate units, with customizable alerts for critical shortages or maintenance issues.
               </div>
             </div>
           </div>
           
-          <!-- Key Benefits -->
-          <div class="benefits-section">
-            <h2 class="section-header">
-              <div class="header-icon">B</div>
-              Key Benefits
-            </h2>
-            
-            <div class="benefits-list">
-              <div class="benefit-item">
-                <div class="benefit-metric">75%</div>
-                <div class="benefit-text">Faster inventory verification compared to manual processes</div>
-              </div>
-              
-              <div class="benefit-item">
-                <div class="benefit-metric">90%</div>
-                <div class="benefit-text">Reduction in paperwork and administrative burden</div>
-              </div>
-              
-              <div class="benefit-item">
-                <div class="benefit-metric">99.5%</div>
-                <div class="benefit-text">Inventory accuracy through blockchain verification</div>
-              </div>
+          <div class="testimonial">
+            <div class="quote">
+              "HandReceipt cut our inventory time by 75% and eliminated nearly all paperwork. Our accountability issues have disappeared, and my soldiers can focus on their actual jobs."
             </div>
-          </div>
-          
-          <!-- User Journey -->
-          <div class="user-journey">
-            <h3 class="journey-title">Commander's Experience</h3>
-            
-            <div class="journey-steps">
-              <div class="journey-step">
-                <div class="step-number">1</div>
-                <div class="step-label">QR Code Scanning</div>
+            <div class="attribution">
+              <div class="avatar">MJ</div>
+              <div class="person-info">
+                <div class="person-name">MAJ Robert Johnson</div>
+                <div class="person-title">Battalion Commander // US Army</div>
               </div>
-              
-              <div class="journey-step">
-                <div class="step-number">2</div>
-                <div class="step-label">Blockchain Verification</div>
-              </div>
-              
-              <div class="journey-step">
-                <div class="step-number">3</div>
-                <div class="step-label">Digital Signature</div>
-              </div>
-              
-              <div class="journey-step">
-                <div class="step-number">4</div>
-                <div class="step-label">Complete Audit Trail</div>
-              </div>
-            </div>
-            
-            <div class="case-study">
-              <div class="case-quote">
-                "HandReceipt cut our inventory time by 75% and eliminated nearly all paperwork. Our accountability issues have disappeared, and my soldiers can focus on their actual jobs."
-              </div>
-              <div class="case-author">MAJ Robert Johnson</div>
-              <div class="case-role">Battalion Commander, US Army</div>
             </div>
           </div>
         </div>
@@ -959,14 +502,12 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 6</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>06</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
 </body>

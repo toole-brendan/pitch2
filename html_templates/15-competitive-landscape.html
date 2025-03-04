@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HandReceipt Pitch Deck - Investment Opportunity</title>
+  <title>HandReceipt Pitch Deck - Competitive Landscape</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --chart-axis: rgba(0, 0, 0, 0.1);
+      --chart-grid: rgba(0, 0, 0, 0.03);
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +41,11 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
+      background-color: var(--bg-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +56,68 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background-color: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,481 +126,365 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-    }
-    
-    /* Two-column layout */
-    .investment-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      flex: 1;
-    }
-    
-    @media (max-width: 768px) {
-      .investment-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-    
-    /* Funding section */
-    .funding-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    
-    /* Funding ask card */
-    .funding-ask {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      z-index: 1;
       position: relative;
-      overflow: hidden;
     }
     
-    .funding-ask::before {
-      content: '';
+    /* Section titles */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    /* Competitive Matrix */
+    .matrix-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .matrix-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .matrix-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+    }
+    
+    .matrix-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .matrix-content {
+      padding: 1.5rem;
+      position: relative;
+    }
+    
+    .matrix-grid {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      border-left: 2px solid var(--chart-axis);
+      border-bottom: 2px solid var(--chart-axis);
+    }
+    
+    .grid-lines {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 0.3rem;
-      background: linear-gradient(to right, #2563eb, #10b981);
+      bottom: 0;
+      z-index: 0;
     }
     
-    .series-label {
-      font-size: 0.875rem;
+    .h-grid-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: var(--chart-grid);
+    }
+    
+    .v-grid-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--chart-grid);
+    }
+    
+    .axis-label {
+      position: absolute;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .x-axis-label {
+      bottom: -30px;
+      transform: translateX(-50%);
+    }
+    
+    .y-axis-label {
+      left: -10px;
+      transform: translateY(50%) rotate(-90deg);
+      transform-origin: left center;
+    }
+    
+    .axis-title {
+      position: absolute;
+      font-family: 'IBM Plex Mono', monospace;
       font-weight: 600;
-      color: #6b7280;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+      color: var(--text-primary);
     }
     
-    .ask-amount {
-      font-size: 3.5rem;
-      font-weight: 700;
-      background: linear-gradient(to right, #2563eb, #10b981);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
+    .x-axis-title {
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
     }
     
-    .ask-description {
-      font-size: 1rem;
-      color: #6b7280;
-      max-width: 80%;
-      line-height: 1.5;
+    .y-axis-title {
+      left: -60px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+      text-align: center;
     }
     
-    /* Use of funds card */
-    .use-of-funds {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
+    .matrix-point {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      transition: transform 0.2s ease;
     }
     
-    .section-title {
-      font-size: 1.25rem;
+    .handreceipt-point {
+      background-color: var(--accent-primary);
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--accent-primary);
+      width: 16px;
+      height: 16px;
+    }
+    
+    .competitor-point {
+      background-color: var(--text-secondary);
+      opacity: 0.8;
+    }
+    
+    .matrix-point:hover {
+      transform: translate(-50%, -50%) scale(1.3);
+      z-index: 3;
+    }
+    
+    .point-label {
+      position: absolute;
+      white-space: nowrap;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    
+    .handreceipt-label {
+      background-color: var(--accent-primary);
+      color: white;
       font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.5rem;
     }
     
-    .funds-chart {
-      position: relative;
-      height: 12rem;
-      display: flex;
-      margin-bottom: 1.5rem;
+    .competitor-label {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
     }
     
-    .funds-segment {
-      position: relative;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .development-segment {
-      flex: 40;
-      background-color: #dbeafe;
-      border-radius: 0.5rem 0 0 0.5rem;
-    }
-    
-    .sales-segment {
-      flex: 35;
-      background-color: #bfdbfe;
-    }
-    
-    .operations-segment {
-      flex: 25;
-      background-color: #93c5fd;
-      border-radius: 0 0.5rem 0.5rem 0;
-    }
-    
-    .segment-label {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #1e40af;
-    }
-    
-    .segment-percentage {
-      font-size: 0.875rem;
-      color: #1e40af;
-      margin-top: 0.25rem;
-    }
-    
-    .funds-legend {
-      display: flex;
-      justify-content: center;
+    /* Competitive advantages */
+    .advantages-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
     
-    .legend-item {
+    .advantage-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .advantage-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .advantage-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .advantage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .advantage-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .advantage-marker {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--accent-primary);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+    
+    .advantage-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    
+    .market-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .market-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .market-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .military-header {
+      background-color: var(--military-bg);
+      border-bottom: 2px solid var(--military-accent);
+    }
+    
+    .commercial-header {
+      background-color: var(--commercial-bg);
+      border-bottom: 2px solid var(--commercial-accent);
+    }
+    
+    .market-title {
+      font-size: 1.1rem;
+    }
+    
+    .military-title {
+      color: var(--military-accent);
+    }
+    
+    .commercial-title {
+      color: var(--commercial-accent);
+    }
+    
+    .market-content {
+      padding: 1.25rem;
+    }
+    
+    .competitors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .competitor-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    
+    .competitor-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .competitor-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
     
-    .legend-color {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 0.25rem;
-      flex-shrink: 0;
+    .competitor-desc {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
     }
     
-    .development-color {
-      background-color: #dbeafe;
-    }
-    
-    .sales-color {
-      background-color: #bfdbfe;
-    }
-    
-    .operations-color {
-      background-color: #93c5fd;
-    }
-    
-    .legend-text {
-      font-size: 0.875rem;
-      color: #4b5563;
-    }
-    
-    /* Key milestones section */
-    .milestones {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    .competitor-strengths {
       display: flex;
-      flex-direction: column;
-      flex: 1;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
     }
     
-    .milestones-list {
-      flex: 1;
+    .competitor-weakness {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .milestone-item {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    
-    .milestone-quarter {
-      width: 3rem;
-      height: 3rem;
-      background-color: #f3f4f6;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      color: #1f2937;
-      flex-shrink: 0;
-    }
-    
-    .milestone-content {
-      flex: 1;
-    }
-    
-    .milestone-title {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .milestone-desc {
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-    
-    /* Return potential section */
-    .return-potential {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    
-    /* Valuation card */
-    .valuation-card {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      position: relative;
-    }
-    
-    .valuation-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.25rem;
-    }
-    
-    .valuation-progress {
-      position: relative;
-      margin-bottom: 3rem;
-    }
-    
-    .progress-track {
-      width: 100%;
-      height: 0.5rem;
-      background-color: #e5e7eb;
-      border-radius: 0.25rem;
-      position: relative;
-    }
-    
-    .progress-marker {
-      position: absolute;
-      top: 0;
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      transform: translate(-50%, -25%);
-    }
-    
-    .progress-label {
-      position: absolute;
-      top: 1.25rem;
-      transform: translateX(-50%);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #1f2937;
-      text-align: center;
-    }
-    
-    .progress-sublabel {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: normal;
-      color: #6b7280;
+      gap: 0.5rem;
       margin-top: 0.25rem;
+      flex-wrap: wrap;
     }
     
-    .current-marker {
-      left: 10%;
-      background-color: #10b981;
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      background-color: var(--feature-bg);
+      color: var(--text-secondary);
     }
     
-    .series-b-marker {
-      left: 40%;
-      background-color: #2563eb;
+    .strength-tag {
+      color: #10803f;
+      background-color: rgba(16, 128, 63, 0.1);
     }
     
-    .exit-marker {
-      left: 85%;
-      background-color: #8b5cf6;
-    }
-    
-    .progress-highlight {
-      position: absolute;
-      height: 100%;
-      left: 0;
-      border-radius: 0.25rem;
-      width: 10%;
-      background-color: #10b981;
-    }
-    
-    .valuation-metrics {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10%;
-    }
-    
-    .metric-column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .metric-value {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .metric-label {
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-    
-    /* Exit opportunities */
-    .exit-opportunities {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      flex: 1;
-    }
-    
-    .opportunities-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.25rem;
-    }
-    
-    .opportunities-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    
-    .opportunity-card {
-      background-color: #f8fafc;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .opportunity-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-    
-    .opportunity-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-    
-    .defense-icon {
-      background-color: #dbeafe;
-      color: #1e40af;
-    }
-    
-    .commercial-icon {
-      background-color: #d1fae5;
-      color: #047857;
-    }
-    
-    .enterprise-icon {
-      background-color: #e0e7ff;
-      color: #4f46e5;
-    }
-    
-    .payment-icon {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-    
-    .opportunity-title {
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: #1f2937;
-    }
-    
-    .opportunity-desc {
-      font-size: 0.8125rem;
-      color: #6b7280;
-    }
-    
-    /* IP section */
-    .ip-section {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .ip-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1rem;
-    }
-    
-    .ip-subtitle {
-      font-size: 1rem;
-      color: #4b5563;
-      margin-bottom: 1.25rem;
-    }
-    
-    .patents-list {
-      display: flex;
-      gap: 1rem;
-      justify-content: space-between;
-    }
-    
-    .patent-item {
-      background-color: #f8fafc;
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      flex: 1;
-    }
-    
-    .patent-status {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: white;
-      background-color: #10b981;
-      padding: 0.1875rem 0.5rem;
-      border-radius: 0.25rem;
-      display: inline-block;
-      margin-bottom: 0.5rem;
-    }
-    
-    .pending-status {
-      background-color: #f59e0b;
-    }
-    
-    .patent-name {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .patent-desc {
-      font-size: 0.75rem;
-      color: #6b7280;
+    .weakness-tag {
+      color: #b91c1c;
+      background-color: rgba(185, 28, 28, 0.1);
     }
     
     /* Footer area */
@@ -537,256 +493,331 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    /* Navigation controls */
+
+    /* Navigation */
     .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
       display: flex;
-      gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .advantages-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .matrix-grid {
+        height: 300px;
+      }
+      
+      .y-axis-title {
+        left: -45px;
+      }
+      
+      .point-label {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">Investment Opportunity</h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Competitive Landscape</h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
     <div class="slide-content">
-      <div class="investment-container">
-        <!-- Funding Section -->
-        <div class="funding-section">
-          <!-- Funding Ask -->
-          <div class="funding-ask">
-            <div class="series-label">Series A</div>
-            <div class="ask-amount">$10M</div>
-            <div class="ask-description">Seeking $10M to accelerate growth across both markets and reach Series B readiness in 18 months</div>
-          </div>
-          
-          <!-- Use of Funds -->
-          <div class="use-of-funds">
-            <h2 class="section-title">Use of Funds</h2>
+      <!-- Competitive Matrix -->
+      <div class="matrix-container">
+        <div class="matrix-header">
+          <h2 class="matrix-title">COMPETITIVE MATRIX_</h2>
+        </div>
+        
+        <div class="matrix-content">
+          <div class="matrix-grid">
+            <!-- Grid Lines -->
+            <div class="grid-lines">
+              <div class="h-grid-line" style="top: 25%;"></div>
+              <div class="h-grid-line" style="top: 50%;"></div>
+              <div class="h-grid-line" style="top: 75%;"></div>
+              <div class="v-grid-line" style="left: 25%;"></div>
+              <div class="v-grid-line" style="left: 50%;"></div>
+              <div class="v-grid-line" style="left: 75%;"></div>
+            </div>
             
-            <div class="funds-chart">
-              <div class="funds-segment development-segment">
-                <div class="segment-info">
-                  <div class="segment-label">Product</div>
-                  <div class="segment-percentage">40%</div>
-                </div>
-              </div>
-              
-              <div class="funds-segment sales-segment">
-                <div class="segment-info">
-                  <div class="segment-label">Sales</div>
-                  <div class="segment-percentage">35%</div>
-                </div>
-              </div>
-              
-              <div class="funds-segment operations-segment">
-                <div class="segment-info">
-                  <div class="segment-label">Ops</div>
-                  <div class="segment-percentage">25%</div>
-                </div>
+            <!-- Axis Labels -->
+            <div class="y-axis-title">DUAL MARKET CAPABILITY</div>
+            <div class="x-axis-title">FEATURE COMPLETENESS</div>
+            
+            <!-- Data Points -->
+            <div class="matrix-point handreceipt-point" style="left: 75%; top: 85%;">
+              <div class="point-label handreceipt-label" style="bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px);">
+                HANDRECEIPT
               </div>
             </div>
             
-            <div class="funds-legend">
-              <div class="legend-item">
-                <div class="legend-color development-color"></div>
-                <div class="legend-text">Product Development</div>
+            <!-- Competitors -->
+            <div class="matrix-point competitor-point" style="left: 78%; top: 30%;">
+              <div class="point-label competitor-label" style="top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);">
+                GOTENNA
+              </div>
+            </div>
+            
+            <div class="matrix-point competitor-point" style="left: 35%; top: 40%;">
+              <div class="point-label competitor-label" style="top: 100%; left: 0; transform: translateY(8px);">
+                LEIDOS
+              </div>
+            </div>
+            
+            <div class="matrix-point competitor-point" style="left: 65%; top: 25%;">
+              <div class="point-label competitor-label" style="bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px);">
+                MANHATTAN
+              </div>
+            </div>
+            
+            <div class="matrix-point competitor-point" style="left: 82%; top: 15%;">
+              <div class="point-label competitor-label" style="top: 100%; right: 0; transform: translateY(8px);">
+                SAP
+              </div>
+            </div>
+            
+            <div class="matrix-point competitor-point" style="left: 25%; top: 65%;">
+              <div class="point-label competitor-label" style="top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);">
+                RFID VENDORS
+              </div>
+            </div>
+            
+            <div class="matrix-point competitor-point" style="left: 45%; top: 75%;">
+              <div class="point-label competitor-label" style="bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px);">
+                ORACLE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Competitive Advantages -->
+      <div>
+        <div class="section-title">KEY COMPETITIVE ADVANTAGES_</div>
+        <div class="section-subtitle">HandReceipt's differentiation and advantages</div>
+        
+        <div class="advantages-container">
+          <!-- Defense Advantages -->
+          <div class="advantage-card">
+            <h3 class="advantage-title">DUAL MARKET DOMINANCE_</h3>
+            
+            <div class="advantage-list">
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Cross-domain expertise</strong> spanning both military logistics and commercial supply chain environments, enabling best practice sharing.
+                </div>
               </div>
               
-              <div class="legend-item">
-                <div class="legend-color sales-color"></div>
-                <div class="legend-text">Sales & Marketing</div>
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Unified platform architecture</strong> supporting proprietary authentication and verification protocols across both markets.
+                </div>
               </div>
               
-              <div class="legend-item">
-                <div class="legend-color operations-color"></div>
-                <div class="legend-text">Operations & Compliance</div>
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Network effect advantage</strong> as dual market presence creates reinforcing cycles of data, security, and functionality improvements.
+                </div>
+              </div>
+              
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Military-grade security practices</strong> applied to commercial applications, creating security posture unmatched by commercial-only solutions.
+                </div>
               </div>
             </div>
           </div>
           
-          <!-- Key Milestones -->
-          <div class="milestones">
-            <h2 class="section-title">Key Milestones to Achieve</h2>
+          <!-- Technical Advantages -->
+          <div class="advantage-card">
+            <h3 class="advantage-title">TECHNICAL ADVANTAGES_</h3>
             
-            <div class="milestones-list">
-              <div class="milestone-item">
-                <div class="milestone-quarter">Q3 '25</div>
-                <div class="milestone-content">
-                  <div class="milestone-title">Full Production Military Release</div>
-                  <div class="milestone-desc">Complete brigade-level deployment capability with security certifications</div>
+            <div class="advantage-list">
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Patented Shell Token™ technology</strong> for secure item authentication in disconnected environments, with 99.8% counterfeit detection rate.
                 </div>
               </div>
               
-              <div class="milestone-item">
-                <div class="milestone-quarter">Q4 '25</div>
-                <div class="milestone-content">
-                  <div class="milestone-title">Commercial Platform 2.0</div>
-                  <div class="milestone-desc">Enhanced payment features and expanded ERP integrations</div>
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Integration flexibility</strong> through platform-agnostic architecture that connects with legacy ERP systems and modern cloud platforms.
                 </div>
               </div>
               
-              <div class="milestone-item">
-                <div class="milestone-quarter">Q1 '26</div>
-                <div class="milestone-content">
-                  <div class="milestone-title">International Expansion</div>
-                  <div class="milestone-desc">Launch in Canada, UK, and initial NATO partners</div>
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Offline-first architecture</strong> enabling full functionality in disconnected environments with smart synchronization when connectivity returns.
                 </div>
               </div>
               
-              <div class="milestone-item">
-                <div class="milestone-quarter">Q3 '26</div>
-                <div class="milestone-content">
-                  <div class="milestone-title">Series B Readiness</div>
-                  <div class="milestone-desc">$2M MRR with clear path to profitability in Year 4</div>
+              <div class="advantage-item">
+                <span class="advantage-marker"></span>
+                <div class="advantage-text">
+                  <strong>Low infrastructure requirements</strong> with minimal deployment footprint compatible with both tactical field operations and retail environments.
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      
+      <!-- Key Competitors -->
+      <div>
+        <div class="section-title">MARKET-SPECIFIC COMPETITORS_</div>
+        <div class="section-subtitle">Analysis of primary competitors in each segment</div>
         
-        <!-- Return Potential Section -->
-        <div class="return-potential">
-          <!-- Valuation Path -->
-          <div class="valuation-card">
-            <h2 class="valuation-title">Path to $500M+ Valuation</h2>
-            
-            <div class="valuation-progress">
-              <div class="progress-track">
-                <div class="progress-highlight"></div>
-                
-                <div class="progress-marker current-marker">
-                  <div class="progress-label">
-                    Series A
-                    <span class="progress-sublabel">$50M Valuation</span>
-                  </div>
-                </div>
-                
-                <div class="progress-marker series-b-marker">
-                  <div class="progress-label">
-                    Series B
-                    <span class="progress-sublabel">$200M Valuation</span>
-                  </div>
-                </div>
-                
-                <div class="progress-marker exit-marker">
-                  <div class="progress-label">
-                    Exit Opportunity
-                    <span class="progress-sublabel">$500M+ Valuation</span>
-                  </div>
-                </div>
-              </div>
+        <div class="advantages-container">
+          <!-- Military Competitors -->
+          <div class="market-card">
+            <div class="market-header military-header">
+              <h3 class="market-title military-title">DEFENSE COMPETITORS_</h3>
             </div>
             
-            <div class="valuation-metrics">
-              <div class="metric-column">
-                <div class="metric-value">18 mo</div>
-                <div class="metric-label">To Series B</div>
-              </div>
-              
-              <div class="metric-column">
-                <div class="metric-value">4x</div>
-                <div class="metric-label">Multiple to Series B</div>
-              </div>
-              
-              <div class="metric-column">
-                <div class="metric-value">10x+</div>
-                <div class="metric-label">Potential Return</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Exit Opportunities -->
-          <div class="exit-opportunities">
-            <h2 class="opportunities-title">Multiple Exit Opportunities</h2>
-            
-            <div class="opportunities-grid">
-              <div class="opportunity-card">
-                <div class="opportunity-header">
-                  <div class="opportunity-icon defense-icon">DC</div>
-                  <div class="opportunity-title">Defense Contractors</div>
+            <div class="market-content">
+              <div class="competitors-list">
+                <div class="competitor-item">
+                  <div class="competitor-name">LEIDOS GFPMS</div>
+                  <div class="competitor-desc">
+                    Government property management system for tracking military assets.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">DoD Contract Access</div>
+                    <div class="tag strength-tag">Scale</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Enterprise-only</div>
+                    <div class="tag weakness-tag">Heavy Implementation</div>
+                    <div class="tag weakness-tag">No Mobile Focus</div>
+                  </div>
                 </div>
-                <div class="opportunity-desc">Strategic acquisition to enhance military logistics capabilities</div>
-              </div>
-              
-              <div class="opportunity-card">
-                <div class="opportunity-header">
-                  <div class="opportunity-icon commercial-icon">SC</div>
-                  <div class="opportunity-title">Supply Chain Software</div>
+                
+                <div class="competitor-item">
+                  <div class="competitor-name">GOTENNA MESH NETWORKS</div>
+                  <div class="competitor-desc">
+                    Tactical communications solutions with limited inventory features.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">Military Presence</div>
+                    <div class="tag strength-tag">Offline Capability</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Not Inventory-Focused</div>
+                    <div class="tag weakness-tag">Limited Authentication</div>
+                  </div>
                 </div>
-                <div class="opportunity-desc">Complementary technology for enterprise SCM platforms</div>
-              </div>
-              
-              <div class="opportunity-card">
-                <div class="opportunity-header">
-                  <div class="opportunity-icon enterprise-icon">ES</div>
-                  <div class="opportunity-title">Enterprise Software</div>
+                
+                <div class="competitor-item">
+                  <div class="competitor-name">HOMEBREW SYSTEMS</div>
+                  <div class="competitor-desc">
+                    Custom-built spreadsheets and legacy systems currently in use.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">Familiar to Users</div>
+                    <div class="tag strength-tag">No Cost</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Error-Prone</div>
+                    <div class="tag weakness-tag">No Security</div>
+                    <div class="tag weakness-tag">Limited Features</div>
+                  </div>
                 </div>
-                <div class="opportunity-desc">Blockchain integration for ERP providers</div>
-              </div>
-              
-              <div class="opportunity-card">
-                <div class="opportunity-header">
-                  <div class="opportunity-icon payment-icon">PP</div>
-                  <div class="opportunity-title">Payment Processors</div>
-                </div>
-                <div class="opportunity-desc">Supply chain transaction network acquisition</div>
               </div>
             </div>
           </div>
           
-          <!-- IP Position -->
-          <div class="ip-section">
-            <h2 class="ip-title">Strong IP Position</h2>
-            <p class="ip-subtitle">Multiple patents creating defensible market advantages</p>
+          <!-- Commercial Competitors -->
+          <div class="market-card">
+            <div class="market-header commercial-header">
+              <h3 class="market-title commercial-title">COMMERCIAL COMPETITORS_</h3>
+            </div>
             
-            <div class="patents-list">
-              <div class="patent-item">
-                <div class="patent-status">Granted</div>
-                <div class="patent-name">Verification Algorithm</div>
-                <div class="patent-desc">QR-based blockchain verification with 99.7% accuracy</div>
-              </div>
-              
-              <div class="patent-item">
-                <div class="patent-status">Granted</div>
-                <div class="patent-name">Dual Blockchain Security</div>
-                <div class="patent-desc">Private/public chain integration for secure verification</div>
-              </div>
-              
-              <div class="patent-item">
-                <div class="patent-status pending-status">Pending</div>
-                <div class="patent-name">Smart Contract Payment</div>
-                <div class="patent-desc">Supply chain-triggered conditional payment execution</div>
+            <div class="market-content">
+              <div class="competitors-list">
+                <div class="competitor-item">
+                  <div class="competitor-name">SAP INVENTORY MANAGEMENT</div>
+                  <div class="competitor-desc">
+                    Enterprise inventory solution for large commercial organizations.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">Market Leader</div>
+                    <div class="tag strength-tag">Feature Rich</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Cost Prohibitive</div>
+                    <div class="tag weakness-tag">Complex Implementation</div>
+                    <div class="tag weakness-tag">Poor Mobile UX</div>
+                  </div>
+                </div>
+                
+                <div class="competitor-item">
+                  <div class="competitor-name">MANHATTAN ASSOCIATES</div>
+                  <div class="competitor-desc">
+                    Warehouse management and inventory tracking platform.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">Retail Focus</div>
+                    <div class="tag strength-tag">Integration Ecosystem</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Not Mobile-First</div>
+                    <div class="tag weakness-tag">Requires Connectivity</div>
+                  </div>
+                </div>
+                
+                <div class="competitor-item">
+                  <div class="competitor-name">ORACLE WMS</div>
+                  <div class="competitor-desc">
+                    Enterprise warehouse management system with inventory modules.
+                  </div>
+                  <div class="competitor-strengths">
+                    <div class="tag strength-tag">Enterprise Integration</div>
+                    <div class="tag strength-tag">Reporting</div>
+                  </div>
+                  <div class="competitor-weakness">
+                    <div class="tag weakness-tag">Legacy Architecture</div>
+                    <div class="tag weakness-tag">Poor UX/UI</div>
+                    <div class="tag weakness-tag">High TCO</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -796,14 +827,12 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 15</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>15</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
 </body>

@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Call to Action</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --dark-grid-line: rgba(255, 255, 255, 0.05);
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +40,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +54,68 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -53,367 +123,295 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 2rem;
+      z-index: 1;
+      position: relative;
     }
     
-    /* Two-column layout */
+    /* Call to Action Main Section */
     .cta-container {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 2rem;
       flex: 1;
-    }
-    
-    @media (max-width: 768px) {
-      .cta-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-    
-    /* Investment Opportunity Section */
-    .opportunity-section {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-    }
-    
-    /* Main CTA section */
-    .cta-main {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 2rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       gap: 2rem;
-      position: relative;
-      overflow: hidden;
     }
     
-    .cta-main::before {
+    .cta-headline {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      position: relative;
+      text-align: center;
+      max-width: 1000px;
+    }
+    
+    .cta-highlight {
+      color: var(--accent-primary);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .cta-highlight.commercial {
+      color: var(--accent-secondary);
+    }
+    
+    .cta-subtitle {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      color: var(--text-secondary);
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.5;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    /* Opportunity Cards */
+    .opportunity-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1rem 0 2rem;
+    }
+    
+    .opportunity-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1.5rem;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .opportunity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .opportunity-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      border-radius: 4px;
+      position: relative;
+    }
+    
+    .military-icon {
+      color: var(--military-accent);
+    }
+    
+    .military-icon::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 0.5rem;
-      background: linear-gradient(to right, #2563eb, #10b981);
+      height: 100%;
+      border: 2px solid var(--military-accent);
+      border-radius: 4px;
+      clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
     }
     
-    .cta-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #1f2937;
-      text-align: center;
+    .commercial-icon {
+      color: var(--accent-secondary);
     }
     
-    .offering-details {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-    }
-    
-    .detail-column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .detail-label {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #6b7280;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    .detail-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .detail-subdesc {
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-    
-    .highlighted-value {
-      background: linear-gradient(to right, #2563eb, #10b981);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    /* Timeline section */
-    .timeline-section {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .timeline-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.5rem;
-    }
-    
-    .timeline-container {
-      position: relative;
-      padding-left: 2rem;
-    }
-    
-    .timeline-container::before {
+    .commercial-icon::after {
       content: '';
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0.75rem;
-      width: 2px;
-      background-color: #e5e7eb;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--accent-secondary);
+      border-radius: 4px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%, 0 70%);
     }
     
-    .timeline-item {
-      position: relative;
-      margin-bottom: 1.5rem;
-    }
-    
-    .timeline-item:last-child {
-      margin-bottom: 0;
-    }
-    
-    .timeline-dot {
-      position: absolute;
-      left: -2rem;
-      top: 0;
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 50%;
-      background-color: #10b981;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 0.625rem;
-    }
-    
-    .timeline-date {
-      font-size: 0.875rem;
+    .opportunity-title {
+      font-size: 1.1rem;
       font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .timeline-desc {
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-    
-    /* Vision section */
-    .vision-section {
-      background-color: #ecfdf5;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .vision-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #047857;
-      margin-bottom: 1rem;
-    }
-    
-    .vision-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .vision-statement {
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: #065f46;
-      font-style: italic;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      position: relative;
-      padding: 0 1rem;
-    }
-    
-    .vision-statement::before {
-      content: '"';
-      position: absolute;
-      top: -1rem;
-      left: -0.5rem;
-      font-size: 3rem;
-      color: rgba(16, 185, 129, 0.2);
-      font-family: Georgia, serif;
-    }
-    
-    .vision-statement::after {
-      content: '"';
-      position: absolute;
-      bottom: -2rem;
-      right: -0.5rem;
-      font-size: 3rem;
-      color: rgba(16, 185, 129, 0.2);
-      font-family: Georgia, serif;
-    }
-    
-    /* Company details */
-    .company-details {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .company-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-    
-    .detail-group {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .detail-name {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #6b7280;
-      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+      text-align: center;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 1px;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .detail-info {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: #1f2937;
-    }
-    
-    /* Next steps section */
-    .next-steps {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .steps-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.25rem;
-    }
-    
-    .steps-list {
+    .opportunity-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
     }
     
-    .step-item {
+    .opportunity-item {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       align-items: flex-start;
     }
     
-    .step-number {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 0.5rem;
-      background-color: #dbeafe;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      color: #1e40af;
+    .opportunity-marker {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      margin-top: 0.25rem;
       flex-shrink: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     }
     
-    .step-content {
-      flex: 1;
+    .military-marker {
+      background-color: var(--military-accent);
     }
     
-    .step-title {
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
+    .commercial-marker {
+      background-color: var(--accent-secondary);
     }
     
-    .step-desc {
-      font-size: 0.8125rem;
-      color: #6b7280;
+    .opportunity-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      text-align: left;
     }
     
-    /* Contact information */
-    .contact-info {
-      background-color: #f8fafc;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      border: 1px dashed #cbd5e1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .contact-details {
+    /* Investment Ask */
+    .investment-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      align-items: center;
+      gap: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .contact-title {
-      font-size: 0.875rem;
+    .investment-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .investment-title {
+      font-size: 1.25rem;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'IBM Plex Mono', monospace;
       margin-bottom: 0.5rem;
-    }
-    
-    .contact-item {
-      font-size: 0.8125rem;
-      color: #6b7280;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .contact-icon {
-      width: 1.25rem;
-      height: 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #4b5563;
-    }
-    
-    .qr-placeholder {
-      width: 5rem;
-      height: 5rem;
-      background-color: #e5e7eb;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.625rem;
-      color: #9ca3af;
       text-align: center;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .investment-title::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+    }
+    
+    .investment-amount {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .investment-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      text-align: center;
+      line-height: 1.5;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+    
+    .primary-button {
+      background-color: var(--accent-primary);
+      color: white;
+      border: 2px solid var(--accent-primary);
+    }
+    
+    .primary-button:hover {
+      background-color: transparent;
+      color: var(--accent-primary);
+    }
+    
+    .secondary-button {
+      background-color: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--border-color);
+    }
+    
+    .secondary-button:hover {
+      background-color: var(--bg-secondary);
+      border-color: var(--text-secondary);
+    }
+    
+    /* Team Section */
+    .team-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .team-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .contact-info {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+    
+    .contact-email {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .contact-email:hover {
+      text-decoration: underline;
     }
     
     /* Footer area */
@@ -422,224 +420,169 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    /* Navigation controls */
+
+    /* Navigation */
     .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
       display: flex;
-      gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .opportunity-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+      
+      .cta-headline {
+        font-size: 2rem;
+      }
+      
+      .cta-subtitle {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">Join Our Journey</h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Call to Action</h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
     <div class="slide-content">
+      <!-- Main Call to Action -->
       <div class="cta-container">
-        <!-- CTA Section -->
-        <div class="opportunity-section">
-          <!-- Main CTA -->
-          <div class="cta-main">
-            <h2 class="cta-title">Investment Opportunity</h2>
-            
-            <div class="offering-details">
-              <div class="detail-column">
-                <div class="detail-label">Raising</div>
-                <div class="detail-value highlighted-value">$10M</div>
-                <div class="detail-subdesc">Series A</div>
-              </div>
-              
-              <div class="detail-column">
-                <div class="detail-label">Pre-money Valuation</div>
-                <div class="detail-value">$40M</div>
-                <div class="detail-subdesc">4x revenue multiple</div>
-              </div>
-              
-              <div class="detail-column">
-                <div class="detail-label">Minimum Investment</div>
-                <div class="detail-value">$500K</div>
-                <div class="detail-subdesc">16.7% reserved for strategic partners</div>
-              </div>
-            </div>
-          </div>
+        <h2 class="cta-headline">
+          Transforming Supply Systems Across <span class="cta-highlight">Military</span> and <span class="cta-highlight commercial">Commercial</span> Markets
+        </h2>
+        
+        <p class="cta-subtitle">
+          HandReceipt has built the first dual-market solution that delivers military-grade authentication and verification to both defense and commercial logistics environments.
+        </p>
+      </div>
+      
+      <!-- Opportunity Cards -->
+      <div class="opportunity-container">
+        <!-- Military Opportunity -->
+        <div class="opportunity-card">
+          <div class="opportunity-icon military-icon">M</div>
+          <h3 class="opportunity-title">Defense Opportunity</h3>
           
-          <!-- Timeline for Closing -->
-          <div class="timeline-section">
-            <h2 class="timeline-title">Timeline for Closing</h2>
-            
-            <div class="timeline-container">
-              <div class="timeline-item">
-                <div class="timeline-dot">1</div>
-                <div class="timeline-date">March 15, 2025</div>
-                <div class="timeline-desc">Initial commitments and term sheet distribution</div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-dot">2</div>
-                <div class="timeline-date">March 30, 2025</div>
-                <div class="timeline-desc">Due diligence materials available in data room</div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-dot">3</div>
-                <div class="timeline-date">April 15, 2025</div>
-                <div class="timeline-desc">Closing target with first tranche funding</div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-dot">4</div>
-                <div class="timeline-date">May 1, 2025</div>
-                <div class="timeline-desc">First 100 days plan implementation begins</div>
-              </div>
+          <div class="opportunity-list">
+            <div class="opportunity-item">
+              <span class="opportunity-marker military-marker"></span>
+              <p class="opportunity-text">
+                <strong>$2.3B addressable market</strong> growing 14% annually with strong DoD modernization tailwinds
+              </p>
             </div>
-          </div>
-          
-          <!-- Company Details -->
-          <div class="company-details">
-            <div class="company-grid">
-              <div class="detail-group">
-                <div class="detail-name">Company</div>
-                <div class="detail-info">HandReceipt, Inc.</div>
-              </div>
-              
-              <div class="detail-group">
-                <div class="detail-name">Founded</div>
-                <div class="detail-info">2023</div>
-              </div>
-              
-              <div class="detail-group">
-                <div class="detail-name">Headquarters</div>
-                <div class="detail-info">Austin, TX</div>
-              </div>
-              
-              <div class="detail-group">
-                <div class="detail-name">Team Size</div>
-                <div class="detail-info">32 employees</div>
-              </div>
-              
-              <div class="detail-group">
-                <div class="detail-name">Current Funding</div>
-                <div class="detail-info">$2.5M Seed</div>
-              </div>
-              
-              <div class="detail-group">
-                <div class="detail-name">Current Revenue</div>
-                <div class="detail-info">$10M ARR</div>
-              </div>
+            
+            <div class="opportunity-item">
+              <span class="opportunity-marker military-marker"></span>
+              <p class="opportunity-text">
+                <strong>Unit-level solution gap</strong> for offline-capable inventory verification and counterfeit prevention
+              </p>
+            </div>
+            
+            <div class="opportunity-item">
+              <span class="opportunity-marker military-marker"></span>
+              <p class="opportunity-text">
+                <strong>5-year traction potential</strong> with 35+ military units across three branches through rapid ATO pathway
+              </p>
             </div>
           </div>
         </div>
         
-        <!-- Vision and Contact Section -->
-        <div class="vision-section">
-          <h2 class="vision-title">Our Vision</h2>
+        <!-- Commercial Opportunity -->
+        <div class="opportunity-card">
+          <div class="opportunity-icon commercial-icon">C</div>
+          <h3 class="opportunity-title">Commercial Opportunity</h3>
           
-          <div class="vision-content">
-            <div class="vision-statement">
-              Building the new standard for supply chain verification and payment, creating unprecedented transparency and efficiency across military and commercial markets.
-            </div>
-          </div>
-          
-          <!-- Next Steps -->
-          <div class="next-steps">
-            <h2 class="steps-title">Next Steps</h2>
-            
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                  <div class="step-title">Initial Meeting</div>
-                  <div class="step-desc">Schedule a follow-up call to discuss investment details</div>
-                </div>
-              </div>
-              
-              <div class="step-item">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                  <div class="step-title">Due Diligence</div>
-                  <div class="step-desc">Access our secure data room for comprehensive materials</div>
-                </div>
-              </div>
-              
-              <div class="step-item">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                  <div class="step-title">Terms & Commitment</div>
-                  <div class="step-desc">Finalize investment terms and secure your allocation</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Contact Information -->
-          <div class="contact-info">
-            <div class="contact-details">
-              <div class="contact-title">Contact Information</div>
-              
-              <div class="contact-item">
-                <div class="contact-icon">👤</div>
-                <div>John Anderson, CEO</div>
-              </div>
-              
-              <div class="contact-item">
-                <div class="contact-icon">✉️</div>
-                <div>john@handreceipt.com</div>
-              </div>
-              
-              <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div>(512) 555-1234</div>
-              </div>
+          <div class="opportunity-list">
+            <div class="opportunity-item">
+              <span class="opportunity-marker commercial-marker"></span>
+              <p class="opportunity-text">
+                <strong>$4.1B serviceable market</strong> in retail, manufacturing, and logistics with clear path to expansion
+              </p>
             </div>
             
-            <div class="qr-placeholder">
-              Contact<br>QR Code
+            <div class="opportunity-item">
+              <span class="opportunity-marker commercial-marker"></span>
+              <p class="opportunity-text">
+                <strong>Transaction fee revenue</strong> potential scaling to 40% of total revenue by Year 4
+              </p>
+            </div>
+            
+            <div class="opportunity-item">
+              <span class="opportunity-marker commercial-marker"></span>
+              <p class="opportunity-text">
+                <strong>Strategic advantage</strong> from military security IP application to commercial counterfeit prevention
+              </p>
             </div>
           </div>
         </div>
+      </div>
+      
+      <!-- Investment Ask -->
+      <div class="investment-container">
+        <h3 class="investment-title">Series A Investment Opportunity</h3>
+        <div class="investment-amount">$5 Million</div>
+        <p class="investment-subtitle">
+          Join us in revolutionizing dual-market supply chain management at a $25M valuation with clear path to $200M+ Series B in 18-24 months.
+        </p>
+        
+        <div class="cta-buttons">
+          <a href="mailto:invest@handreceipt.com" class="cta-button primary-button">Schedule Follow-Up</a>
+          <a href="https://handreceipt.com/data-room" class="cta-button secondary-button">Access Data Room</a>
+        </div>
+      </div>
+      
+      <!-- Team Contact -->
+      <div class="team-section">
+        <h3 class="team-title">Leadership Team</h3>
+        <p class="contact-info">
+          Contact: <a href="mailto:founders@handreceipt.com" class="contact-email">founders@handreceipt.com</a>
+        </p>
       </div>
     </div>
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 16</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>16</span>
+        <a href="#finish" class="nav-btn">END »</a>
+      </div>
     </div>
   </div>
 </body>

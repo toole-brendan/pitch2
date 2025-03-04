@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Problem Statement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +37,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +51,65 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,6 +118,8 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     /* Split screen layout for military and commercial */
@@ -73,158 +139,124 @@
     
     /* Military side */
     .military-side {
-      background-color: #fee2e2;
-      border-radius: 0.5rem;
+      background-color: var(--military-bg);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      border: 1px solid var(--military-accent);
+      box-shadow: 0 0 15px rgba(0, 119, 204, 0.15);
     }
     
     .military-side .section-title {
-      color: #991b1b;
+      color: var(--military-accent);
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: clamp(1.1rem, 2vw, 1.3rem);
       margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .military-side .section-title-icon {
       width: 1.5rem;
       height: 1.5rem;
-      background-color: #991b1b;
-      border-radius: 50%;
+      background-color: var(--military-accent);
     }
     
     /* Commercial side */
     .commercial-side {
-      background-color: #dbeafe;
-      border-radius: 0.5rem;
+      background-color: var(--commercial-bg);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      border: 1px solid var(--commercial-accent);
+      box-shadow: 0 0 15px rgba(255, 107, 0, 0.15);
     }
     
     .commercial-side .section-title {
-      color: #1e40af;
+      color: var(--commercial-accent);
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: clamp(1.1rem, 2vw, 1.3rem);
       margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .commercial-side .section-title-icon {
       width: 1.5rem;
       height: 1.5rem;
-      background-color: #1e40af;
-      border-radius: 50%;
+      background-color: var(--commercial-accent);
     }
     
-    /* Visual placeholder */
-    .visual-placeholder {
-      height: 120px;
-      background-color: rgba(255, 255, 255, 0.6);
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-    
-    .visual-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .cost-metric {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #991b1b;
-      margin-right: 1rem;
-    }
-
-    .commercial-cost-metric {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #1e40af;
-      margin-right: 1rem;
-    }
-    
-    .metric-description {
-      font-size: 0.9rem;
-      max-width: 60%;
-      font-weight: 500;
-    }
-    
-    /* Challenges list */
-    .challenges-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    
-    .challenge-item {
-      background-color: white;
-      border-radius: 0.375rem;
-      padding: 0.75rem;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-    }
-    
-    .challenge-icon {
-      width: 1.75rem;
-      height: 1.75rem;
-      border-radius: 50%;
-      background-color: #f3f4f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #4b5563;
-    }
-    
-    .challenge-text strong {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-weight: 600;
-      font-size: 0.875rem;
-      color: #1f2937;
-    }
-    
-    .challenge-text span {
-      font-size: 0.8125rem;
-      color: #4b5563;
-    }
-    
-    /* Customer quote */
-    .customer-quote {
+    /* Problem items */
+    .problem-list {
+      list-style: none;
       margin-top: 1rem;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      font-style: italic;
-      font-size: 0.85rem;
-      color: #4b5563;
-      border-left: 3px solid;
     }
     
-    .military-side .customer-quote {
-      border-left-color: #991b1b;
+    .problem-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
     }
     
-    .commercial-side .customer-quote {
-      border-left-color: #1e40af;
+    .problem-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .problem-icon {
+      min-width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--text-primary);
+      font-weight: bold;
+      margin-top: 0.2rem;
+    }
+    
+    .problem-icon.military {
+      color: var(--military-accent);
+    }
+    
+    .problem-icon.commercial {
+      color: var(--commercial-accent);
+    }
+    
+    .problem-content {
+      flex-grow: 1;
+    }
+    
+    .problem-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    .problem-description {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     /* Footer area */
@@ -233,16 +265,42 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Navigation */
+    .slide-nav {
+      display: flex;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">The Broken Link in Supply Chains</h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Supply Chain Challenges</h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
@@ -252,117 +310,101 @@
         <div class="military-side">
           <h2 class="section-title">
             <div class="section-title-icon"></div>
-            Military Challenges
+            Defense Challenges_
           </h2>
           
-          <div class="visual-placeholder">
-            <div class="visual-content">
-              <div class="cost-metric">$38M</div>
-              <div class="metric-description">Lost annually through inefficient inventory processes across one division</div>
-            </div>
-          </div>
-          
-          <div class="challenges-list">
-            <div class="challenge-item">
-              <div class="challenge-icon">1</div>
-              <div class="challenge-text">
-                <strong>Paper-based Accountability</strong>
-                <span>Manual signatures and physical forms requiring in-person processing</span>
+          <ul class="problem-list">
+            <li class="problem-item">
+              <div class="problem-icon military">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Lengthy Payment Cycles</h3>
+                <p class="problem-description">60-120 day invoice processing timelines due to manual verification requirements</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">2</div>
-              <div class="challenge-text">
-                <strong>Time-consuming Inventories</strong>
-                <span>8+ hours per week per unit spent on manual inventory counts</span>
+            <li class="problem-item">
+              <div class="problem-icon military">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Limited Traceability</h3>
+                <p class="problem-description">Critical supply chain visibility gaps with 40% of items lacking complete chain-of-custody</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">3</div>
-              <div class="challenge-text">
-                <strong>High Liability Risk</strong>
-                <span>$100K+ personal liability per lost/misplaced equipment incident</span>
+            <li class="problem-item">
+              <div class="problem-icon military">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Complex Compliance</h3>
+                <p class="problem-description">Resource-intensive DFARS/CMMC requirements with limited system support</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">4</div>
-              <div class="challenge-text">
-                <strong>Limited Visibility</strong>
-                <span>72+ hour delays in status updates across the supply chain</span>
+            <li class="problem-item">
+              <div class="problem-icon military">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Legacy Systems</h3>
+                <p class="problem-description">Outdated infrastructure with 75% of processes requiring manual intervention</p>
               </div>
-            </div>
-          </div>
-          
-          <div class="customer-quote">
-            "I spend more time on paperwork than leading my soldiers. The financial liability hanging over me is a constant source of stress."
-            <br>— Company Commander, US Army
-          </div>
+            </li>
+          </ul>
         </div>
         
         <!-- Commercial Side -->
         <div class="commercial-side">
           <h2 class="section-title">
             <div class="section-title-icon"></div>
-            Commercial Challenges
+            Commercial Challenges_
           </h2>
           
-          <div class="visual-placeholder">
-            <div class="visual-content">
-              <div class="commercial-cost-metric">$52K</div>
-              <div class="metric-description">Average financing costs due to payment delays for mid-sized distributors</div>
-            </div>
-          </div>
-          
-          <div class="challenges-list">
-            <div class="challenge-item">
-              <div class="challenge-icon">1</div>
-              <div class="challenge-text">
-                <strong>Extended Payment Cycles</strong>
-                <span>60-90 day payment cycles creating significant cash flow problems</span>
+          <ul class="problem-list">
+            <li class="problem-item">
+              <div class="problem-icon commercial">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Inventory Discrepancies</h3>
+                <p class="problem-description">Average error rates of 12% representing $1.2M+ annual loss for mid-sized manufacturers</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">2</div>
-              <div class="challenge-text">
-                <strong>Limited Supplier Visibility</strong>
-                <span>Minimal transparency into multi-tier supplier networks</span>
+            <li class="problem-item">
+              <div class="problem-icon commercial">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Supplier Verification</h3>
+                <p class="problem-description">Limited tools to verify authenticity, creating significant counterfeiting risks</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">3</div>
-              <div class="challenge-text">
-                <strong>Expensive ERP Systems</strong>
-                <span>$250K+ implementation costs for enterprise systems</span>
+            <li class="problem-item">
+              <div class="problem-icon commercial">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Disconnected Systems</h3>
+                <p class="problem-description">Data silos between ERP, warehouse, and logistics systems causing coordination failures</p>
               </div>
-            </div>
+            </li>
             
-            <div class="challenge-item">
-              <div class="challenge-icon">4</div>
-              <div class="challenge-text">
-                <strong>Data Silos</strong>
-                <span>Disconnected information between departments and locations</span>
+            <li class="problem-item">
+              <div class="problem-icon commercial">></div>
+              <div class="problem-content">
+                <h3 class="problem-title">Manual Reconciliation</h3>
+                <p class="problem-description">36% of staff time spent on reconciliation tasks rather than strategic operations</p>
               </div>
-            </div>
-          </div>
-          
-          <div class="customer-quote">
-            "Managing cash flow is impossible with 90-day payment terms. We're constantly choosing between paying our suppliers and making payroll."
-            <br>— Operations Director, TechComponents
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 2</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>02</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
+
+  <script>
+    // No theme toggle script needed
+  </script>
 </body>
 </html>

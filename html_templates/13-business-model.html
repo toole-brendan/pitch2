@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HandReceipt Pitch Deck - Team</title>
+  <title>HandReceipt Pitch Deck - Business Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --dark-grid-line: rgba(255, 255, 255, 0.05);
+      --feature-bg: rgba(240, 240, 240, 0.6);
+      --feature-hover: rgba(255, 255, 255, 0.9);
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +40,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +54,68 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,235 +124,328 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
-    /* Leadership team section */
-    .leadership-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    /* Common components */
+    .card {
+      background-color: var(--card-bg);
+      padding: 1.25rem;
+      border-radius: 4px;
+      box-shadow: 0 0 15px var(--shadow-color);
+      border: 1px solid var(--border-color);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 20px var(--shadow-color);
     }
     
     .section-title {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #1f2937;
-      margin-left: 0.5rem;
-    }
-    
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    
-    @media (max-width: 768px) {
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    /* Team member card */
-    .team-card {
-      background-color: white;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .card-photo {
-      height: 10rem;
-      background-color: #f3f4f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    
-    .photo-placeholder {
-      width: 6rem;
-      height: 6rem;
-      border-radius: 50%;
-      background-color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #9ca3af;
-      font-size: 2rem;
-      font-weight: bold;
-    }
-    
-    .expertise-badge {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: white;
-    }
-    
-    .military-badge {
-      background-color: #2563eb;
-    }
-    
-    .commercial-badge {
-      background-color: #10b981;
-    }
-    
-    .blockchain-badge {
-      background-color: #8b5cf6;
-    }
-    
-    .card-content {
-      padding: 1.25rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .member-name {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
-    
-    .member-title {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #16a34a;
-      margin-bottom: 0.75rem;
-    }
-    
-    .member-bio {
-      font-size: 0.875rem;
-      color: #6b7280;
+      color: var(--text-primary);
       margin-bottom: 1rem;
-      flex: 1;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
-    /* Previous experience */
-    .previous-experience {
-      margin-top: auto;
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .flex-row {
       display: flex;
-      gap: 0.5rem;
-    }
-    
-    .experience-logo {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 0.25rem;
-      background-color: #f3f4f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: #4b5563;
-    }
-    
-    /* Advisors section */
-    .advisors-section {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .advisors-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 1.25rem;
-    }
-    
-    .advisors-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
     
-    @media (max-width: 768px) {
-      .advisors-grid {
-        grid-template-columns: 1fr;
-      }
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
     
-    .advisor-card {
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    
+    /* Revenue model section */
+    .revenue-model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    .market-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .market-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .market-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .military-header {
+      background-color: var(--military-bg);
+      border-bottom: 2px solid var(--military-accent);
+    }
+    
+    .commercial-header {
+      background-color: var(--commercial-bg);
+      border-bottom: 2px solid var(--commercial-accent);
+    }
+    
+    .military-title {
+      color: var(--military-accent);
+    }
+    
+    .commercial-title {
+      color: var(--commercial-accent);
+    }
+    
+    .market-content {
+      padding: 1.25rem;
+    }
+    
+    .pricing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .pricing-item {
       display: flex;
       gap: 1rem;
-      align-items: center;
+      align-items: flex-start;
     }
     
-    .advisor-photo {
-      width: 3.5rem;
-      height: 3.5rem;
+    .pricing-marker {
+      width: 1.5rem;
+      height: 1.5rem;
       border-radius: 50%;
-      background-color: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #9ca3af;
-      font-size: 1.25rem;
-      font-weight: bold;
+      color: white;
+      font-weight: 600;
+      font-size: 0.8rem;
       flex-shrink: 0;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .advisor-details {
+    .military-marker {
+      background-color: var(--military-accent);
+    }
+    
+    .commercial-marker {
+      background-color: var(--commercial-accent);
+    }
+    
+    .pricing-content {
       flex: 1;
     }
     
-    .advisor-name {
-      font-size: 1rem;
+    .pricing-title {
       font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
-    .advisor-role {
-      font-size: 0.8125rem;
-      color: #6b7280;
+    .pricing-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
     }
     
-    /* Team stats section */
-    .team-stats {
+    .pricing-amount {
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .military-amount {
+      color: var(--military-accent);
+    }
+    
+    .commercial-amount {
+      color: var(--commercial-accent);
+    }
+    
+    /* Unit economics section */
+    .economics-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
     
-    @media (max-width: 768px) {
-      .team-stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .economics-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1.25rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .stat-card {
-      background-color: white;
-      border-radius: 0.75rem;
-      padding: 1.25rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      text-align: center;
+    .economics-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .economics-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .metrics-list {
       display: flex;
       flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .metric-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .metric-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    /* Growth projections */
+    .growth-container {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .growth-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    
+    .growth-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .growth-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .growth-content {
+      padding: 1.25rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .growth-metrics {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .growth-milestone {
+      background-color: var(--feature-bg);
+      padding: 1rem;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+    
+    .growth-milestone:hover {
+      background-color: var(--feature-hover);
+    }
+    
+    .milestone-year {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .milestone-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .milestone-stat {
+      flex: 1;
+      text-align: center;
     }
     
     .stat-value {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: #16a34a;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(90deg, var(--military-accent), var(--commercial-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .stat-label {
-      font-size: 0.875rem;
-      color: #6b7280;
-      line-height: 1.3;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     /* Footer area */
@@ -291,193 +454,304 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    /* Navigation controls */
+
+    /* Navigation */
     .slide-nav {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
       display: flex;
-      gap: 0.5rem;
-      z-index: 100;
-      opacity: 0.3;
-      transition: opacity 0.2s;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
-    
-    .slide-nav:hover {
-      opacity: 1;
-    }
-    
-    .nav-button {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .revenue-model-grid, .economics-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .growth-content {
+        flex-direction: column;
+      }
+      
+      .milestone-stats {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">Leadership Team</h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Business Model</h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
     <div class="slide-content">
-      <!-- Leadership Section -->
-      <div class="leadership-section">
-        <div class="team-grid">
-          <!-- CEO -->
-          <div class="team-card">
-            <div class="card-photo">
-              <div class="photo-placeholder">CEO</div>
-              <div class="expertise-badge military-badge">Military</div>
+      <!-- Revenue Model Section -->
+      <div>
+        <div class="section-title">REVENUE MODEL_</div>
+        <div class="section-subtitle">Dual market revenue streams optimized for market fit</div>
+        
+        <div class="revenue-model-grid">
+          <!-- Military Market -->
+          <div class="market-card">
+            <div class="market-header military-header">
+              <h2 class="military-title">DEFENSE MARKET_</h2>
             </div>
-            <div class="card-content">
-              <h3 class="member-name">John Anderson</h3>
-              <div class="member-title">Chief Executive Officer</div>
-              <div class="member-bio">Former logistics officer with 12 years military experience. Tech entrepreneur with previous startup exit to Oracle. Combines operational expertise with proven business leadership.</div>
-              <div class="previous-experience">
-                <div class="experience-logo">ORC</div>
-                <div class="experience-logo">DOD</div>
-                <div class="experience-logo">US</div>
+            
+            <div class="market-content">
+              <div class="pricing-list">
+                <div class="pricing-item">
+                  <div class="pricing-marker military-marker">1</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">DEPLOYMENT LICENSE_</h3>
+                    <p class="pricing-desc">Per-unit annual licenses based on personnel strength and item volume. Includes platform access, mobile applications, and basic integrations.</p>
+                    <div class="pricing-amount military-amount">$120,000 - $450,000 / year</div>
+                  </div>
+                </div>
+                
+                <div class="pricing-item">
+                  <div class="pricing-marker military-marker">2</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">IMPLEMENTATION SERVICES_</h3>
+                    <p class="pricing-desc">Fixed-fee implementation including system configuration, data migration, and training. One-time fee at project kickoff.</p>
+                    <div class="pricing-amount military-amount">$50,000 - $150,000</div>
+                  </div>
+                </div>
+                
+                <div class="pricing-item">
+                  <div class="pricing-marker military-marker">3</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">ENTERPRISE INTEGRATIONS_</h3>
+                    <p class="pricing-desc">Custom integrations with military logistics systems such as GCSS-Army, LMP, and other DoD systems.</p>
+                    <div class="pricing-amount military-amount">$75,000 - $200,000</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           
-          <!-- CTO -->
-          <div class="team-card">
-            <div class="card-photo">
-              <div class="photo-placeholder">CTO</div>
-              <div class="expertise-badge blockchain-badge">Blockchain</div>
+          <!-- Commercial Market -->
+          <div class="market-card">
+            <div class="market-header commercial-header">
+              <h2 class="commercial-title">COMMERCIAL MARKET_</h2>
             </div>
-            <div class="card-content">
-              <h3 class="member-name">Dr. Maya Patel</h3>
-              <div class="member-title">Chief Technology Officer</div>
-              <div class="member-bio">Blockchain architect previously at ConsenSys. Holds 3 blockchain patents focused on supply chain verification. PhD in Distributed Systems with expertise in blockchain security protocols.</div>
-              <div class="previous-experience">
-                <div class="experience-logo">CON</div>
-                <div class="experience-logo">ETH</div>
-                <div class="experience-logo">MIT</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- COO -->
-          <div class="team-card">
-            <div class="card-photo">
-              <div class="photo-placeholder">COO</div>
-              <div class="expertise-badge military-badge">Military</div>
-            </div>
-            <div class="card-content">
-              <h3 class="member-name">Robert Martinez</h3>
-              <div class="member-title">Chief Operations Officer</div>
-              <div class="member-bio">Former Defense Logistics Agency director with 20+ years of supply chain experience. Led major logistics modernization initiatives with $200M+ budgets. Expert in defense procurement processes.</div>
-              <div class="previous-experience">
-                <div class="experience-logo">DLA</div>
-                <div class="experience-logo">DOD</div>
-                <div class="experience-logo">GE</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Military Division Head -->
-          <div class="team-card">
-            <div class="card-photo">
-              <div class="photo-placeholder">COL</div>
-              <div class="expertise-badge military-badge">Military</div>
-            </div>
-            <div class="card-content">
-              <h3 class="member-name">Col. James Wilson (Ret.)</h3>
-              <div class="member-title">Head of Military Division</div>
-              <div class="member-bio">Retired Colonel who previously led Army logistics modernization initiative. 26 years of military service with extensive property accountability and supply chain expertise. Maintains strong DOD relationships.</div>
-              <div class="previous-experience">
-                <div class="experience-logo">USA</div>
-                <div class="experience-logo">LOG</div>
-                <div class="experience-logo">CECOM</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Commercial Division Head -->
-          <div class="team-card">
-            <div class="card-photo">
-              <div class="photo-placeholder">VP</div>
-              <div class="expertise-badge commercial-badge">Commercial</div>
-            </div>
-            <div class="card-content">
-              <h3 class="member-name">Jennifer Lee</h3>
-              <div class="member-title">Head of Commercial Division</div>
-              <div class="member-bio">Previously VP at SAP Supply Chain. Has scaled 3 enterprise SaaS companies with successful exits. Expert in ERP integration and supply chain optimization for mid-market enterprises.</div>
-              <div class="previous-experience">
-                <div class="experience-logo">SAP</div>
-                <div class="experience-logo">ORCL</div>
-                <div class="experience-logo">AMZN</div>
+            
+            <div class="market-content">
+              <div class="pricing-list">
+                <div class="pricing-item">
+                  <div class="pricing-marker commercial-marker">1</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">SaaS SUBSCRIPTION_</h3>
+                    <p class="pricing-desc">Tiered SaaS pricing model based on user count, transaction volume, and features. Billed annually with enterprise discounts.</p>
+                    <div class="pricing-amount commercial-amount">$30,000 - $250,000 / year</div>
+                  </div>
+                </div>
+                
+                <div class="pricing-item">
+                  <div class="pricing-marker commercial-marker">2</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">TRANSACTION FEES_</h3>
+                    <p class="pricing-desc">Shell Token supply chain financing with 0.5% transaction fee for rapid supplier payments. Based on transaction volume.</p>
+                    <div class="pricing-amount commercial-amount">0.5% of payment volume</div>
+                  </div>
+                </div>
+                
+                <div class="pricing-item">
+                  <div class="pricing-marker commercial-marker">3</div>
+                  <div class="pricing-content">
+                    <h3 class="pricing-title">PARTNER INTEGRATIONS_</h3>
+                    <p class="pricing-desc">Pre-built integrations with major ERP systems and supply chain platforms. Licensed as add-ons to base subscription.</p>
+                    <div class="pricing-amount commercial-amount">$10,000 - $50,000 / year</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Team Stats -->
-      <div class="team-stats">
-        <div class="stat-card">
-          <div class="stat-value">75+</div>
-          <div class="stat-label">Years Combined Military Experience</div>
-        </div>
+      <!-- Unit Economics Section -->
+      <div>
+        <div class="section-title">UNIT ECONOMICS_</div>
+        <div class="section-subtitle">Key profitability metrics by customer segment</div>
         
-        <div class="stat-card">
-          <div class="stat-value">5</div>
-          <div class="stat-label">Successful Tech Startup Exits</div>
-        </div>
-        
-        <div class="stat-card">
-          <div class="stat-value">8</div>
-          <div class="stat-label">Patents in Blockchain & Supply Chain</div>
-        </div>
-        
-        <div class="stat-card">
-          <div class="stat-value">$3B+</div>
-          <div class="stat-label">Managed in Supply Chain Budgets</div>
+        <div class="economics-grid">
+          <!-- Military Economics -->
+          <div class="economics-card">
+            <h3 class="economics-title">DEFENSE CUSTOMER UNIT_</h3>
+            
+            <div class="metrics-list">
+              <div class="metric-row">
+                <div class="metric-label">AVG INITIAL CONTRACT</div>
+                <div class="metric-value">$225,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">IMPLEMENTATION COST</div>
+                <div class="metric-value">$85,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">ONGOING SUPPORT COST</div>
+                <div class="metric-value">$35,000/yr</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">CUSTOMER ACQUISITION COST</div>
+                <div class="metric-value">$25,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">GROSS MARGIN</div>
+                <div class="metric-value">68%</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">RENEWAL RATE</div>
+                <div class="metric-value">92%</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">PAYBACK PERIOD</div>
+                <div class="metric-value">14 MONTHS</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Commercial Economics -->
+          <div class="economics-card">
+            <h3 class="economics-title">COMMERCIAL CUSTOMER UNIT_</h3>
+            
+            <div class="metrics-list">
+              <div class="metric-row">
+                <div class="metric-label">AVG INITIAL CONTRACT</div>
+                <div class="metric-value">$85,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">IMPLEMENTATION COST</div>
+                <div class="metric-value">$22,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">ONGOING SUPPORT COST</div>
+                <div class="metric-value">$18,000/yr</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">CUSTOMER ACQUISITION COST</div>
+                <div class="metric-value">$15,000</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">GROSS MARGIN</div>
+                <div class="metric-value">76%</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">RENEWAL RATE</div>
+                <div class="metric-value">85%</div>
+              </div>
+              
+              <div class="metric-row">
+                <div class="metric-label">PAYBACK PERIOD</div>
+                <div class="metric-value">8 MONTHS</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
-      <!-- Advisors Section -->
-      <div class="advisors-section">
-        <h2 class="advisors-title">Key Advisors</h2>
+      <!-- Growth Projections -->
+      <div class="growth-container">
+        <div class="growth-header">
+          <h3 class="growth-title">GROWTH PROJECTIONS_</h3>
+        </div>
         
-        <div class="advisors-grid">
-          <div class="advisor-card">
-            <div class="advisor-photo">AS</div>
-            <div class="advisor-details">
-              <div class="advisor-name">Hon. Richard Thompson</div>
-              <div class="advisor-role">Former Assistant Secretary of Defense for Logistics</div>
+        <div class="growth-content">
+          <div class="growth-metrics">
+            <div class="growth-milestone">
+              <div class="milestone-year">YEAR 1 (2024)</div>
+              <div class="milestone-stats">
+                <div class="milestone-stat">
+                  <div class="stat-value">14</div>
+                  <div class="stat-label">CUSTOMERS</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">$2.7M</div>
+                  <div class="stat-label">REVENUE</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">-$1.1M</div>
+                  <div class="stat-label">EBITDA</div>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <div class="advisor-card">
-            <div class="advisor-photo">DR</div>
-            <div class="advisor-details">
-              <div class="advisor-name">Dr. Sarah Johnson</div>
-              <div class="advisor-role">Supply Chain Professor, MIT Sloan</div>
+            
+            <div class="growth-milestone">
+              <div class="milestone-year">YEAR 2 (2025)</div>
+              <div class="milestone-stats">
+                <div class="milestone-stat">
+                  <div class="stat-value">32</div>
+                  <div class="stat-label">CUSTOMERS</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">$5.8M</div>
+                  <div class="stat-label">REVENUE</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">$0.3M</div>
+                  <div class="stat-label">EBITDA</div>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <div class="advisor-card">
-            <div class="advisor-photo">CIO</div>
-            <div class="advisor-details">
-              <div class="advisor-name">Michael Chen</div>
-              <div class="advisor-role">CIO, Major Defense Contractor</div>
+            
+            <div class="growth-milestone">
+              <div class="milestone-year">YEAR 3 (2026)</div>
+              <div class="milestone-stats">
+                <div class="milestone-stat">
+                  <div class="stat-value">65</div>
+                  <div class="stat-label">CUSTOMERS</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">$12.4M</div>
+                  <div class="stat-label">REVENUE</div>
+                </div>
+                
+                <div class="milestone-stat">
+                  <div class="stat-value">$3.1M</div>
+                  <div class="stat-label">EBITDA</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -486,14 +760,12 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 13</div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="slide-nav">
-      <div class="nav-button">←</div>
-      <div class="nav-button">→</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>13</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
 </body>

@@ -1,10 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HandReceipt Pitch Deck - Solution Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS Variables for theme switching */
+    :root {
+      /* Light theme (default) */
+      --bg-primary: #f5f5f5;
+      --bg-secondary: #e5e5e5;
+      --bg-tertiary: #d4d4d4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-primary: #0066b3;
+      --accent-secondary: #e65c00;
+      --border-color: #cccccc;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --military-bg: #e6f0fa;
+      --military-accent: #0066b3;
+      --commercial-bg: #f8f1e6;
+      --commercial-accent: #e65c00;
+      --grid-line: rgba(0, 0, 0, 0.05);
+      --phone-bg: #f0f2f5;
+      --phone-border: #c4c9d4;
+      --app-header-bg: #0066b3;
+      --app-content-bg: #ffffff;
+      --app-section-bg: #e6f0fa;
+      --app-button-bg: #0066b3;
+      --progress-bg: #d4d4d4;
+      --progress-fill: #0066b3;
+      --process-line: #d4d4d4;
+      --feature-border: #eaeaea;
+      --testimonial-bg: #e6f0fa;
+      --testimonial-text: #4d4d4d;
+      --testimonial-accent: #0066b3;
+      --step-bg: #0066b3;
+    }
+
     /* Reset and base styles */
     * {
       box-sizing: border-box;
@@ -14,9 +51,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Slide container - takes up full viewport */
@@ -27,25 +65,65 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+      background: var(--bg-primary);
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center center;
     }
     
     /* Header area */
     .slide-header {
       margin-bottom: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     .slide-title {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
     
-    .green-underline {
+    .slide-title::before {
+      content: "> ";
+      color: var(--accent-primary);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .accent-underline {
       width: 80px;
-      height: 4px;
-      background-color: #16a34a;
+      height: 3px;
+      background-color: var(--accent-primary);
       margin-top: 0.5rem;
+      position: relative;
+    }
+    
+    .accent-underline::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: var(--accent-secondary);
+      right: -15px;
+      top: 0;
     }
     
     /* Main content area */
@@ -54,6 +132,8 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      z-index: 1;
+      position: relative;
     }
     
     /* Solution container */
@@ -84,36 +164,38 @@
       width: 100%;
       max-width: 280px;
       height: 500px;
-      background-color: #1e293b;
-      border-radius: 36px;
+      background-color: var(--phone-border);
+      border-radius: 16px;
       padding: 12px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 0 30px rgba(0, 119, 204, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto;
       position: relative;
       z-index: 1;
+      border: 1px solid var(--accent-primary);
     }
     
     .phone-inner {
       width: 100%;
       height: 100%;
-      background-color: white;
-      border-radius: 24px;
+      background-color: var(--phone-bg);
+      border-radius: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 1px solid #0f172a;
+      border: 1px solid var(--border-color);
     }
     
     .app-header {
-      background-color: #16a34a;
+      background-color: var(--app-header-bg);
       padding: 12px 16px;
-      color: white;
+      color: var(--text-primary);
       font-weight: 600;
       display: flex;
       justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .app-content {
@@ -122,25 +204,29 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      background-color: var(--app-content-bg);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .app-section {
-      background-color: #f3f4f6;
-      border-radius: 8px;
+      background-color: var(--app-section-bg);
+      border-radius: 4px;
       padding: 12px;
       font-size: 0.875rem;
-      color: #4b5563;
+      color: var(--text-secondary);
       text-align: center;
+      border: 1px solid var(--border-color);
     }
     
     .app-button {
-      background-color: #16a34a;
-      color: white;
-      border-radius: 6px;
+      background-color: var(--app-button-bg);
+      color: var(--text-primary);
+      border-radius: 4px;
       padding: 10px;
       text-align: center;
       font-weight: 500;
       margin-top: auto;
+      border: 1px solid var(--accent-primary);
     }
     
     /* ROI metrics card */
@@ -148,12 +234,13 @@
       position: absolute;
       top: -20px;
       right: -20px;
-      background: white;
-      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       padding: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid #16a34a;
+      box-shadow: 0 0 15px var(--shadow-color);
+      border-left: 3px solid var(--accent-primary);
       z-index: 2;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .metric-item {
@@ -163,15 +250,15 @@
     }
     
     .metric-value {
-      font-weight: bold;
-      color: #16a34a;
+      font-weight: 600;
+      color: var(--accent-primary);
       font-size: 1.1rem;
       margin-right: 8px;
     }
     
     .metric-label {
-      font-size: 0.85rem;
-      color: #4b5563;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
     }
     
     /* Process flow */
@@ -182,9 +269,12 @@
     }
     
     .process-title {
-      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-size: clamp(1.25rem, 2.5vw, 1.4rem);
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary);
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .process-flow {
@@ -205,22 +295,25 @@
     .step-icon {
       width: 60px;
       height: 60px;
-      border-radius: 50%;
-      background-color: #16a34a;
+      background-color: var(--step-bg);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 0.75rem;
-      color: white;
+      color: var(--text-primary);
       font-weight: bold;
       font-size: 1.25rem;
+      font-family: 'IBM Plex Mono', monospace;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .step-label {
       text-align: center;
       font-weight: 500;
       font-size: 0.875rem;
-      color: #1f2937;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .process-flow::after {
@@ -230,7 +323,7 @@
       left: 10%;
       width: 80%;
       height: 2px;
-      background-color: #d1d5db;
+      background-color: var(--process-line);
       z-index: 1;
     }
     
@@ -242,38 +335,40 @@
     }
     
     .feature-card {
-      background-color: white;
-      border-radius: 0.5rem;
+      background-color: var(--card-bg);
+      border: 1px solid var(--feature-border);
       padding: 1rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px var(--shadow-color);
     }
     
     .feature-title {
       font-weight: 600;
       margin-bottom: 0.5rem;
-      color: #1f2937;
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-family: 'IBM Plex Sans', sans-serif;
     }
     
     .feature-icon {
       width: 1.5rem;
       height: 1.5rem;
-      border-radius: 50%;
-      background-color: #16a34a;
+      background-color: var(--accent-primary);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--text-primary);
       font-size: 0.75rem;
       font-weight: bold;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .feature-description {
-      font-size: 0.8125rem;
-      color: #4b5563;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .feature-list {
@@ -283,39 +378,42 @@
     
     .feature-list li {
       font-size: 0.75rem;
-      color: #6b7280;
+      color: var(--text-secondary);
       margin-bottom: 0.25rem;
       position: relative;
       padding-left: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .feature-list li::before {
-      content: '•';
+      content: '>';
       position: absolute;
       left: 0;
-      color: #16a34a;
+      color: var(--accent-primary);
     }
     
     /* Customer testimonial */
     .customer-testimonial {
-      background-color: #f0fdf4;
-      border-radius: 0.5rem;
+      background-color: var(--testimonial-bg);
+      border: 1px solid var(--border-color);
       padding: 1rem;
       margin-top: 0.5rem;
-      border-left: 4px solid #16a34a;
+      border-left: 3px solid var(--accent-primary);
     }
     
     .testimonial-text {
-      font-style: italic;
+      font-style: normal;
       font-size: 0.85rem;
-      color: #065f46;
+      color: var(--testimonial-text);
       margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     .testimonial-author {
       font-size: 0.75rem;
       font-weight: 600;
-      color: #059669;
+      color: var(--testimonial-accent);
+      font-family: 'IBM Plex Mono', monospace;
     }
     
     /* Footer area */
@@ -324,16 +422,42 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-secondary);
+      z-index: 1;
+      position: relative;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Navigation */
+    .slide-nav {
+      display: flex;
+      gap: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .nav-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
     }
   </style>
 </head>
 <body>
   <div class="slide">
+    <!-- Grid Background Pattern -->
+    <div class="grid-bg"></div>
+    
     <!-- Slide Header -->
     <div class="slide-header">
-      <h1 class="slide-title">HandReceipt Solution Overview</h1>
-      <div class="green-underline"></div>
+      <h1 class="slide-title">Solution Overview</h1>
+      <div class="accent-underline"></div>
     </div>
     
     <!-- Slide Content -->
@@ -344,43 +468,43 @@
           <div class="roi-metrics">
             <div class="metric-item">
               <div class="metric-value">75%</div>
-              <div class="metric-label">Faster inventory verification</div>
+              <div class="metric-label">Faster verification_</div>
             </div>
             <div class="metric-item">
               <div class="metric-value">90%</div>
-              <div class="metric-label">Reduction in paperwork</div>
+              <div class="metric-label">Less paperwork_</div>
             </div>
             <div class="metric-item">
               <div class="metric-value">99.5%</div>
-              <div class="metric-label">Inventory accuracy</div>
+              <div class="metric-label">Inventory accuracy_</div>
             </div>
           </div>
           
           <div class="phone-mockup">
             <div class="phone-inner">
               <div class="app-header">
-                <span>HandReceipt</span>
+                <span>HANDRECEIPT_</span>
                 <span>v1.2</span>
               </div>
               <div class="app-content">
-                <div style="font-weight: 600; color: #1f2937;">Inventory Management</div>
+                <div style="font-weight: 600; color: var(--text-primary);">INVENTORY_MANAGEMENT</div>
                 <div class="app-section" style="height: 160px; display: flex; align-items: center; justify-content: center; position: relative;">
                   <!-- Simple inventory list representation -->
-                  <div style="width: 70%; height: 80%; border: 2px solid #333; border-radius: 8px; padding: 10px;">
-                    <div style="width: 100%; height: 8px; background: #333; margin-bottom: 10px;"></div>
-                    <div style="width: 100%; height: 8px; background: #333; margin-bottom: 10px;"></div>
-                    <div style="width: 100%; height: 8px; background: #333; margin-bottom: 10px;"></div>
-                    <div style="width: 100%; height: 8px; background: #333; margin-bottom: 10px;"></div>
-                    <div style="width: 40%; height: 8px; background: #333;"></div>
+                  <div style="width: 70%; height: 80%; border: 1px solid var(--border-color); padding: 10px;">
+                    <div style="width: 100%; height: 8px; background: var(--border-color); margin-bottom: 10px;"></div>
+                    <div style="width: 100%; height: 8px; background: var(--border-color); margin-bottom: 10px;"></div>
+                    <div style="width: 100%; height: 8px; background: var(--border-color); margin-bottom: 10px;"></div>
+                    <div style="width: 100%; height: 8px; background: var(--border-color); margin-bottom: 10px;"></div>
+                    <div style="width: 40%; height: 8px; background: var(--border-color);"></div>
                   </div>
                 </div>
                 <div class="app-section" style="height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
-                  <div style="width: 100%; height: 10px; background-color: #e5e7eb; border-radius: 5px; margin-bottom: 8px; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background-color: #16a34a; border-radius: 5px;"></div>
+                  <div style="width: 100%; height: 10px; background-color: var(--progress-bg); margin-bottom: 8px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background-color: var(--progress-fill);"></div>
                   </div>
-                  <div style="font-size: 0.8rem; color: #16a34a; font-weight: 600;">Verification Complete: 80%</div>
+                  <div style="font-size: 0.8rem; color: var(--accent-primary); font-weight: 600;">VERIFICATION: 80%_</div>
                 </div>
-                <div class="app-button">Scan Item</div>
+                <div class="app-button">SCAN_ITEM</div>
               </div>
             </div>
           </div>
@@ -389,7 +513,7 @@
         <!-- Platform Features -->
         <div class="process-container">
           <!-- Process Flow -->
-          <h2 class="process-title">Blockchain-Powered Process Flow</h2>
+          <h2 class="process-title">BLOCKCHAIN-POWERED PROCESS_</h2>
           
           <div class="process-flow">
             <div class="process-step">
@@ -471,7 +595,7 @@
               "HandReceipt cut our inventory time by 75% and eliminated nearly all paperwork. Our accountability issues have disappeared, and my soldiers can focus on their actual jobs."
             </div>
             <div class="testimonial-author">
-              — MAJ Robert Johnson, Battalion Commander, US Army
+              — MAJ Robert Johnson // Battalion Commander // US Army
             </div>
           </div>
         </div>
@@ -480,9 +604,17 @@
     
     <!-- Slide Footer -->
     <div class="slide-footer">
-      <div>HandReceipt | Confidential</div>
-      <div>Slide 3</div>
+      <div>HANDRECEIPT // CONFIDENTIAL</div>
+      <div class="slide-nav">
+        <a href="#prev" class="nav-btn">« PREV</a>
+        <span>03</span>
+        <a href="#next" class="nav-btn">NEXT »</a>
+      </div>
     </div>
   </div>
+
+  <script>
+    // No theme toggle script needed
+  </script>
 </body>
 </html>
